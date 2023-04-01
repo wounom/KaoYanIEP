@@ -68,7 +68,7 @@ public class EmailServiceImpl implements EmailService {
             }else {
                 text = templateEngine.process("resetpassword.html",context);
             }
-            sendEmail.setMsg(text);
+            sendEmail.setContent(text,"text/html");
             sendEmail.send();
             LocalDateTime activeTime = LocalDateTime.now().plusMinutes(5);//验证码的存活时间
             if( userfindByemail==null){
