@@ -149,7 +149,8 @@ public class UserServiceImpl implements UserService {
 
         try {
             String newFn = FileUtil.saveFile(file,imgPath);
-            String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() +"/images/"+newFn;
+            String url = request.getScheme()+"://172.25.94.245:"+request.getServerPort() +"/images/"+newFn;
+
             User user = new User();
             user.setEmail(email);
             user.setImage(url);
