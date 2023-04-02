@@ -66,6 +66,14 @@ public interface UserService {
      **/
     Result resetPw(User user,String newpassword);
 
+    /**
+     * 邮箱，用户名，生日，性别，目标院校
+     * 修改个人信息
+     * @return void
+     * @author litind
+     **/
+    Result updateUserInfo(User user);
+
 
     Boolean isUsernameExsit(String username);
 
@@ -75,11 +83,11 @@ public interface UserService {
 
     List<User> getUsers(String search);
 
-    void updateUser(User user);
 
     User getUserById(Integer id);
 
     void deleteById(Integer id);
+
 
 
 }

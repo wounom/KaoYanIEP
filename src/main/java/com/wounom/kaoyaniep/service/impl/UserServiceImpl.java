@@ -111,6 +111,23 @@ public class UserServiceImpl implements UserService {
         return new Result(400,"密码修改失败，请检查原密码是否正确");
     }
 
+    /**
+     *
+     * 更新用户信息
+     * @param user
+     * @return java.lang.Boolean
+     * @author litind
+     **/
+    @Override
+    public Result updateUserInfo(User user){
+        int r = userMapper.updateUser(user);
+        if(r>0){
+            return new Result(200,"修改成功");
+        }else {
+            return new Result(400,"修改失败");
+        }
+    }
+
 
     @Override
     public Boolean isUsernameExsit(String username) {
@@ -129,17 +146,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUsers(search);
     }
 
-    @Override
-    public void updateUser(User user) {
-        if (user.getPassword() != null) {
-            if ("".equals(user.getPassword())) {
-                user.setPassword(null);
-            } else {
-                user.setPassword(PasswordUtil.md5Pwd(user.getPassword(),user.getSalt()));
-            }
-        }
-        userMapper.updateUser(user);
-    }
 
     @Override
     public User getUserById(Integer id) {

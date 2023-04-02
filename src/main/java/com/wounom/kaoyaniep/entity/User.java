@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.entity;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author litind
@@ -22,6 +23,15 @@ public class User {
     private String signature;
     private String target_Unversity;
 
+    private Date birthDay;
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
     public String getSex() {
         return sex;
     }

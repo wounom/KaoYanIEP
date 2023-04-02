@@ -5,16 +5,6 @@
     <select id="selectByUsername" resultType="com.wounom.kaoyaniep.entity.User">
         select * from user where username = #{username} and is_valid=0
     </select>
-
-
-
-
-
-
-
-
-
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into user(username,password,reg_time,nickname,gender,avatar)
         values (#{username},#{password},now(),#{nickname},#{gender},#{avatar})
@@ -36,28 +26,6 @@
         </if>
         order by reg_time desc;
     </select>
-
-    <update id="updateUser" parameterType="com.wounom.kaoyaniep.entity.User">
-        update user
-        <set>
-            <if test="nickname != null">
-                nickname = #{nickname},
-            </if>
-            <if test="signature != null">
-                signature= #{signature},
-            </if>
-            <if test="avatar != null">
-                avatar = #{avatar},
-            </if>
-            <if test="password != null">
-                password = #{password},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-        </set>
-        where username = #{username}
-    </update>
 
     <select id="getUserById" resultType="com.wounom.kaoyaniep.entity.User">
         select * from user where id = #{id}

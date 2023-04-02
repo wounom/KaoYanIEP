@@ -30,7 +30,13 @@ public interface UserMapper  {
 
     List<User> getUsers(String search);
 
-    void updateUser(User user);
+    @Update("<script>"+"update user"+"<set>"+
+            "<if test=\"username!=null\"> username= #{username}, </if>"+
+            "<if test=\"sex != null\"> sex = #{sex}, </if>"+
+            "<if test=\"birthDay!= null\"> birthday = #{birthDay},</if>"+
+            "<if test=\"target_Unversity != null\"> target_unversity = #{target_Unversity},</if>"
+            +"</set>"+"where email = #{email}"+"</script>")
+    int updateUser(User user);
 
     User getUserById(Integer id);
 

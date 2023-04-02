@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -32,6 +33,7 @@ public class UserController {
     /**
      *
      * 注册
+     * 用户名，邮箱，验证码，密码
      * @param user
      * @return com.wounom.kaoyaniep.entity.Result
      * @author litind
@@ -86,7 +88,7 @@ public class UserController {
         response.sendRedirect("/index");
     }
     /**
-     *
+     * 邮箱，验证码，新密码
      * 忘记密码
      * @param user
      * @return com.wounom.kaoyaniep.entity.User
@@ -104,13 +106,13 @@ public class UserController {
     /**
      *
      * 修改密码
+     * 邮箱，原密码，新密码
      * @param user
      * @return com.wounom.kaoyaniep.entity.User
      * @author litind
      **/
     @ApiOperation("修改密码")
     @PostMapping("/resetpw")
-
     public Result resetPw(@RequestBody User user, String newpassword){
         return userService.resetPw(user,newpassword);
     }
@@ -121,5 +123,17 @@ public class UserController {
         return userMapper.findall();
     }
 
+    /**
+     *
+     * 更新用户信息
+     * @param user
+     * @return
+     * @author litind
+     **/
+    @ApiOperation("更新用户信息")
+    @PostMapping("/updateUserInfo")
+    public Result updateUserinfo(User user){
+        return userService.updateUserInfo(user);
+    }
 
 }
