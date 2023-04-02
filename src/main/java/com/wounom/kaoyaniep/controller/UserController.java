@@ -1,18 +1,24 @@
 package com.wounom.kaoyaniep.controller;
 
+import cn.hutool.core.map.MapUtil;
 import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.UserService;
+import com.wounom.kaoyaniep.utils.FileUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -134,6 +140,21 @@ public class UserController {
     @PostMapping("/updateUserInfo")
     public Result updateUserinfo(User user){
         return userService.updateUserInfo(user);
+    }
+
+    /**
+     *
+     * 上传用户头像
+     * @param email,file,request
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/uploadimage")
+    public Result uploadImg(String email, MultipartFile file,HttpServletRequest request){
+        if (file.isEmpty()){
+            return new Result(400,"文件为空");
+        }
+        return userService.uploadimg(email,file,request);
     }
 
 }

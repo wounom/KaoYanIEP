@@ -1,7 +1,9 @@
 package com.wounom.kaoyaniep.service;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -73,6 +75,15 @@ public interface UserService {
      * @author litind
      **/
     Result updateUserInfo(User user);
+
+    /**
+     *
+     * 上传头像
+     * @param email,file
+     * @return java.lang.Boolean
+     * @author litind
+     **/
+    Result uploadimg(String email, MultipartFile file, HttpServletRequest request);
 
 
     Boolean isUsernameExsit(String username);

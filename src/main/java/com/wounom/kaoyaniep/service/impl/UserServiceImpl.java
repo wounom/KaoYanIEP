@@ -4,12 +4,19 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.service.UserService;
+import com.wounom.kaoyaniep.utils.FileUtil;
 import com.wounom.kaoyaniep.utils.PasswordUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author litind
@@ -126,6 +133,33 @@ public class UserServiceImpl implements UserService {
         }else {
             return new Result(400,"修改失败");
         }
+    }
+
+    /**
+     *
+     * 上传头像
+     * @param eamil.file
+     * @return java.lang.Boolean
+     * @author litind
+     **/
+    @Value("${file.upload-path}")
+    private String imgPath;
+    @Override
+    public Result uploadimg(String email, MultipartFile file, HttpServletRequest request){
+
+        try {
+            String newFn = FileUtil.saveFile(file,imgPath);
+            String url = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() +"/images/"+newFn;
+            User user = new User();
+            user.setEmail(email);
+            user.setImage(url);
+            userMapper.updateUserImg(user);
+            return new Result(200,url);
+        } catch (IOException e) {
+
+            return new Result(400,"上传失败"+e.getMessage());
+        }
+
     }
 
 

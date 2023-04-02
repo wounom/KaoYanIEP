@@ -24,6 +24,15 @@ public class User {
     private String target_Unversity;
 
     private Date birthDay;
+    public String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Date getBirthDay() {
         return birthDay;
@@ -51,6 +60,9 @@ public class User {
     public String getTarget_Unversity() {
         return target_Unversity;
     }
+
+
+
 
     public void setTarget_Unversity(String target_Unversity) {
         this.target_Unversity = target_Unversity;
