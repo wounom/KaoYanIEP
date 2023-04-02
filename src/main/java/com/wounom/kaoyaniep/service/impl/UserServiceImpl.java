@@ -168,8 +168,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectByUsername(username) != null;
     }
 
-
-
     @Override
     public int countAll(String search) {
         return userMapper.countAll(search);
