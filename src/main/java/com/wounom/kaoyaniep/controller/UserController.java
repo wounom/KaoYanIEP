@@ -155,6 +155,9 @@ public class UserController {
             return new Result(400,"文件为空");
         }
         return userService.uploadimg(email,file,request);
+
     }
+
+
 
 }
