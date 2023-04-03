@@ -6,10 +6,13 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.UserService;
 import com.wounom.kaoyaniep.utils.FileUtil;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -28,6 +31,7 @@ import java.util.UUID;
  */
 @RestController
 @CrossOrigin
+@Slf4j
 @RequestMapping("/user")
 public class UserController {
     @Resource
@@ -56,7 +60,7 @@ public class UserController {
     /**
      *
      * 登陆
-     * @param request
+     * @param user
      * @param user
      * @return com.wounom.kaoyaniep.entity.Result
      * @author litind
@@ -64,14 +68,17 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     @ResponseBody
-    public Result Login(HttpServletRequest request,@RequestBody User user){
+    public Result Login(HttpServletRequest request, @RequestBody User user){
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
+        /*log.info("username",user.getUsername());
+        log.info("password",user.getPassword());*/
         if(!userService.isUserEmailexsit(user.getEmail())){
             return new Result(400,"账号不存在");
         }
         User newuser = userService.getUserByEmail(user.getEmail());//查询已经注册的该邮箱账户
         if(userService.loginCheck(user)!=null){
+            String token = TokenUtils.CreateToken(newuser);
             request.getSession().setAttribute("user",newuser);
             request.getSession().setMaxInactiveInterval(1800);
             return new Result(200,"登录成功");
@@ -83,15 +90,16 @@ public class UserController {
     /**
      *
      * 登出
-     * @param response
+     * @param request,sessionStatus
      * @return com.wounom.kaoyaniep.entity.User
      * @author litind
      **/
     @ApiOperation("登出")
     @PostMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Result logout(HttpServletRequest request, SessionStatus sessionStatus) {
         request.getSession().invalidate();
-        response.sendRedirect("/index");
+        sessionStatus.setComplete();
+        return new Result(200,"登出成功");
     }
     /**
      * 邮箱，验证码，新密码
