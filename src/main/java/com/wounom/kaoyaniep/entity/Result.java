@@ -10,10 +10,9 @@ import lombok.Data;
  */
 
 public class Result {
-    @ApiModelProperty(example = "1")
+
     private Integer code = 0;
     private String message;
-    @ApiModelProperty(example = "1")
     private Integer count = 0;
     private Object data;
 

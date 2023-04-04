@@ -93,7 +93,7 @@ public class AdminController {
      **/
     @PostMapping("/Fppush")
     @ApiOperation("上传首页推送")
-    public Result updateFpagePush(FirstpagePush firstpagePush, MultipartFile file,HttpServletRequest request){
+    public Result updateFpagePush(FirstpagePush firstpagePush,MultipartFile file,HttpServletRequest request){
         if (file.isEmpty()){
             return new Result(400,"图片为空");
         }
