@@ -142,19 +142,24 @@ public class UserServiceImpl implements UserService {
      * @return java.lang.Boolean
      * @author litind
      **/
-    @Value("${file.upload-path}")
+    @Value("${file.upload-path}/")
     private String imgPath;
     @Override
     public Result uploadimg(String email, MultipartFile file, HttpServletRequest request){
+        User user = userMapper.selectByUserEmail1(email);
+        if (user.getImagePath()!=null){
+            FileUtil.deleteFile(user.getImagePath());
+        }
 
         try {
             String newFn = FileUtil.saveFile(file,imgPath);
             String url = request.getScheme()+"://172.25.94.245:"+request.getServerPort() +"/images/userheadimg/"+newFn;
-
-            User user = new User();
-            user.setEmail(email);
-            user.setImage(url);
-            userMapper.updateUserImg(user);
+            String path = imgPath+newFn;
+            User newuser = new User();
+            newuser.setEmail(email);
+            newuser.setImage(url);
+            newuser.setImagePath(path);
+            userMapper.updateUserImg(newuser);
             return new Result(200,url);
         } catch (IOException e) {
 

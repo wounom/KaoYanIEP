@@ -52,5 +52,10 @@ public class FirstpagePush  implements Serializable {
 	 */
 	@ApiModelProperty(value = "图片")
 	private String image;
+	/**
+	 * 图片路径
+	 */
+	@ApiModelProperty(value = "图片路径")
+	private String imagePath;
 
 }

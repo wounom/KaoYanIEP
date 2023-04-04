@@ -26,6 +26,16 @@ public class User {
     private Date birthDay;
     public String image;
 
+    public String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     public String getImage() {
         return image;
     }

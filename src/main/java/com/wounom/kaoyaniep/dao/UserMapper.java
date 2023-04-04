@@ -73,6 +73,6 @@ public interface UserMapper  {
     @Update("update user set code =#{code}, active_time=#{active_Time},salt = #{salt}, password = #{password} where email = #{email}")
     void updatePw(User user);
 
-    @Update("update user set image = #{image} where email = #{email}")
+    @Update("update user set image = #{image}, imagepath = #{imagePath} where email = #{email}")
     void updateUserImg(User user);
 }

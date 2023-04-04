@@ -96,8 +96,10 @@ public class AdminServiceImpl implements AdminService {
         try {
             String newFn = FileUtil.saveFile(file,path);
             String url = request.getScheme()+"://172.25.94.245:"+request.getServerPort() +"/images/firstpage/"+newFn;
+            String imgPath = path+newFn;
             firstpagePush.setCreate_Time(DateTime.now());
             firstpagePush.setImage(url);
+            firstpagePush.setImagePath(imgPath);
             adminMapper.updateFpp(firstpagePush);
             return new Result(200,url);
         } catch (IOException e) {
@@ -107,16 +109,19 @@ public class AdminServiceImpl implements AdminService {
     /**
      *
      * 删除首页推送
-     * @param firstId
+     * @param first_Id
      * @return
      * @author litind
      **/
     @Override
-    public Result deleteFpp(int  firstId) {
-        if (adminMapper.selectFppById(firstId)==null){
+    public Result deleteFpp(int  first_Id) {
+        FirstpagePush firstpagePush = adminMapper.selectFppById(first_Id);
+        if (firstpagePush==null){
             return new Result(400,"表单为空，请勿重复重置");
         }
-        if(adminMapper.deleteFppById(firstId)>0){
+        boolean n =  FileUtil.deleteFile(firstpagePush.getImagePath());
+        System.out.println(n);
+        if(adminMapper.deleteFppById(first_Id)>0){
             return new Result(200,"重置成功");
         }else {
             return new Result(400,"重置失败，请联系开发者");

@@ -13,6 +13,14 @@ import java.util.UUID;
  * @date 2023/4/2 19:56
  */
 public class FileUtil {
+    /**
+     *
+     * 保存文件
+     * @param file
+     * @param path
+     * @return java.lang.String
+     * @author litind
+     **/
     public static String saveFile(MultipartFile file,String path) throws IOException {
         String fileName = file.getOriginalFilename();
         String filesub = fileName.substring(fileName.indexOf("."));
@@ -24,5 +32,20 @@ public class FileUtil {
         File file1 = new File(path,newFileName);
         file.transferTo(file1);
         return newFileName;
+    }
+    /**
+     *
+     * 删除无效文件
+     * @param path
+     * @return
+     * @author litind
+     **/
+    public static boolean deleteFile(String path){
+        boolean flag = false;
+        File file = new File(path);
+        if (file.isFile()&& file.exists()){
+            flag =  file.delete();
+        }
+        return flag;
     }
 }

@@ -108,8 +108,8 @@ public class AdminController {
      **/
     @PostMapping("/deletepush")
     @ApiOperation("重置首页推送")
-    public Result resetFpagePush(int firstId){
-        return adminService.deleteFpp(firstId);
+    public Result resetFpagePush(int first_Id){
+        return adminService.deleteFpp(first_Id);
     }
 
 }

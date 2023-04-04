@@ -26,6 +26,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/forgetpw")
                 .excludePathPatterns("/admin/**")
                 .excludePathPatterns("/firstpage/**")
-                .excludePathPatterns("/images/**");
+                .excludePathPatterns("/images/firstpage/**");
     }
 }
