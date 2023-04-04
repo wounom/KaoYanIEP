@@ -1,15 +1,18 @@
 package com.wounom.kaoyaniep.controller;
 
 import com.wounom.kaoyaniep.entity.Admin;
+import com.wounom.kaoyaniep.entity.FirstpagePush;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.AdminService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +51,6 @@ public class AdminController {
             return new Result(400,"用户名或密码错误");
         }
     }
-
     /**
      *
      * 运维增加管理员
@@ -82,4 +84,32 @@ public class AdminController {
         }
         return adminService.updateAdmin(admin);
     }
+    /**
+     *
+     * 上传首页推送
+     * @param firstpagePush
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/Fppush")
+    @ApiOperation("上传首页推送")
+    public Result updateFpagePush(FirstpagePush firstpagePush, MultipartFile file,HttpServletRequest request){
+        if (file.isEmpty()){
+            return new Result(400,"图片为空");
+        }
+        return adminService.updateFpp(firstpagePush,file,request);
+    }
+    /**
+     *
+     * 重置首页推送（删除）
+     * @param
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/deletepush")
+    @ApiOperation("重置首页推送")
+    public Result resetFpagePush(int firstId){
+        return adminService.deleteFpp(firstId);
+    }
+
 }

@@ -1,15 +1,23 @@
 package com.wounom.kaoyaniep.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.AdminMapper;
 import com.wounom.kaoyaniep.entity.Admin;
+import com.wounom.kaoyaniep.entity.FirstpagePush;
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.AdminService;
+import com.wounom.kaoyaniep.utils.FileUtil;
 import com.wounom.kaoyaniep.utils.PasswordUtil;
 import org.apache.ibatis.io.ResolverUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.geom.RectangularShape;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @author litind
@@ -73,6 +81,45 @@ public class AdminServiceImpl implements AdminService {
             return new Result(200,"修改成功");
         }else {
             return new Result(400,"修改失败");
+        }
+    }
+    /**
+     *
+     * 上传首页推送
+     * @param firstpagePush
+     * @return
+     * @author litind
+     **/
+    @Override
+    public  Result updateFpp(FirstpagePush firstpagePush, MultipartFile file, HttpServletRequest request){
+        String path="D://JAVA/Project/KaoYanIEP/images/firstpage/";
+        try {
+            String newFn = FileUtil.saveFile(file,path);
+            String url = request.getScheme()+"://172.25.94.245:"+request.getServerPort() +"/images/firstpage/"+newFn;
+            firstpagePush.setCreate_Time(DateTime.now());
+            firstpagePush.setImage(url);
+            adminMapper.updateFpp(firstpagePush);
+            return new Result(200,url);
+        } catch (IOException e) {
+            return new Result(400,"上传失败"+e.getMessage());
+        }
+    }
+    /**
+     *
+     * 删除首页推送
+     * @param firstId
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result deleteFpp(int  firstId) {
+        if (adminMapper.selectFppById(firstId)==null){
+            return new Result(400,"表单为空，请勿重复重置");
+        }
+        if(adminMapper.deleteFppById(firstId)>0){
+            return new Result(200,"重置成功");
+        }else {
+            return new Result(400,"重置失败，请联系开发者");
         }
     }
 }

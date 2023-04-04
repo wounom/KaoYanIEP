@@ -2,11 +2,9 @@ package com.wounom.kaoyaniep.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.wounom.kaoyaniep.entity.Admin;
+import com.wounom.kaoyaniep.entity.FirstpagePush;
 import com.wounom.kaoyaniep.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -25,4 +23,13 @@ public interface AdminMapper extends BaseMapper {
     int insertAdmin(Admin admin);
     @Update("update admin set password = #{password},salt = #{salt} where username = #{username}")
     int updateAdmin(Admin admin);
+
+    @Update("update firstpage_push set title = #{title},create_time = #{create_Time},URL = #{url}, image = #{image} where first_id = #{first_Id}")
+    int updateFpp(FirstpagePush firstpagePush);
+
+    @Update("update firstpage_push set title = null,create_time =null ,URL = null, image = null where first_id = #{first_Id}")
+    int deleteFppById(int firstId);
+
+    @Select("select * from firstpage_push where first_id = #{first_Id}")
+    FirstpagePush selectFppById(int firstId);
 }

@@ -1,8 +1,12 @@
 package com.wounom.kaoyaniep.service;
 
 import com.wounom.kaoyaniep.entity.Admin;
+import com.wounom.kaoyaniep.entity.FirstpagePush;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.User;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litind
@@ -19,4 +23,8 @@ public interface AdminService {
     Result addAdmin(Admin admin);
 
     Result updateAdmin(Admin admin);
+
+    Result updateFpp(FirstpagePush firstpagePush, MultipartFile file, HttpServletRequest request);
+
+    Result deleteFpp(int firstId);
 }

@@ -12,10 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class fileConfig implements WebMvcConfigurer {
-    private String filePath="D://JAVA/Project/KaoYanIEP/images/";
+    private String imgPath="D://JAVA/Project/KaoYanIEP/images/";
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/images/**").addResourceLocations("file:"+filePath);
+        registry.addResourceHandler("/images/userheadimg/**").addResourceLocations("file:"+imgPath+"userheadimg/");
+        registry.addResourceHandler("/images/firstpage/**").addResourceLocations("file:"+imgPath+"firstpage/");
     }
 
 }
