@@ -1,13 +1,19 @@
 package com.wounom.kaoyaniep.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
 /**
  * @author litind
  * @version 1.0
  * @date 2023/3/30 16:36
  */
+
 public class Result {
+    @ApiModelProperty(example = "1")
     private Integer code = 0;
     private String message;
+    @ApiModelProperty(example = "1")
     private Integer count = 0;
     private Object data;
 
