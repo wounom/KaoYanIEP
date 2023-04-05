@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.service;
 
+
 import com.wounom.kaoyaniep.entity.Result;
 
 /**
@@ -9,5 +10,7 @@ import com.wounom.kaoyaniep.entity.Result;
  */
 public interface TieWenService {
 
+    Result getCheckTiewen();
 
+    Result checkTiewen(int tiewenId, int status);
 }

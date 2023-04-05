@@ -1,11 +1,14 @@
 package com.wounom.kaoyaniep.dao;
 
+
+
 import com.wounom.kaoyaniep.entity.Tiewen;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+
 
 /**
  * @author litind
@@ -18,5 +21,9 @@ public interface TieWenMapper {
     List<Tiewen> getTieWenbyUserId(long id);
 
 
+    @Select("select * from tiewen where status = 0")
+    List<Tiewen> getCheckTiewen();
 
+    @Update("update tiewen set status = #{status} where tiewenId = #{tiewenId}")
+    int updateTieWenStatus(int tiewenId, int status);
 }
