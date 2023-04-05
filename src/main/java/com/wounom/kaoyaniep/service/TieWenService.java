@@ -1,8 +1,6 @@
 package com.wounom.kaoyaniep.service;
 
-import com.wounom.kaoyaniep.entity.Tiewen;
-
-import java.util.List;
+import com.wounom.kaoyaniep.entity.Result;
 
 /**
  * @author litind
@@ -10,5 +8,6 @@ import java.util.List;
  * @date 2023/4/3 9:18
  */
 public interface TieWenService {
+
 
 }

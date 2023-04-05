@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.dao;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ import java.util.List;
 public interface TieWenMapper {
     @Select("select * from tiewen where user_id = #{userId}")
     List<Tiewen> getTieWenbyUserId(long id);
+
+
+
 }

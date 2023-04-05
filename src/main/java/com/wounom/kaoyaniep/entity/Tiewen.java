@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-03 
+ * @Date 2023-04-05 
  */
 
 @ApiModel(value = "tiewen")
@@ -26,13 +26,13 @@ public class Tiewen  implements Serializable {
 	 * 贴文id
 	 */
 	@ApiModelProperty(value = "贴文id")
-	private int tiewenId;
+	private Long tiewenId;
 
 	/**
 	 * 用户id
 	 */
 	@ApiModelProperty(value = "用户id")
-	private int userId;
+	private Long userId;
 
 	/**
 	 * 标题
@@ -41,22 +41,22 @@ public class Tiewen  implements Serializable {
 	private String title;
 
 	/**
-	 * 贴文状态：0.待审核（默认）1.已过审2.被删除
+	 * 贴文状态：0.待审核（默认）1.已过审 -1.被拒绝 2.查看
 	 */
-	@ApiModelProperty(value = "贴文状态：0.待审核（默认）1.已过审2.被删除")
+	@ApiModelProperty(value = "贴文状态：0.待审核（默认）1.已过审 -1.被拒绝 2.查看")
 	private Integer status;
 
 	/**
 	 * 贴文创建时间
 	 */
 	@ApiModelProperty(value = "贴文创建时间")
-	private Date create_Time;
+	private Date createTime;
 
 	/**
 	 * 评论计数
 	 */
 	@ApiModelProperty(value = "评论计数")
-	private Long comment_Count;
+	private Long commentCount;
 
 	/**
 	 * 贴文内容
@@ -65,9 +65,9 @@ public class Tiewen  implements Serializable {
 	private String content;
 
 	/**
-	 * 版块id
+	 * 版块名字
 	 */
-	@ApiModelProperty(value = "版块id")
-	private Long blockId;
+	@ApiModelProperty(value = "版块名字")
+	private String blockName;
 
 }
