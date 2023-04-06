@@ -33,5 +33,17 @@ public class OfficialTieController {
         return officalTieService.getOfficialTieByblockName(blockName);
 
     }
+    /**
+     *
+     * 获取热门官方贴
+     * @param
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/gethot")
+    @ApiOperation("/获取热门官方贴")
+    public Result getHotOfficalTie(){
+        return officalTieService.getOfficialTieByTime();
+    }
 
 }

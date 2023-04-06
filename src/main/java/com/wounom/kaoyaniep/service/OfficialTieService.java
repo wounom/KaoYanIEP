@@ -9,4 +9,6 @@ import com.wounom.kaoyaniep.entity.Result;
  */
 public interface OfficialTieService {
     Result getOfficialTieByblockName(String blockName);
+
+    Result getOfficialTieByTime();
 }

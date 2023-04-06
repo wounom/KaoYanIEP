@@ -21,6 +21,14 @@ import java.util.List;
 public class OfficialTieServiceImpl implements OfficialTieService {
     @Resource
     private OfficialTieMapper officalTieMapper;
+
+    /**
+     * 获取官方特别版贴
+     *
+     * @param blockName
+     * @return com.wounom.kaoyaniep.entity.Result
+     * @author litind
+     **/
     @Override
     public Result getOfficialTieByblockName(String blockName) {
         List<TiewenOfficial> list = officalTieMapper.getOfficialTieByBlockName(blockName);
@@ -28,6 +36,22 @@ public class OfficialTieServiceImpl implements OfficialTieService {
             return new Result(200,"获取成功",list.size(),list);
         }else {
             return new Result(400,"获取失败,该板块内容为空",0,null);
+        }
+    }
+
+    /**
+     *
+     * 获取热帖
+     * @return com.wounom.kaoyaniep.entity.Result
+     * @author litind
+     **/
+    @Override
+    public Result getOfficialTieByTime() {
+        List<TiewenOfficial> list = officalTieMapper.getOfficialTieByTime();
+        if (list.size()!=0){
+            return new Result(200,"获取成功",list.size(),list);
+        }else {
+            return new Result(400,"获取失败,可能无数据");
         }
     }
 }

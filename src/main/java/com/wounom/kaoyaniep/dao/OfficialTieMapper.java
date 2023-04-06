@@ -16,4 +16,7 @@ import java.util.List;
 public interface OfficialTieMapper {
     @Select("select * from tiewen_official where blockName = #{blockName}")
     List<TiewenOfficial> getOfficialTieByBlockName(String blockName);
+
+    @Select("select * from tiewen_official order by createTime desc limit 0,9")
+    List<TiewenOfficial> getOfficialTieByTime();
 }
