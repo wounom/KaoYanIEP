@@ -164,5 +164,4 @@ public class UserController {
         }
         return userService.uploadimg(email,file,request);
     }
-
 }

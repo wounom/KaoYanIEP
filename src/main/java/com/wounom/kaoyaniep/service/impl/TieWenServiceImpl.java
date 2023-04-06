@@ -65,4 +65,21 @@ public class TieWenServiceImpl implements TieWenService {
         }
         //过审为1
     }
+    /**
+     *
+     * 通过用户id获取贴文
+     * @param userId
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getTiewenByUser(int userId) {
+        List<Tiewen> tiewenList =  tieWenMapper.getTieWenbyUserId(userId);
+        if (tiewenList != null){
+            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        }
+        else {
+            return new Result(400,"未发布贴文");
+        }
+    }
 }

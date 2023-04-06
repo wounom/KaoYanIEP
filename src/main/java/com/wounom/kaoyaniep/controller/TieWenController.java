@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.controller;
 
 
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.TieWenService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litind
@@ -52,6 +54,21 @@ public class TieWenController {
         return tieWenService.checkTiewen(tiewenId,status);
     }
 
+
+    /**
+     *
+     * 获取用户发帖
+     * @param userId
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/getTiewenByUserid")
+    @ApiOperation("通过用户id获取帖子")
+    public Result GetTieWenByUser(int userId/*HttpServletRequest request*/){
+        /*User user = (User) request.getSession().getAttribute("user");
+        int userId = (int) user.getId();*/
+        return tieWenService.getTiewenByUser(userId);
+    }
 
 
 }
