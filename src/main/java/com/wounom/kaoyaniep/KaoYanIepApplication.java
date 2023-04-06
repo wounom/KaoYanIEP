@@ -16,5 +16,4 @@ public class KaoYanIepApplication {
     public static void main(String[] args) {
         SpringApplication.run(KaoYanIepApplication.class, args);
     }
-
 }
