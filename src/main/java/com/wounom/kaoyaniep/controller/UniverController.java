@@ -1,13 +1,9 @@
 package com.wounom.kaoyaniep.controller;
 
 import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.University;
 import com.wounom.kaoyaniep.service.UniverService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
