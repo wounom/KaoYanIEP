@@ -55,47 +55,13 @@ public class TieWenServiceImpl implements TieWenService {
            }else {
                return new Result(400,"系统错误");
            }
-        }else {
+        }else {//过审为1
             int r= tieWenMapper.updateTieWenStatus(tiewenId,status);
             if (r >0){
                 return new Result(200,"贴文已通过审核");
             }else {
                 return new Result(400,"系统错误");
             }
-        }
-        //过审为1
-    }
-    /**
-     *
-     * 通过用户id获取贴文
-     * @param userId
-     * @return
-     * @author litind
-     **/
-    @Override
-    public Result getTiewenByUser(int userId) {
-        List<Tiewen> tiewenList =  tieWenMapper.getTieWenbyUserId(userId);
-        if (tiewenList != null){
-            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
-        }
-        else {
-            return new Result(400,"未发布贴文");
-        }
-    }
-    /**
-     *
-     * 通过板块名称删除贴文
-     * @param blockName
-     * @return
-     * @author litind
-     **/
-    @Override
-    public Result deleteTiewenByBlock(String blockName) {
-        int r = tieWenMapper.deleteTiewenByBlock(blockName);
-        if (r >0){
-            return new Result(200,"清除成功");
-        }else {
-            return new Result(400,"清除失败,表内无该板块数据");
         }
     }
 }
