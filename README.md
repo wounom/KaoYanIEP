@@ -1,2 +1,2 @@
 # KaoYanIEP
-this is a platform。
+this is a platform
