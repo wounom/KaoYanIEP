@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.entity.Admin;
 import com.wounom.kaoyaniep.entity.FirstpagePush;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.AdminService;
+import com.wounom.kaoyaniep.service.BlockService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AdminController {
     @Resource
     private AdminService adminService;
+    @Resource
+    private BlockService blockService;
 
     /**
      *
@@ -109,5 +112,7 @@ public class AdminController {
     public Result resetFpagePush(int first_Id){
         return adminService.deleteFpp(first_Id);
     }
+
+
 
 }

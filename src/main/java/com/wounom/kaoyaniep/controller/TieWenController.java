@@ -3,7 +3,6 @@ package com.wounom.kaoyaniep.controller;
 
 
 import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.TieWenService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litind
@@ -53,8 +51,6 @@ public class TieWenController {
         //过审为1
         return tieWenService.checkTiewen(tiewenId,status);
     }
-
-
     /**
      *
      * 获取用户发帖
@@ -70,5 +66,17 @@ public class TieWenController {
         return tieWenService.getTiewenByUser(userId);
     }
 
+    /**
+     *
+     * 管理员删除板块的同时删除板块内数据
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/deleteByBlock")
+    @ApiOperation("删除板块时，同时删除板块数据")
+    public Result deleteTiewenByBlock(String blockName){
+        return tieWenService.deleteTiewenByBlock(blockName);
+    }
 
 }

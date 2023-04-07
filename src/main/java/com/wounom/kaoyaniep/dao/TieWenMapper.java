@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.dao;
 
 
 import com.wounom.kaoyaniep.entity.Tiewen;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -26,4 +27,7 @@ public interface TieWenMapper {
 
     @Update("update tiewen set status = #{status} where tiewenId = #{tiewenId}")
     int updateTieWenStatus(int tiewenId, int status);
+
+    @Delete("delete from tiewen where blockName = #{blockName}")
+    int deleteTiewenByBlock(String blockName);
 }

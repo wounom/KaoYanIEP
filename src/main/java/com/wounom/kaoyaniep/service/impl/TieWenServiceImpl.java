@@ -82,4 +82,20 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(400,"未发布贴文");
         }
     }
+    /**
+     *
+     * 通过板块名称删除贴文
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result deleteTiewenByBlock(String blockName) {
+        int r = tieWenMapper.deleteTiewenByBlock(blockName);
+        if (r >0){
+            return new Result(200,"清除成功");
+        }else {
+            return new Result(400,"清除失败,表内无该板块数据");
+        }
+    }
 }
