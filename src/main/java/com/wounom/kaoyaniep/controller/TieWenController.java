@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litind
@@ -25,4 +26,16 @@ public class TieWenController {
     @Resource
     private TieWenService tieWenService;
 
+    /**
+     *
+     * 收藏贴文
+     * @param tName,request
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/collectTie")
+    @ApiOperation("收藏贴文")
+    public Result CollectTie(String tName, HttpServletRequest request){
+        return tieWenService.collectTie(tName,request);
+    }
 }

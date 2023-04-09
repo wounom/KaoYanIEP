@@ -2,13 +2,14 @@ package com.wounom.kaoyaniep.service.impl;
 
 
 
+import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
-import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.Tiewen;
+import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.TieWenService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -23,45 +24,23 @@ public class TieWenServiceImpl implements TieWenService {
 
     /**
      *
-     * 获取需要审核贴文
+     * 收藏帖子
+     * @param tName,request
      * @return
      * @author litind
      **/
     @Override
-    public Result getCheckTiewen() {
-        List<Tiewen> needToCheck = tieWenMapper.getCheckTiewen();
-        if (needToCheck.size()!=0){
-            return new Result(200,"获取成功", needToCheck.size(), needToCheck);
+    public Result collectTie(String tName, HttpServletRequest request) {
+        Collectlisttiewen collectlisttiewen = new Collectlisttiewen();
+        User user = (User) request.getSession().getAttribute("user");
+        collectlisttiewen.setTName(tName);
+        collectlisttiewen.setUserEmail(user.getEmail());
+        collectlisttiewen.setCollecttime(DateTime.now());
+        int r = tieWenMapper.insertCollectlist(collectlisttiewen);
+        if (r>0){
+            return new Result(200,"收藏成功");
         }else {
-            return new Result(400,"暂无需要处理的贴文");
-        }
-    }
-
-    /**
-     *
-     * 贴文审核
-     * @param status
-     * @return com.wounom.kaoyaniep.entity.Result
-     * @author litind
-     **/
-
-    @Override
-    public Result checkTiewen(int tiewenId,int status) {
-        //拒绝为-1
-        if(status <0){
-           int r= tieWenMapper.updateTieWenStatus(tiewenId,status);
-           if (r >0){
-               return new Result(200,"拒绝成功");
-           }else {
-               return new Result(400,"系统错误");
-           }
-        }else {//过审为1
-            int r= tieWenMapper.updateTieWenStatus(tiewenId,status);
-            if (r >0){
-                return new Result(200,"贴文已通过审核");
-            }else {
-                return new Result(400,"系统错误");
-            }
+            return new Result(400,"收藏失败");
         }
     }
 }

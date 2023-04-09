@@ -1,7 +1,9 @@
 package com.wounom.kaoyaniep.dao;
 
 import com.wounom.kaoyaniep.entity.Block;
+import com.wounom.kaoyaniep.entity.Collectlistblock;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,4 +21,7 @@ public interface BlockMapper {
 
     @Delete("delete from block where blockName = #{blockName}")
     int deleteBlock(String blockName);
+
+    @Insert("insert into  collectlistblock(userEmail,collecttime,bName) values (#{userEmail},#{collecttime},#{bName})")
+    int insertCollectlist(Collectlistblock collectlistblock);
 }

@@ -1,6 +1,8 @@
 package com.wounom.kaoyaniep.dao;
 
+import com.wounom.kaoyaniep.entity.Collectlistarticle;
 import com.wounom.kaoyaniep.entity.TiewenOfficial;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,4 +21,7 @@ public interface OfficialTieMapper {
 
     @Select("select * from tiewen_official order by createTime desc limit 0,9")
     List<TiewenOfficial> getOfficialTieByTime();
+
+    @Insert("insert into  collectlistarticle(userEmail,collecttime,aName) values (#{userEmail},#{collecttime},#{aName})")
+    int insertCollectlist(Collectlistarticle collectlistarticle);
 }

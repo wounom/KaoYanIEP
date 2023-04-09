@@ -3,6 +3,8 @@ package com.wounom.kaoyaniep.service;
 
 import com.wounom.kaoyaniep.entity.Result;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author litind
  * @version 1.0
@@ -10,7 +12,6 @@ import com.wounom.kaoyaniep.entity.Result;
  */
 public interface TieWenService {
 
-    Result getCheckTiewen();
 
-    Result checkTiewen(int tiewenId, int status);
+    Result collectTie(String tName, HttpServletRequest request);
 }

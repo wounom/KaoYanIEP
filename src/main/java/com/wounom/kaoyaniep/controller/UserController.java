@@ -117,6 +117,7 @@ public class UserController {
         userService.forgetPw(user);
         return new Result(200,"修改成功");
     }
+
     /**
      *
      * 修改密码
@@ -146,19 +147,23 @@ public class UserController {
      **/
     @ApiOperation("更新用户信息")
     @PostMapping("/updateUserInfo")
-    public Result updateUserinfo(User user){
+    public Result updateUserinfo(User user,HttpServletRequest request){//user不用传入Email，通过session获取
+        User oldUser = (User) request.getSession().getAttribute("user");
+        user.setEmail(oldUser.getEmail());
         return userService.updateUserInfo(user);
     }
 
     /**
      *
      * 上传用户头像
-     * @param email,file,request
+     * @param file,request,
      * @return
      * @author litind
      **/
     @PostMapping("/uploadimage")
-    public Result uploadImg(String email, MultipartFile file,HttpServletRequest request){
+    public Result uploadImg(MultipartFile file,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        String email = user.getEmail();
         if (file.isEmpty()){
             return new Result(400,"文件为空");
         }

@@ -2,11 +2,9 @@ package com.wounom.kaoyaniep.dao;
 
 
 
+import com.wounom.kaoyaniep.entity.Collectlisttiewen;
 import com.wounom.kaoyaniep.entity.Tiewen;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -30,4 +28,7 @@ public interface TieWenMapper {
 
     @Delete("delete from tiewen where blockName = #{blockName}")
     int deleteTiewenByBlock(String blockName);
+
+    @Insert("insert into  collectlisttiewen(userEmail,collecttime,tName) values (#{userEmail},#{collecttime},#{tName})")
+    int insertCollectlist(Collectlisttiewen collectlisttiewen);
 }

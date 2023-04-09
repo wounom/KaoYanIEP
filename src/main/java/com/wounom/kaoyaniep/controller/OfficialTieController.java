@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author litind
@@ -45,5 +46,17 @@ public class OfficialTieController {
     public Result getHotOfficalTie(){
         return officalTieService.getOfficialTieByTime();
     }
-
+    
+    /**
+     *
+     * 收藏官方贴
+     * @param
+     * @return 
+     * @author litind
+     **/
+    @PostMapping("/collectArticle")
+    @ApiOperation("收藏贴文")
+    public Result Collect(String aName, HttpServletRequest request){
+        return officalTieService.collectArticle(aName,request);
+    }
 }

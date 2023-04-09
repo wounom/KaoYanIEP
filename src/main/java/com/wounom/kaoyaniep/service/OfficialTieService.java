@@ -2,6 +2,8 @@ package com.wounom.kaoyaniep.service;
 
 import com.wounom.kaoyaniep.entity.Result;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author litind
  * @version 1.0
@@ -11,4 +13,6 @@ public interface OfficialTieService {
     Result getOfficialTieByblockName(String blockName);
 
     Result getOfficialTieByTime();
+
+    Result collectArticle(String aName, HttpServletRequest request);
 }
