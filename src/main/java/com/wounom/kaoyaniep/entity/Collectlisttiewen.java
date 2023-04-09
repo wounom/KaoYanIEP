@@ -46,4 +46,10 @@ public class Collectlisttiewen  implements Serializable {
 	@ApiModelProperty(value = "贴文名")
 	private String tName;
 
+	/**
+	 * 贴文id
+	 */
+	@ApiModelProperty(value = "贴文id")
+	private Long tid;
+
 }

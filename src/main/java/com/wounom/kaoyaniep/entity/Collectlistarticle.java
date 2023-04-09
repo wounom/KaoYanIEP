@@ -46,4 +46,10 @@ public class Collectlistarticle  implements Serializable {
 	@ApiModelProperty(value = "文章名")
 	private String aName;
 
+	/**
+	 * 文章id
+	 */
+	@ApiModelProperty(value = "文章id")
+	private Long aid;
+
 }

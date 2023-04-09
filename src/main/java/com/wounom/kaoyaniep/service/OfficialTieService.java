@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.service;
 
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.TiewenOfficial;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,5 +15,7 @@ public interface OfficialTieService {
 
     Result getOfficialTieByTime();
 
-    Result collectArticle(String aName, HttpServletRequest request);
+    Result collectArticle(TiewenOfficial tiewenOfficial, HttpServletRequest request);
+
+    Result getofficialTieById(int tiewenId);
 }

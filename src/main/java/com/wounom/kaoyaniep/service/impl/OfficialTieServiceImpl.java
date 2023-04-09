@@ -58,15 +58,16 @@ public class OfficialTieServiceImpl implements OfficialTieService {
 
     /**
      * 收藏文章
-     * @param aName,request
+     * @param tiewenOfficial,request
      * @return
      * @author litind
      **/
     @Override
-    public Result collectArticle(String aName, HttpServletRequest request) {
+    public Result collectArticle(TiewenOfficial tiewenOfficial, HttpServletRequest request) {
         Collectlistarticle collectlistarticle = new Collectlistarticle();
         User user = (User) request.getSession().getAttribute("user");
-        collectlistarticle.setAName(aName);
+        collectlistarticle.setAName(tiewenOfficial.getTitle());
+        collectlistarticle.setAid(tiewenOfficial.getTiewenId());
         collectlistarticle.setUserEmail(user.getEmail());
         collectlistarticle.setCollecttime(DateTime.now());
         int r = officalTieMapper.insertCollectlist(collectlistarticle);
@@ -74,6 +75,23 @@ public class OfficialTieServiceImpl implements OfficialTieService {
             return new Result(200,"收藏成功");
         }else {
             return new Result(400,"收藏失败");
+        }
+    }
+
+    /**
+     *
+     * 通过文章id获取文章详情
+     * @param tiewenId
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getofficialTieById(int tiewenId) {
+        List<TiewenOfficial> list =  officalTieMapper.getOfficialTieById(tiewenId);
+        if (list.size()>0){
+            return new Result(200,"获取成功",list.size(),list);
+        }else {
+            return new Result(400,"获取失败");
         }
     }
 }

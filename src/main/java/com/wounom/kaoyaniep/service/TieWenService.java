@@ -2,6 +2,7 @@ package com.wounom.kaoyaniep.service;
 
 
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.Tiewen;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,5 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface TieWenService {
 
 
-    Result collectTie(String tName, HttpServletRequest request);
+    Result collectTie(Tiewen tiewen, HttpServletRequest request);
+
+    Result getTiewenByid(int tiewenId);
 }

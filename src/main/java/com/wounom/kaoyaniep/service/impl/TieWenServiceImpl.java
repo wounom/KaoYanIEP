@@ -25,15 +25,16 @@ public class TieWenServiceImpl implements TieWenService {
     /**
      *
      * 收藏帖子
-     * @param tName,request
+     * @param tiewen,request
      * @return
      * @author litind
      **/
     @Override
-    public Result collectTie(String tName, HttpServletRequest request) {
+    public Result collectTie(Tiewen tiewen, HttpServletRequest request) {
         Collectlisttiewen collectlisttiewen = new Collectlisttiewen();
         User user = (User) request.getSession().getAttribute("user");
-        collectlisttiewen.setTName(tName);
+        collectlisttiewen.setTName(tiewen.getTitle());
+        collectlisttiewen.setTid(tiewen.getTiewenId());
         collectlisttiewen.setUserEmail(user.getEmail());
         collectlisttiewen.setCollecttime(DateTime.now());
         int r = tieWenMapper.insertCollectlist(collectlisttiewen);
@@ -41,6 +42,22 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(200,"收藏成功");
         }else {
             return new Result(400,"收藏失败");
+        }
+    }
+    /**
+     *
+     * 通过贴文id获取贴文详情
+     * @param tiewenId
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getTiewenByid(int tiewenId) {
+        List<Tiewen> tiewenList  =  tieWenMapper.getTiewenById(tiewenId);
+        if (tiewenList.size()>0){
+            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        }else {
+            return new Result(400,"获取失败，数据为空");
         }
     }
 }

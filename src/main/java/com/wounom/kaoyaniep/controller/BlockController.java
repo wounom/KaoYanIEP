@@ -58,7 +58,7 @@ public class BlockController {
      * @author litind
      **/
     @PostMapping("/collectblock")
-    @ApiOperation("收藏帖子")
+    @ApiOperation("收藏板块")
     public Result CollectBlock(String bName, HttpServletRequest request){
         return blockService.collectBlock(bName,request);
     }

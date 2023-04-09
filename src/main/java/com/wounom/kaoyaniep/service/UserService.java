@@ -99,4 +99,15 @@ public interface UserService {
 
     void deleteById(Integer id);
 
+    Result getCollectlistArticle(HttpServletRequest request);
+
+    Result getCollectlistBlock(HttpServletRequest request);
+
+    Result getCollectlistTiewen(HttpServletRequest request);
+
+    Result deleteArticleById(Long aid, HttpServletRequest request);
+
+    Result deleteTiewenById(Long tid, HttpServletRequest request);
+
+    Result deleteBlockById(String bName, HttpServletRequest request);
 }

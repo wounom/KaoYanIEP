@@ -161,6 +161,7 @@ public class UserController {
      * @author litind
      **/
     @PostMapping("/uploadimage")
+    @ApiOperation("上传用户头像")
     public Result uploadImg(MultipartFile file,HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         String email = user.getEmail();
@@ -168,5 +169,82 @@ public class UserController {
             return new Result(400,"文件为空");
         }
         return userService.uploadimg(email,file,request);
+    }
+
+    /**
+     *
+     * 获取用户收藏列表
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getCollectlistArticle")
+    @ApiOperation("获取用户文章收藏列表")
+    public Result getCollectlistArticle(HttpServletRequest request){
+        return userService.getCollectlistArticle(request);
+    }
+
+    /**
+     *
+     * 获取用户板块收藏列表
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getCollectlistBlock")
+    @ApiOperation("获取用户板块收藏列表")
+    public Result getCollectlistBlock(HttpServletRequest request){
+        return userService.getCollectlistBlock(request);
+    }
+
+    /**
+     *
+     * 获取用户贴文收藏列表
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getCollectlistTiewen")
+    @ApiOperation("获取用户贴文收藏列表")
+    public Result getCollectlistTiewen(HttpServletRequest request){
+        return userService.getCollectlistTiewen(request);
+    }
+
+    /**
+     *
+     * 删除用户收藏文章
+     * @param
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/deleteCollectArticle")
+    @ApiOperation("删除收藏文章")
+    public Result deleteArticleById(Long aid, HttpServletRequest request){
+        return userService.deleteArticleById(aid,request);
+    }
+    /**
+     *
+     * 删除用户收藏贴文
+     * @param
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/deleteCollectTiewen")
+    @ApiOperation("删除收藏文章")
+    public Result deleteTiewenById(Long tid, HttpServletRequest request){
+        return userService.deleteTiewenById(tid,request);
+    }
+
+    /**
+     *
+     * 删除用户收藏板块
+     * @param
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/deleteCollectBlock")
+    @ApiOperation("删除收藏板块")
+    public Result deleteBlockById(String bName, HttpServletRequest request){
+        return userService.deleteBlockById(bName,request);
     }
 }

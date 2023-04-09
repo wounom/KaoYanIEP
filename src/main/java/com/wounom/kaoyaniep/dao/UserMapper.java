@@ -1,9 +1,11 @@
 package com.wounom.kaoyaniep.dao;
 
-import com.wounom.kaoyaniep.entity.User;
+import com.wounom.kaoyaniep.entity.*;
+import com.wounom.kaoyaniep.entity.Result;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
@@ -75,4 +77,20 @@ public interface UserMapper  {
 
     @Update("update user set image = #{image}, imagepath = #{imagePath} where email = #{email}")
     void updateUserImg(User user);
+
+    @Select("select * from collectlistarticle where userEmail = #{userEmail}")
+    List<Collectlistarticle> getCollectlistA(String userEmail);
+    @Select("select * from collectlistblock where userEmail = #{userEmail}")
+    List<Collectlistblock> getCollectlistB(String userEmail);
+
+    @Select("select * from collectlisttiewen where userEmail = #{userEmail}")
+    List<Collectlisttiewen> getCollectlistT(String userEmail);
+
+
+    @Delete("delete from collectlistarticle where userEmail = #{userEmail} and aid = #{aid}")
+    int deleteCollectArticleByid(Collectlistarticle collectlistarticle);
+    @Delete("delete from collectlisttiewen where userEmail = #{userEmail} and tid = #{tid}")
+    int deleteCollectTiewenByid(Collectlisttiewen collectlisttiewen);
+    @Delete("delete from collectlistblock where userEmail = #{userEmail} and bName = #{bName}")
+    int deleteCollectBlockByid(Collectlistblock collectlistblock);
 }

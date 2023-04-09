@@ -29,6 +29,9 @@ public interface TieWenMapper {
     @Delete("delete from tiewen where blockName = #{blockName}")
     int deleteTiewenByBlock(String blockName);
 
-    @Insert("insert into  collectlisttiewen(userEmail,collecttime,tName) values (#{userEmail},#{collecttime},#{tName})")
+    @Insert("insert into  collectlisttiewen(userEmail,collecttime,tName,tid) values (#{userEmail},#{collecttime},#{tName}),#{tid}")
     int insertCollectlist(Collectlisttiewen collectlisttiewen);
+
+    @Select("select * from where tiewenId = #{tiewenId}")
+    List<Tiewen> getTiewenById(int tiewenId);
 }

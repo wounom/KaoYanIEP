@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.controller;
 
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.TiewenOfficial;
 import com.wounom.kaoyaniep.service.OfficialTieService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +56,21 @@ public class OfficialTieController {
      * @author litind
      **/
     @PostMapping("/collectArticle")
-    @ApiOperation("收藏贴文")
-    public Result Collect(String aName, HttpServletRequest request){
-        return officalTieService.collectArticle(aName,request);
+    @ApiOperation("收藏文章")
+    public Result Collect(TiewenOfficial tiewenOfficial, HttpServletRequest request){
+        return officalTieService.collectArticle(tiewenOfficial,request);
+    }
+
+    /**
+     *
+     * 通过官方文章id获取文章
+     * @param
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/getofficialTieById")
+    @ApiOperation("通过文章id获取文章")
+    public Result getofficialTieById(int tiewenId){
+       return officalTieService.getofficialTieById(tiewenId);
     }
 }
