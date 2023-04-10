@@ -42,7 +42,7 @@ public class EmailController {
     public Result sendRegist(@RequestParam(value = "email")String email){
         /*JSONObject jsonObject = JSON.parseObject(email);
         email = jsonObject.getString("email");*/
-        System.out.println(email);
+        //System.out.println(email);
         return emailService.sendEmail(email,1);
     }
 
