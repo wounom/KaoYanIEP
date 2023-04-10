@@ -40,8 +40,9 @@ public class EmailController {
     @PostMapping("/sendemailRegist")
     @ApiOperation("发送注册邮件")
     public Result sendRegist(@RequestParam(value = "email")String email){
-        JSONObject jsonObject = JSON.parseObject(email);
-        email = jsonObject.getString("email");
+        /*JSONObject jsonObject = JSON.parseObject(email);
+        email = jsonObject.getString("email");*/
+        System.out.println(email);
         return emailService.sendEmail(email,1);
     }
 
