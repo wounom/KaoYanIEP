@@ -1,16 +1,16 @@
 package com.wounom.kaoyaniep.controller;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.TiewenOfficial;
 import com.wounom.kaoyaniep.service.OfficialTieService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author litind
@@ -29,9 +29,9 @@ public class OfficialTieController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getspecialTie")
-    @ApiOperation("获取特别专版的官方帖子")
-    public Result getSpecialTie(String blockName){
+    @GetMapping("/getspecialTie/blockName={blockName}")
+    @ApiOperation("获取特别专版的官方帖子(blockName)")
+    public Result getSpecialTie(@PathVariable String blockName){
         return officalTieService.getOfficialTieByblockName(blockName);
 
     }
@@ -56,10 +56,11 @@ public class OfficialTieController {
      * @author litind
      **/
     @PostMapping("/collectArticle")
-    @ApiOperation("收藏文章")
-    public Result Collect(TiewenOfficial tiewenOfficial, HttpServletRequest request){
+    @ApiOperation("收藏文章 (title,tiewenId)")
+    public Result Collect(@RequestBody TiewenOfficial tiewenOfficial, HttpServletRequest request){
         return officalTieService.collectArticle(tiewenOfficial,request);
     }
+
 
     /**
      *
@@ -68,9 +69,11 @@ public class OfficialTieController {
      * @return
      * @author litind
      **/
-    @PostMapping("/getofficialTieById")
+    @GetMapping("/getofficialTieById/{tiewenId}")
     @ApiOperation("通过文章id获取文章")
-    public Result getofficialTieById(int tiewenId){
+    public Result getofficialTieById(@PathVariable int tiewenId){
+        System.out.println(tiewenId);
        return officalTieService.getofficialTieById(tiewenId);
     }
 }
+

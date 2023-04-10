@@ -8,8 +8,11 @@ import com.wounom.kaoyaniep.service.UserService;
 import com.wounom.kaoyaniep.utils.FileUtil;
 import com.wounom.kaoyaniep.utils.TokenUtils;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Update;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -50,8 +54,8 @@ public class UserController {
      **/
     @ApiOperation("注册")
     @PostMapping("/regist")
-
     public Result Register(@RequestBody User user){
+        System.out.println(user);
         if(userService.isUserEmailexsit(user.getEmail())){//查询已经注册的账户
             return new Result(400,"用户已存在",0,"");
         }
@@ -122,13 +126,18 @@ public class UserController {
      *
      * 修改密码
      * 邮箱，原密码，新密码
-     * @param user
+     * @param param
      * @return com.wounom.kaoyaniep.entity.User
      * @author litind
      **/
-    @ApiOperation("修改密码")
+    @ApiOperation("修改密码(String oldPwd,String newPwd)")
     @PostMapping("/resetpw")
-    public Result resetPw(@RequestBody User user, String newpassword){
+    public Result resetPw(HttpServletRequest request,@RequestBody String param){
+        JSONObject json = JSON.parseObject(param);
+        String oldPwd=json.getString("oldPwd");
+        String newpassword = json.getString("newPwd");
+        User user = (User) request.getSession().getAttribute("user");
+        user.setPassword(oldPwd);
         return userService.resetPw(user,newpassword);
     }
 
@@ -147,7 +156,7 @@ public class UserController {
      **/
     @ApiOperation("更新用户信息")
     @PostMapping("/updateUserInfo")
-    public Result updateUserinfo(User user,HttpServletRequest request){//user不用传入Email，通过session获取
+    public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){//user不用传入Email，通过session获取
         User oldUser = (User) request.getSession().getAttribute("user");
         user.setEmail(oldUser.getEmail());
         return userService.updateUserInfo(user);
@@ -218,8 +227,10 @@ public class UserController {
      * @author litind
      **/
     @DeleteMapping("/deleteCollectArticle")
-    @ApiOperation("删除收藏文章")
-    public Result deleteArticleById(Long aid, HttpServletRequest request){
+    @ApiOperation("删除收藏文章(aid)")
+    public Result deleteArticleById(@RequestParam("aid") Long aid, HttpServletRequest request){
+        /*JSONObject json = JSON.parseObject(String.valueOf(aid));
+        aid = json.getLong("aid");*/
         return userService.deleteArticleById(aid,request);
     }
     /**
@@ -230,8 +241,11 @@ public class UserController {
      * @author litind
      **/
     @DeleteMapping("/deleteCollectTiewen")
-    @ApiOperation("删除收藏文章")
-    public Result deleteTiewenById(Long tid, HttpServletRequest request){
+    @ApiOperation("删除收藏文章(tid)")
+    public Result deleteTiewenById(@RequestParam("tid") Long tid, HttpServletRequest request){
+        /*JSONObject json = JSON.parseObject(tid);
+        Long  id = json.getLong("value");*/
+        /*Long tid = map.get("tid");*/
         return userService.deleteTiewenById(tid,request);
     }
 
@@ -243,8 +257,10 @@ public class UserController {
      * @author litind
      **/
     @DeleteMapping("/deleteCollectBlock")
-    @ApiOperation("删除收藏板块")
-    public Result deleteBlockById(String bName, HttpServletRequest request){
+    @ApiOperation("删除收藏板块(bName)")
+    public Result deleteBlockById(@RequestParam("bName") String bName, HttpServletRequest request){
+       /* JSONObject json = JSON.parseObject(bName);
+        bName = json.getString("bName");*/
         return userService.deleteBlockById(bName,request);
     }
 }

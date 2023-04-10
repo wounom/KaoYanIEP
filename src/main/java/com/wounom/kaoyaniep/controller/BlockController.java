@@ -3,14 +3,13 @@ package com.wounom.kaoyaniep.controller;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.BlockService;
 import io.swagger.annotations.ApiOperation;
+import jdk.vm.ci.meta.Value;
 import org.apache.ibatis.annotations.Insert;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author litind
@@ -41,9 +40,9 @@ public class BlockController {
      * @return
      * @author litind
      **/
-    @DeleteMapping("/deleteBlock")
+    @DeleteMapping("/deleteBlock/{blockName}/{status}")
     @ApiOperation("删除板块，记得去TiewenController删除板块内数据")
-    public Result deleteBlock(int status,String blockName){
+    public Result deleteBlock(@RequestParam(value = "status") int status,@RequestParam(value = "blockName") String blockName){
         if(status == 1 || status == 2){
             return  new Result(400,"官方必要板块，不允许删除");
         } else{ //删除院校板块
@@ -57,9 +56,9 @@ public class BlockController {
      * @return
      * @author litind
      **/
-    @PostMapping("/collectblock")
+    @PostMapping("/collectblock/{bName}")
     @ApiOperation("收藏板块")
-    public Result CollectBlock(String bName, HttpServletRequest request){
+    public Result CollectBlock( @RequestParam(value = "bName") String bName, HttpServletRequest request){
         return blockService.collectBlock(bName,request);
     }
 }

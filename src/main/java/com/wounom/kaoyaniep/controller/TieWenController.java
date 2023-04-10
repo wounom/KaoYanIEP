@@ -6,12 +6,11 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.service.TieWenService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author litind
@@ -34,8 +33,8 @@ public class TieWenController {
      * @author litind
      **/
     @PostMapping("/collectTie")
-    @ApiOperation("收藏贴文")
-    public Result CollectTie(Tiewen tiewen, HttpServletRequest request){
+    @ApiOperation("收藏贴文 (title,tiewenId)")
+    public Result CollectTie(@RequestBody Tiewen tiewen, HttpServletRequest request){
         return tieWenService.collectTie(tiewen,request);
     }
 
@@ -46,9 +45,10 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @PostMapping("/getTiewenByid")
-    @ApiOperation("查看贴文详情：收藏贴文看详情")
-    public  Result getTiewenByid(int tiewenId){
+    @GetMapping("/getTiewenByid/{tiewenId}")
+    @ApiOperation("查看贴文详情：收藏贴文看详情(tiewenId)")
+    public  Result getTiewenByid(@PathVariable(value = "tiewenId") int tiewenId){
+
         return tieWenService.getTiewenByid(tiewenId);
     }
 }

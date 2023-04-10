@@ -25,6 +25,6 @@ public interface OfficialTieMapper {
     @Insert("insert into  collectlistarticle(userEmail,collecttime,aName,aid) values (#{userEmail},#{collecttime},#{aName},#{aid})")
     int insertCollectlist(Collectlistarticle collectlistarticle);
 
-    @Select("select * from where tiewenID = #{tiewenId}")
+    @Select("select * from tiewen_official where tiewenID = #{tiewenId}")
     List<TiewenOfficial> getOfficialTieById(int tiewenId);
 }
