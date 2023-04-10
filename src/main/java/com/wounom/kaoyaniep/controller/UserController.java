@@ -54,8 +54,8 @@ public class UserController {
      **/
     @ApiOperation("注册")
     @PostMapping("/regist")
+    @ResponseBody
     public Result Register(@RequestBody User user){
-        System.out.println(user);
         if(userService.isUserEmailexsit(user.getEmail())){//查询已经注册的账户
             return new Result(400,"用户已存在",0,"");
         }

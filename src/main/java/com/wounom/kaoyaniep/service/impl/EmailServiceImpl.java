@@ -70,7 +70,7 @@ public class EmailServiceImpl implements EmailService {
             }
             sendEmail.setContent(text,"text/html");
             sendEmail.send();
-            LocalDateTime activeTime = LocalDateTime.now().plusMinutes(5);//验证码的存活时间
+            LocalDateTime activeTime = LocalDateTime.now().plusMinutes(30);//验证码的存活时间
             if( userfindByemail==null){
                 User user = new User();
                 user.setEmail(email);
