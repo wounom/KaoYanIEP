@@ -34,4 +34,7 @@ public interface TieWenMapper {
 
     @Select("select * from where tiewenId = #{tiewenId}")
     List<Tiewen> getTiewenById(int tiewenId);
+
+    @Select("select * from where blockName = #{blockName} ")
+    List<Tiewen> getTiewenByBlock(String blockName);
 }

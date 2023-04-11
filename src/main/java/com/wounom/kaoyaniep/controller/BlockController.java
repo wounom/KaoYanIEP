@@ -27,10 +27,10 @@ public class BlockController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getBlock")
-    @ApiOperation("管理员：板块管理，获取板块列表")
-    public Result getBlock(){
-       return blockService.getBlock();
+    @GetMapping("/getBlockByDistrict")
+    @ApiOperation("研友论坛中获取板块列表与板块信息")
+    public Result getBlockByDistrict(@RequestParam("district") String district){
+       return blockService.getBlockByDistrict(district);
     }
 
     /**
@@ -61,4 +61,5 @@ public class BlockController {
     public Result CollectBlock( @RequestParam(value = "bName") String bName, HttpServletRequest request){
         return blockService.collectBlock(bName,request);
     }
+
 }

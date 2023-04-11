@@ -16,8 +16,8 @@ import java.util.List;
  */
 @Mapper
 public interface BlockMapper {
-    @Select("select * from block")
-    List<Block> getBlock();
+    @Select("select * from block where district = #{district}")
+    List<Block> getBlockByDistrict(String district);
 
     @Delete("delete from block where blockName = #{blockName}")
     int deleteBlock(String blockName);

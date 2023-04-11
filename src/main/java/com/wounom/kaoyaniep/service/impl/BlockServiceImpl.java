@@ -23,8 +23,8 @@ public class BlockServiceImpl implements BlockService {
     @Resource
     private BlockMapper blockMapper;
     @Override
-    public Result getBlock() {
-        List<Block> blockList =  blockMapper.getBlock();
+    public Result getBlockByDistrict(String district) {
+        List<Block> blockList =  blockMapper.getBlockByDistrict(district);
         if(blockList.size()>0){
             return new Result(200,"获取成功",blockList.size(),blockList);
         }else {

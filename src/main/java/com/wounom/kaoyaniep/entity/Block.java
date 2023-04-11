@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-07 
+ * @Date 2023-04-11 
  */
 
 @ApiModel(value = "block")
@@ -34,10 +34,6 @@ public class Block  implements Serializable {
 	@ApiModelProperty(value = "版块名字")
 	private String blockName;
 
-	/**
-	 * 版块状态（0正常（默认）1已删除）
-	 */
-	@ApiModelProperty(value = "版块状态（0正常（默认）1已删除）")
 	private Integer status;
 
 	/**
@@ -45,5 +41,17 @@ public class Block  implements Serializable {
 	 */
 	@ApiModelProperty(value = "版块创建时间")
 	private Date blockTime;
+
+	/**
+	 * 贴文数量
+	 */
+	@ApiModelProperty(value = "贴文数量")
+	private Long tiewencount;
+
+	/**
+	 * 版块地区
+	 */
+	@ApiModelProperty(value = "版块地区")
+	private String district;
 
 }

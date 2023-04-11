@@ -51,4 +51,17 @@ public class TieWenController {
 
         return tieWenService.getTiewenByid(tiewenId);
     }
+
+    /**
+     *
+     * 通过板块名称获取贴文
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getTiewenByBlock")
+    @ApiOperation("通过板块名称获取贴文")
+    public Result getTiewenByBlock(String blockName){
+        return tieWenService.getTiewenByBlock(blockName);
+    }
 }

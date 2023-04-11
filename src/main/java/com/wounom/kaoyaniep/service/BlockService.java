@@ -13,7 +13,7 @@ public interface BlockService {
 
     Result deleteBlock(String blockName);
 
-    Result getBlock();
+    Result getBlockByDistrict(String district);
 
     Result collectBlock(String bName, HttpServletRequest request);
 }

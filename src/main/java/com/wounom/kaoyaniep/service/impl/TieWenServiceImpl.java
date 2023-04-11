@@ -60,4 +60,20 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(400,"获取失败，数据为空");
         }
     }
+    /**
+     *
+     * 通过板块名称获取贴文
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getTiewenByBlock(String blockName) {
+        List<Tiewen> tiewenList = tieWenMapper.getTiewenByBlock(blockName);
+        if (tiewenList.size()>0){
+            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        }else {
+            return new Result(400,"获取失败，数据为空");
+        }
+    }
 }

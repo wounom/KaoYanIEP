@@ -17,4 +17,6 @@ public interface TieWenService {
     Result collectTie(Tiewen tiewen, HttpServletRequest request);
 
     Result getTiewenByid(int tiewenId);
+
+    Result getTiewenByBlock(String blockName);
 }
