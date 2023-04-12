@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Mapper
 public interface TieWenMapper {
-    @Select("select * from tiewen where user_id = #{userId}")
+    @Select("select * from tiewen where userId = #{userId}")
     List<Tiewen> getTieWenbyUserId(long id);
 
 
@@ -37,4 +37,9 @@ public interface TieWenMapper {
 
     @Select("select * from where blockName = #{blockName} ")
     List<Tiewen> getTiewenByBlock(String blockName);
+
+    @Insert("insert into tiewen(userId,title,createTime,content,blockName) values (#{userId},#{title},#{createTime},#{content},#{blockName})")
+    int PostTiewen(Tiewen tiewen);
+    @Delete("delete from tiewen where tiewenId = #{tiewenId} AND userId = #{userId}")
+    int deleteTiewenByid(Tiewen tiewen);
 }

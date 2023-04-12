@@ -19,4 +19,10 @@ public interface TieWenService {
     Result getTiewenByid(int tiewenId);
 
     Result getTiewenByBlock(String blockName);
+
+    Result PostTiewen(Tiewen tiewen, HttpServletRequest request);
+
+    Result getTiewenByUserId(Long userId);
+
+    Result deleteTiewen(HttpServletRequest request, Long tiewenId);
 }

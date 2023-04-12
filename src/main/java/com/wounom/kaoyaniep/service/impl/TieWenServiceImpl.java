@@ -6,10 +6,12 @@ import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.TieWenService;
+import org.apache.catalina.webresources.TomcatJarInputStream;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.management.LockInfo;
 import java.util.List;
 
 /**
@@ -74,6 +76,65 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(200,"获取成功",tiewenList.size(),tiewenList);
         }else {
             return new Result(400,"获取失败，数据为空");
+        }
+    }
+    /**
+     *
+     * 上传贴文
+     * @param tiewen,request
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result PostTiewen(Tiewen tiewen, HttpServletRequest request) {
+        //获取发该贴文的用户信息
+        User user =(User) request.getSession().getAttribute("user");
+        tiewen.setUserId(user.getId());
+        tiewen.setCreateTime(DateTime.now());
+        int r = tieWenMapper.PostTiewen(tiewen);
+        if (r>0){
+            return new Result(200,"发布成功");
+        }else {
+            return new Result(400,"发布失败");
+        }
+    }
+
+    /**
+     *
+     * 通过用户id获取帖子
+     * @param userId
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getTiewenByUserId(Long userId) {
+        List<Tiewen> tiewenList =  tieWenMapper.getTieWenbyUserId(userId);
+        if (tiewenList.size()>0){
+            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        }else {
+            return new Result(400,"获取失败，数据为空");
+        }
+    }
+
+    /**
+     *
+     * 删除用户贴文
+     * @param request
+     * @param tiewenId
+     * @return com.wounom.kaoyaniep.entity.Result
+     * @author litind
+     **/
+    @Override
+    public Result deleteTiewen(HttpServletRequest request, Long tiewenId) {
+        Tiewen tiewen = new Tiewen();
+        tiewen.setTiewenId(tiewenId);
+        User user = (User)request.getSession().getAttribute("user");
+        tiewen.setUserId(user.getId());
+        int r = tieWenMapper.deleteTiewenByid(tiewen);
+        if (r>0){
+            return new Result(200,"删除成功");
+        }else {
+            return new Result(400,"删除失败，帖子可能已经不存在或不是您的帖子");
         }
     }
 }

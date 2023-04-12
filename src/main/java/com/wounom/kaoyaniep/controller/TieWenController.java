@@ -4,8 +4,10 @@ package com.wounom.kaoyaniep.controller;
 
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
+import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.TieWenService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -63,5 +65,45 @@ public class TieWenController {
     @ApiOperation("通过板块名称获取贴文")
     public Result getTiewenByBlock(String blockName){
         return tieWenService.getTiewenByBlock(blockName);
+    }
+
+    /**
+     *
+     * 发布贴文
+     * @param tiewen
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/postTiewen")
+    @ApiOperation("发布贴文" +
+            "blockName"+"title"+"content")
+    public Result PostTiewen(Tiewen tiewen,HttpServletRequest request){
+        return tieWenService.PostTiewen(tiewen,request);
+    }
+    /**
+     *
+     * 贴文管理
+     * @param userId
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getTiewenByuserId")
+    @ApiOperation("通过用户id贴文")
+    public Result ManageTiewen(HttpServletRequest request){
+        User user =  (User)request.getSession().getAttribute("user");
+        Long userId = user.getId();
+        return tieWenService.getTiewenByUserId(userId);
+    }
+    /**
+     *
+     * 通过用户id和贴文id删除贴文
+     * @param null
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/deleteByid")
+    @ApiOperation("用户删除自己的贴文")
+    public Result DeleteTiewen(HttpServletRequest request,@RequestParam(value = "tiewenId") Long tiewenId){
+        return tieWenService.deleteTiewen(request,tiewenId);
     }
 }
