@@ -241,7 +241,7 @@ public class UserController {
      * @author litind
      **/
     @DeleteMapping("/deleteCollectTiewen")
-    @ApiOperation("删除收藏文章(tid)")
+    @ApiOperation("删除收藏贴文(tid)")
     public Result deleteTiewenById(@RequestParam("tid") Long tid, HttpServletRequest request){
         /*JSONObject json = JSON.parseObject(tid);
         Long  id = json.getLong("value");*/

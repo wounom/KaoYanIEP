@@ -80,24 +80,26 @@ public class TieWenController {
     public Result PostTiewen(Tiewen tiewen,HttpServletRequest request){
         return tieWenService.PostTiewen(tiewen,request);
     }
+
     /**
      *
      * 贴文管理
-     * @param userId
+     * @param request
      * @return
      * @author litind
      **/
     @GetMapping("/getTiewenByuserId")
-    @ApiOperation("通过用户id贴文")
+    @ApiOperation("通过用户id获取贴文")
     public Result ManageTiewen(HttpServletRequest request){
         User user =  (User)request.getSession().getAttribute("user");
         Long userId = user.getId();
         return tieWenService.getTiewenByUserId(userId);
     }
+
     /**
      *
      * 通过用户id和贴文id删除贴文
-     * @param null
+     * @param request
      * @return
      * @author litind
      **/

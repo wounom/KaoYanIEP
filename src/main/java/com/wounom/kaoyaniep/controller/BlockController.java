@@ -22,7 +22,7 @@ public class BlockController {
     private BlockService blockService;
     /**
      *
-     * 板块管理：获取板块
+     * 获取板块
      * @param
      * @return
      * @author litind
@@ -33,22 +33,6 @@ public class BlockController {
        return blockService.getBlockByDistrict(district);
     }
 
-    /**
-     *
-     * 删除板块 (管理员删除板块)
-     * @param status,blockName
-     * @return
-     * @author litind
-     **/
-    @DeleteMapping("/deleteBlock/{blockName}/{status}")
-    @ApiOperation("删除板块，记得去TiewenController删除板块内数据")
-    public Result deleteBlock(@RequestParam(value = "status") int status,@RequestParam(value = "blockName") String blockName){
-        if(status == 1 || status == 2){
-            return  new Result(400,"官方必要板块，不允许删除");
-        } else{ //删除院校板块
-           return  blockService.deleteBlock(blockName);
-        }
-    }
     /**
      *
      * 收藏板块
