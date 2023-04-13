@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.service.UserService;
 import com.wounom.kaoyaniep.utils.FileUtil;
 import com.wounom.kaoyaniep.utils.PasswordUtil;
+import com.wounom.kaoyaniep.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
         user.setSalt(PasswordUtil.createSalt());//设置用户加密盐
         user.setPassword(PasswordUtil.md5Pwd(user.getPassword(),user.getSalt()));
         user.setIs_Valid(1);
-        user.setUsername(user.getUsername());
+        user.setUsername(UserUtils.getRandomChineseString());
         String ocode = user.getCode();
         String ccode = userMapper.findCode(user.getEmail());
         if(!ccode.equals(ocode)){
@@ -168,153 +169,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    /**
-     *
-     * 获取文章收藏列表
-     * @param request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result getCollectlistArticle(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        String userEmail = user.getEmail();
-        List<Collectlistarticle> list =  userMapper.getCollectlistA(userEmail);
-        if (list.size()>0){
-            return new Result(200,"获取成功", list.size(),list);
-        }else {
-            return new Result(400,"数据为空");
-        }
-    }
-
-    /**
-     *
-     * 获取贴文收藏列表
-     * @param request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result getCollectlistBlock(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        String userEmail = user.getEmail();
-        List<Collectlistblock> list =  userMapper.getCollectlistB(userEmail);
-        if (list.size()>0){
-            return new Result(200,"获取成功", list.size(),list);
-        }else {
-            return new Result(400,"数据为空");
-        }
-    }
-    /**
-     *
-     * 获取贴文收藏列表
-     * @param request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result getCollectlistTiewen(HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        String userEmail = user.getEmail();
-        List<Collectlisttiewen> list =  userMapper.getCollectlistT(userEmail);
-        if (list.size()>0){
-            return new Result(200,"获取成功", list.size(),list);
-        }else {
-            return new Result(400,"数据为空");
-        }
-    }
-
-    /**
-     *
-     * 删除文章收藏
-     * @param aid,request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result deleteArticleById(Long aid, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        Collectlistarticle collectlistarticle = new Collectlistarticle();
-        collectlistarticle.setAid(aid);
-        collectlistarticle.setUserEmail(user.getEmail());
-        int r = userMapper.deleteCollectArticleByid(collectlistarticle);
-        if (r>0){
-            return new Result(200,"删除成功");
-        }else{
-            return new Result(400,"删除失败");
-        }
-    }
-
-    /**
-     *
-     * 删除贴文收藏
-     * @param tid,request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result deleteTiewenById(Long tid, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        Collectlisttiewen collectlisttiewen = new Collectlisttiewen();
-        collectlisttiewen.setTid(tid);
-        collectlisttiewen.setUserEmail(user.getEmail());
-        int r = userMapper.deleteCollectTiewenByid(collectlisttiewen);
-        if (r>0){
-            return new Result(200,"删除成功");
-        }else{
-            return new Result(400,"删除失败");
-        }
-    }
-
-
-    /**
-     *
-     * 删除收藏板块
-     * @param bName,request
-     * @return java.lang.Boolean
-     * @author litind
-     **/
-    @Override
-    public Result deleteBlockById(String bName, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
-        Collectlistblock collectlistblock = new Collectlistblock();
-        collectlistblock.setBName(bName);
-        collectlistblock.setUserEmail(user.getEmail());
-        int r = userMapper.deleteCollectBlockByid(collectlistblock);
-        if (r>0){
-            return new Result(200,"删除成功");
-        }else{
-            return new Result(400,"删除失败");
-        }
-    }
 
 
 
 
 
-    @Override
-    public Boolean isUsernameExsit(String username) {
-        return userMapper.selectByUsername(username) != null;
-    }
 
-    @Override
-    public int countAll(String search) {
-        return userMapper.countAll(search);
-    }
-
-    @Override
-    public List<User> getUsers(String search) {
-        return userMapper.getUsers(search);
-    }
-
-
-    @Override
-    public User getUserById(Integer id) {
-        return userMapper.getUserById(id);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        userMapper.deleteById(id);
-    }
 }

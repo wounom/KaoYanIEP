@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.controller;
 import cn.hutool.core.map.MapUtil;
 import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.University;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.UserService;
 import com.wounom.kaoyaniep.utils.FileUtil;
@@ -180,87 +181,6 @@ public class UserController {
         return userService.uploadimg(email,file,request);
     }
 
-    /**
-     *
-     * 获取用户收藏列表
-     * @param request
-     * @return
-     * @author litind
-     **/
-    @GetMapping("/getCollectlistArticle")
-    @ApiOperation("获取用户文章收藏列表")
-    public Result getCollectlistArticle(HttpServletRequest request){
-        return userService.getCollectlistArticle(request);
-    }
 
-    /**
-     *
-     * 获取用户板块收藏列表
-     * @param request
-     * @return
-     * @author litind
-     **/
-    @GetMapping("/getCollectlistBlock")
-    @ApiOperation("获取用户板块收藏列表")
-    public Result getCollectlistBlock(HttpServletRequest request){
-        return userService.getCollectlistBlock(request);
-    }
 
-    /**
-     *
-     * 获取用户贴文收藏列表
-     * @param request
-     * @return
-     * @author litind
-     **/
-    @GetMapping("/getCollectlistTiewen")
-    @ApiOperation("获取用户贴文收藏列表")
-    public Result getCollectlistTiewen(HttpServletRequest request){
-        return userService.getCollectlistTiewen(request);
-    }
-
-    /**
-     *
-     * 删除用户收藏文章
-     * @param
-     * @return
-     * @author litind
-     **/
-    @DeleteMapping("/deleteCollectArticle")
-    @ApiOperation("删除收藏文章(aid)")
-    public Result deleteArticleById(@RequestParam("aid") Long aid, HttpServletRequest request){
-        /*JSONObject json = JSON.parseObject(String.valueOf(aid));
-        aid = json.getLong("aid");*/
-        return userService.deleteArticleById(aid,request);
-    }
-    /**
-     *
-     * 删除用户收藏贴文
-     * @param
-     * @return
-     * @author litind
-     **/
-    @DeleteMapping("/deleteCollectTiewen")
-    @ApiOperation("删除收藏贴文(tid)")
-    public Result deleteTiewenById(@RequestParam("tid") Long tid, HttpServletRequest request){
-        /*JSONObject json = JSON.parseObject(tid);
-        Long  id = json.getLong("value");*/
-        /*Long tid = map.get("tid");*/
-        return userService.deleteTiewenById(tid,request);
-    }
-
-    /**
-     *
-     * 删除用户收藏板块
-     * @param
-     * @return
-     * @author litind
-     **/
-    @DeleteMapping("/deleteCollectBlock")
-    @ApiOperation("删除收藏板块(bName)")
-    public Result deleteBlockById(@RequestParam("bName") String bName, HttpServletRequest request){
-       /* JSONObject json = JSON.parseObject(bName);
-        bName = json.getString("bName");*/
-        return userService.deleteBlockById(bName,request);
-    }
 }

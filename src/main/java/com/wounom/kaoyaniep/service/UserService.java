@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.service;
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.University;
 import com.wounom.kaoyaniep.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -86,28 +87,5 @@ public interface UserService {
     Result uploadimg(String email, MultipartFile file, HttpServletRequest request);
 
 
-    Boolean isUsernameExsit(String username);
 
-
-
-    int countAll(String search);
-
-    List<User> getUsers(String search);
-
-
-    User getUserById(Integer id);
-
-    void deleteById(Integer id);
-
-    Result getCollectlistArticle(HttpServletRequest request);
-
-    Result getCollectlistBlock(HttpServletRequest request);
-
-    Result getCollectlistTiewen(HttpServletRequest request);
-
-    Result deleteArticleById(Long aid, HttpServletRequest request);
-
-    Result deleteTiewenById(Long tid, HttpServletRequest request);
-
-    Result deleteBlockById(String bName, HttpServletRequest request);
 }
