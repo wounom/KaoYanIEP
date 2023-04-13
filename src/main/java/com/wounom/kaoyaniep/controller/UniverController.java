@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 public class UniverController {
     @Resource
     private UniverService univerService;
-    @GetMapping("/getuniverInfo")
+    @GetMapping("/getInfo")
     @ApiOperation("通过地区、隶属、特性查询院校")
     public Result GetUniverByCondi(String universityDistrict,String universityHigherup
             ,Integer ifDouble, Integer ifGraduate,Integer ifIndependent){//todo:传输方式可以修改

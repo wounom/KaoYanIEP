@@ -37,7 +37,7 @@ public class EmailController {
      * @return
      * @author litind
      **/
-    @PostMapping("/sendemailRegist")
+    @PostMapping("/sendRegist")
     @ApiOperation("发送注册邮件")
     public Result sendRegist(@RequestParam(value = "email")String email){
         /*JSONObject jsonObject = JSON.parseObject(email);

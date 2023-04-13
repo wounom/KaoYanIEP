@@ -17,6 +17,7 @@ import java.util.Map;
  * @date 2023/4/7 8:21
  */
 @RestController
+@RequestMapping("/block")
 public class BlockController {
     @Resource
     private BlockService blockService;
@@ -27,7 +28,7 @@ public class BlockController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getBlockByDistrict")
+    @GetMapping("/getByDistrict")
     @ApiOperation("研友论坛中获取板块列表与板块信息")
     public Result getBlockByDistrict(@RequestParam("district") String district){
        return blockService.getBlockByDistrict(district);
@@ -40,7 +41,7 @@ public class BlockController {
      * @return
      * @author litind
      **/
-    @PostMapping("/collectblock/{bName}")
+    @PostMapping("/collect/{bName}")
     @ApiOperation("收藏板块")
     public Result CollectBlock( @RequestParam(value = "bName") String bName, HttpServletRequest request){
         return blockService.collectBlock(bName,request);

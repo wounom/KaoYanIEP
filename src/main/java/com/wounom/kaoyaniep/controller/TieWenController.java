@@ -47,8 +47,8 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getTiewenByid/{tiewenId}")
-    @ApiOperation("查看贴文详情：收藏贴文看详情(tiewenId)")
+    @GetMapping("/getByid/{tiewenId}")
+    @ApiOperation("通过贴文id查看贴文详情：收藏贴文看详情(tiewenId)")
     public  Result getTiewenByid(@PathVariable(value = "tiewenId") int tiewenId){
 
         return tieWenService.getTiewenByid(tiewenId);
@@ -61,7 +61,7 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getTiewenByBlock")
+    @GetMapping("/getByBlock")
     @ApiOperation("通过板块名称获取贴文")
     public Result getTiewenByBlock(String blockName){
         return tieWenService.getTiewenByBlock(blockName);
@@ -74,7 +74,7 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @PostMapping("/postTiewen")
+    @PostMapping("/post")
     @ApiOperation("发布贴文" +
             "blockName"+"title"+"content")
     public Result PostTiewen(Tiewen tiewen,HttpServletRequest request){
@@ -88,7 +88,7 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getTiewenByuserId")
+    @GetMapping("/getByuserId")
     @ApiOperation("通过用户id获取贴文")
     public Result ManageTiewen(HttpServletRequest request){
         User user =  (User)request.getSession().getAttribute("user");

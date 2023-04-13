@@ -25,6 +25,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/firstpage/**","/images/firstpage/**")
 //                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**", "/swagger-ui/**");
 //    }
+    //todo:项目完成后加上拦截器
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //配置拦截器访问静态资源

@@ -25,7 +25,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getCollectlistArticle")
+    @GetMapping("/getlistArticle")
     @ApiOperation("获取用户文章收藏列表")
     public Result getCollectlistArticle(HttpServletRequest request){
         return collectService.getCollectlistArticle(request);
@@ -38,7 +38,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getCollectlistBlock")
+    @GetMapping("/getlistBlock")
     @ApiOperation("获取用户板块收藏列表")
     public Result getCollectlistBlock(HttpServletRequest request){
         return collectService.getCollectlistBlock(request);
@@ -51,7 +51,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getCollectlistTiewen")
+    @GetMapping("/getlistTiewen")
     @ApiOperation("获取用户贴文收藏列表")
     public Result getCollectlistTiewen(HttpServletRequest request){
         return collectService.getCollectlistTiewen(request);
@@ -63,7 +63,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @DeleteMapping("/deleteCollectArticle")
+    @DeleteMapping("/deleteArticle")
     @ApiOperation("删除收藏文章(aid)")
     public Result deleteArticleById(@RequestParam("aid") Long aid, HttpServletRequest request){
         /*JSONObject json = JSON.parseObject(String.valueOf(aid));
@@ -77,7 +77,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @DeleteMapping("/deleteCollectTiewen")
+    @DeleteMapping("/deleteTiewen")
     @ApiOperation("删除收藏贴文(tid)")
     public Result deleteTiewenById(@RequestParam("tid") Long tid, HttpServletRequest request){
         /*JSONObject json = JSON.parseObject(tid);
@@ -93,7 +93,7 @@ public class CollectController {
      * @return
      * @author litind
      **/
-    @DeleteMapping("/deleteCollectBlock")
+    @DeleteMapping("/deleteBlock")
     @ApiOperation("删除收藏板块(bName)")
     public Result deleteBlockById(@RequestParam("bName") String bName, HttpServletRequest request){
        /* JSONObject json = JSON.parseObject(bName);
