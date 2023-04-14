@@ -156,7 +156,7 @@ public class CollectController {
      **/
     @DeleteMapping("/deleteList")
     @ApiOperation("批量删除收藏")
-    public Result deleteList(@RequestParam List<Long> id, HttpServletRequest request){
+    public Result deleteList(@RequestBody List<Long> id, HttpServletRequest request){
         System.out.println(id);
         return collectService.deleteList(id,request);
     }
