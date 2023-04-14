@@ -1,6 +1,8 @@
 package com.wounom.kaoyaniep.controller;
 
+import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.service.CollectService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2023/4/13 10:54
  */
 @RestController
-@RequestMapping("collet")
+@RequestMapping("collect")
 public class CollectController {
     @Resource
     private CollectService collectService;
@@ -56,6 +58,7 @@ public class CollectController {
     public Result getCollectlistTiewen(HttpServletRequest request){
         return collectService.getCollectlistTiewen(request);
     }
+
     /**
      *
      * 删除用户收藏de文章
@@ -70,6 +73,7 @@ public class CollectController {
         aid = json.getLong("aid");*/
         return collectService.deleteArticleById(aid,request);
     }
+
     /**
      *
      * 删除用户收藏de贴文
@@ -99,6 +103,60 @@ public class CollectController {
        /* JSONObject json = JSON.parseObject(bName);
         bName = json.getString("bName");*/
         return collectService.deleteBlockById(bName,request);
+    }
+
+
+
+
+
+    /**
+     *
+     * 获取收藏列表
+     * @param request,target
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/get")
+    @ApiOperation("获取用户收藏列表,target（-1为文章，0为版块，1为贴文）")
+    public Result getlist(HttpServletRequest request,@RequestParam int target){
+        return collectService.getCollectlist(request,target);
+    }
+
+    /**
+     *
+     * 收藏操作
+     * @param collectlist,request
+     * @return
+     * @author litind
+     **/
+    @PostMapping("/post")
+    @ApiOperation("收藏贴文 (cName,tid,target（-1为文章，0为版块，1为贴文）)")
+    public Result CollectTie(@RequestBody Collectlist collectlist, HttpServletRequest request){
+        return collectService.collect(collectlist,request);
+    }
+    /**
+     *
+     * 删除操作
+     * @param collectlist,request
+     * @return com.wounom.kaoyaniep.entity.Result
+     * @author litind
+     **/
+    @DeleteMapping("/delete")
+    @ApiOperation("删除收藏板块(tid,target)")
+    public Result delete(@RequestBody Collectlist collectlist, HttpServletRequest request){
+        return collectService.delete(collectlist,request);
+    }
+    /**
+     *
+     * 批量删除
+     * @param tid
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/deleteList")
+    @ApiOperation("批量删除收藏")
+    public Result deleteList(@RequestBody Long[] tid,HttpServletRequest request){
+        return collectService.deleteList(tid,request);
     }
 
 }

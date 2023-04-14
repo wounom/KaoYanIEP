@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.CollectMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.CollectService;
@@ -134,6 +135,86 @@ public class CollectServiceImpl implements CollectService {
         if (r>0){
             return new Result(200,"删除成功");
         }else{
+            return new Result(400,"删除失败");
+        }
+    }
+
+
+
+
+
+    /**
+     *
+     * 获取用户收藏列表
+     * @param request,target
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getCollectlist(HttpServletRequest request, int target) {
+        User user = (User) request.getSession().getAttribute("user");
+        Long userId = user.getId();
+        List<Collectlist> list =  collectMapper.getCollectlist(userId,target);
+        if (list.size()>0){
+            return new Result(200,"获取成功", list.size(),list);
+        }else {
+            return new Result(400,"数据为空");
+        }
+    }
+    /**
+     *
+     * 收藏操作
+     * @param collectlist,request
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result collect(Collectlist collectlist, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        collectlist.setUserId(user.getId());
+        collectlist.setCollecttime(DateTime.now());
+        int r = collectMapper.insertCollectlist(collectlist);
+        if (r>0){
+            return new Result(200,"收藏成功");
+        }else {
+            return new Result(400,"收藏失败");
+        }
+    }
+
+    /**
+     *
+     * 删除收藏
+     * @param collectlist,request
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result delete(Collectlist collectlist, HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        collectlist.setUserId(user.getId());
+        int r = collectMapper.deletet(collectlist);
+        if (r>0){
+            return new Result(200,"删除成功");
+        }else {
+            return new Result(400,"删除失败");
+        }
+    }
+
+    /**
+     *
+     * 批量删除
+     * @param tid
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result deleteList(Long[] tid,HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        Long userId = user.getId();
+        int r = collectMapper.deleteByIdList(tid,userId);
+        if (r>0){
+            return new Result(200,"删除成功");
+        }else {
             return new Result(400,"删除失败");
         }
     }

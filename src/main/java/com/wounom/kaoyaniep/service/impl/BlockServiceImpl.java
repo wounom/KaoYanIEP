@@ -2,10 +2,7 @@ package com.wounom.kaoyaniep.service.impl;
 
 import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.BlockMapper;
-import com.wounom.kaoyaniep.entity.Block;
-import com.wounom.kaoyaniep.entity.Collectlistblock;
-import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.User;
+import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.BlockService;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +58,17 @@ public class BlockServiceImpl implements BlockService {
         }else {
             return new Result(400,"收藏失败");
         }
+    }
+    /**
+     *
+     * 模糊搜索
+     * @param blockName,keywords
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result search(String blockName, String keywords) {
+        List<Tiewen> list =  blockMapper.search(blockName,keywords);
+        return null;
     }
 }

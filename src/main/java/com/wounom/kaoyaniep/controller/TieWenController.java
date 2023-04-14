@@ -109,4 +109,7 @@ public class TieWenController {
     public Result DeleteTiewen(HttpServletRequest request,@RequestParam(value = "tiewenId") Long tiewenId){
         return tieWenService.deleteTiewen(request,tiewenId);
     }
+
+
+
 }

@@ -9,4 +9,6 @@ import com.wounom.kaoyaniep.entity.Result;
  */
 public interface UniverService {
     Result getUniver(String universityDistrict, String universityHigherup, Integer ifDouble, Integer ifGraduate, Integer ifIndependent);
+
+    Result getByName(String universityName);
 }

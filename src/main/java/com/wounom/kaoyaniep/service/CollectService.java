@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.service;
 
+import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Result;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,4 +22,12 @@ public interface CollectService {
     Result deleteTiewenById(Long tid, HttpServletRequest request);
 
     Result deleteBlockById(String bName, HttpServletRequest request);
+
+    Result deleteList(Long[] tid,HttpServletRequest request);
+
+    Result getCollectlist(HttpServletRequest request, int target);
+
+    Result collect(Collectlist collectlist, HttpServletRequest request);
+
+    Result delete(Collectlist collectlist, HttpServletRequest request);
 }

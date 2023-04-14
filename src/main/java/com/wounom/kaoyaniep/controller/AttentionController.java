@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AttentionController {
     @Resource
     private AttentionService attentionService;
+
     /**
      *
      * 关注用户
@@ -35,6 +36,7 @@ public class AttentionController {
     public Result attention(HttpServletRequest request, @RequestBody(required = false) User user, @RequestBody(required = false) University university){
         return attentionService.attention(request,user,university);
     }
+
     /**
      *
      * 获取某个用户的关注列表
@@ -49,6 +51,7 @@ public class AttentionController {
         Long id = user.getId();
         return attentionService.getById(id);
     }
+
     /**
      *
      * 取消关注

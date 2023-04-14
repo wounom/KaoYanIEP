@@ -3,10 +3,7 @@ package com.wounom.kaoyaniep.controller;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.UniverService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -17,6 +14,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @ApiOperation("院校信息板块")
+@RequestMapping("/university")
 @CrossOrigin
 public class UniverController {
     @Resource
@@ -26,5 +24,10 @@ public class UniverController {
     public Result GetUniverByCondi(String universityDistrict,String universityHigherup
             ,Integer ifDouble, Integer ifGraduate,Integer ifIndependent){//todo:传输方式可以修改
         return univerService.getUniver(universityDistrict,universityHigherup,ifDouble,ifGraduate,ifIndependent);
+    }
+    @GetMapping("/search")
+    @ApiOperation("通过院校名称搜索院校")
+    public Result GetByName(@RequestParam String universityName){
+        return univerService.getByName(universityName);
     }
 }

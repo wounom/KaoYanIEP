@@ -48,4 +48,18 @@ public class BlockController {
         return blockService.collectBlock(bName,request);
     }
 
+
+    /**
+     *
+     * 模糊搜索板块内的贴文
+     * @param blockName,keywords
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/search")
+    @ApiOperation("模糊搜索板块内的贴文")
+    public Result Search(@RequestParam String blockName,@RequestParam String keywords){
+        return blockService.search(blockName,keywords);
+    }
+
 }

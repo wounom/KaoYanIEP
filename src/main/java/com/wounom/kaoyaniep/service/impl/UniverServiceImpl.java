@@ -28,4 +28,20 @@ public class UniverServiceImpl implements UniverService {
             return new Result(400,"获取失败，无数据");
         }
     }
+    /**
+     *
+     * 通过袁霞名称搜索院校
+     * @param universityName
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getByName(String universityName) {
+        University university = univerMapper.getByName(universityName);
+        if (university!=null){
+            return  new Result(200,"获取成功",1,university);
+        }else {
+            return new Result(400,"获取失败，无数据");
+        }
+    }
 }

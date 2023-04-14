@@ -8,13 +8,14 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.CommentService;
+
+import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +42,12 @@ public class CommentServiceImpl implements CommentService {
         comment.setUserImg(user.getImage());
         comment.setCreateTime(DateTime.now());
         int r= commentMapper.save(comment);
-        return new Result(400,"评论成功");
+        if (r>0){
+            return new Result(400,"评论成功");
+        }else {
+            return new Result(400,"失败");
+        }
+
     }
 
     /**
@@ -102,5 +108,41 @@ public class CommentServiceImpl implements CommentService {
             comments.add(list);
         }
         return new Result(200,"获取成功",comments.size(),comments);
+    }
+    /**
+     *
+     * 发送留言
+     * @param request,comment
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result PostMessage(HttpServletRequest request, Comment comment) {
+        User user = (User) request.getSession().getAttribute("user");
+        comment.setUserId(user.getId());
+        comment.setUserName(user.getUsername());
+        comment.setUserImg(user.getImagePath());
+        comment.setCreateTime(DateTime.now());
+        int r= commentMapper.saveMessage(comment);
+        if (r>0){
+            return new Result(400,"成功");
+        }else {
+            return new Result(400,"失败");
+        }
+    }
+
+    /**
+     *
+     * 获取给自己的留言
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getMessage(HttpServletRequest request) {
+        User user = (User)request.getSession().getAttribute("user");
+        Long targetUserId = user.getId();
+        List<Comment> commentList = commentMapper.getMessage(targetUserId);
+        return null;
     }
 }

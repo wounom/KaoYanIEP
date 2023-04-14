@@ -23,8 +23,6 @@ public interface TieWenMapper {
     @Select("select * from tiewen where status = 0")
     List<Tiewen> getCheckTiewen();
 
-    @Update("update tiewen set status = #{status} where tiewenId = #{tiewenId}")
-    int updateTieWenStatus(int tiewenId, int status);
 
     @Delete("delete from tiewen where blockName = #{blockName}")
     int deleteTiewenByBlock(String blockName);

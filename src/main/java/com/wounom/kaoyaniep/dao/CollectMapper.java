@@ -1,11 +1,10 @@
 package com.wounom.kaoyaniep.dao;
 
+import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Collectlistarticle;
 import com.wounom.kaoyaniep.entity.Collectlistblock;
 import com.wounom.kaoyaniep.entity.Collectlisttiewen;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -31,4 +30,14 @@ public interface CollectMapper {
     int deleteCollectTiewenByid(Collectlisttiewen collectlisttiewen);
     @Delete("delete from collectlistblock where userEmail = #{userEmail} and bName = #{bName}")
     int deleteCollectBlockByid(Collectlistblock collectlistblock);
+
+    @Delete("<script>"+"delete from collectlist where id in <foreach collection=\"array\" item=\"id\" open=\"(\" separator=\",\" close=\")\"> #{id} </foreach>"+"AND userId = #{user}"+"</script>")
+    int deleteByIdList(@Param("id") Long[] id,@Param("userId") Long userId);
+    @Select("select * from collectlist where userId = #{userId} AND target = #{target}")
+    List<Collectlist> getCollectlist(@Param("userId") Long userId,@Param("target") int target);
+
+    @Insert("insert into  collectlist(userId,collecttime,target,cName,tid) values (#{userId},#{collecttime},#{target},#{cName}),#{tid}")
+    int insertCollectlist(Collectlist collectlist);
+    @Delete("delete from collectlist where userId = #{userId} AND target = #{target} AND tid = #{tid}")
+    int deletet(Collectlist collectlist);
 }

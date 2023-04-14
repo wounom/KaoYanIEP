@@ -16,4 +16,6 @@ public interface BlockService {
     Result getBlockByDistrict(String district);
 
     Result collectBlock(String bName, HttpServletRequest request);
+
+    Result search(String blockName, String keywords);
 }

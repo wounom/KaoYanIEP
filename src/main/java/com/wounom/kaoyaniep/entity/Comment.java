@@ -64,7 +64,6 @@ public class Comment  implements Serializable {
 	 */
 	@ApiModelProperty(value = "父级评论id")
 	private Long parentId;
-
 	/**
 	 * 根级id
 	 */
@@ -76,7 +75,6 @@ public class Comment  implements Serializable {
 	 */
 	@ApiModelProperty(value = "用户头像")
 	private String userImg;
-
 	/**
 	 * 留言用户id
 	 */

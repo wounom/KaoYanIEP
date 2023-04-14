@@ -26,4 +26,7 @@ public interface UniverMapper {
             "            </script>")
     List<University> getUniverByCondition(@Param("universityDistrict") String universityDistrict,@Param("universityHigherup") String universityHigherup,
                                           @Param("ifDouble") Integer ifDouble,@Param("ifGraduate") Integer ifGraduate,@Param("ifIndependent") Integer ifIndependent);
+
+    @Select("select * from university where universityName = #{universityName}")
+    University getByName(String universityName);
 }
