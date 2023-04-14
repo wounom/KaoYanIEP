@@ -17,7 +17,7 @@ import java.util.List;
 @Mapper
 public interface TieWenMapper {
     @Select("select * from tiewen where userId = #{userId}")
-    List<Tiewen> getTieWenbyUserId(long id);
+    List<Tiewen> getTieWenbyUserId(Long userId);
 
 
     @Select("select * from tiewen where status = 0")

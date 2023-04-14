@@ -14,4 +14,8 @@ public interface CommentService {
     Result postComment(Comment comment, HttpServletRequest request);
 
     Result getComment(Long tiewenId);
+
+    Result deleteComment(Long id, HttpServletRequest request);
+
+    Result getCommentByUser(HttpServletRequest request);
 }

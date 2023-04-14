@@ -47,4 +47,30 @@ public class CommentController {
     public Result getComment(@RequestParam Long tiewenId){
         return commentService.getComment(tiewenId);
     }
+
+    /**
+     *
+     * 删除评论
+     * @param
+     * @return
+     * @author litind
+     **/
+    @DeleteMapping("/delete")
+    @ApiOperation("通过用户id评论id删除评论")
+    public Result deleteComment(@RequestParam Long id,HttpServletRequest request){
+        return commentService.deleteComment(id,request);
+    }
+
+    /**
+     *
+     * 获取用户贴文的评论
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getByuser")
+    @ApiOperation("用户获取自己发布的帖子下的评论")
+    public Result getCommentByUser(HttpServletRequest request){
+        return commentService.getCommentByUser(request);
+    }
 }

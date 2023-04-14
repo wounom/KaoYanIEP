@@ -84,7 +84,7 @@ public class TieWenController {
 
     /**
      *
-     * 贴文管理
+     * 用户贴文管理
      * @param request
      * @return
      * @author litind

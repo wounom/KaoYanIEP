@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.dao;
 
 import com.wounom.kaoyaniep.entity.Comment;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,4 +20,6 @@ public interface CommentMapper {
     int save(Comment comment);
     @Select("select * from comment where tiewenId = #{tiewenId}")
     List<Comment> getByTiewenId(Long tiewenId);
+    @Delete("delete from comment where id = #{id} AND userId = #{userId}")
+    int deleteComment(Comment comment);
 }
