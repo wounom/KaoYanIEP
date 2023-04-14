@@ -21,6 +21,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/tiewen")
+@CrossOrigin
 public class TieWenController {
 
 

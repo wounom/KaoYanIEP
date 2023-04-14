@@ -19,6 +19,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/specialTie")
+@CrossOrigin
 public class OfficialTieController {
     @Resource
     private OfficialTieService officalTieService;

@@ -18,6 +18,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/block")
+@CrossOrigin
 public class BlockController {
     @Resource
     private BlockService blockService;

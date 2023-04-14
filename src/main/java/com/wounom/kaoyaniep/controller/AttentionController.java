@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/attention")
+@CrossOrigin
 public class AttentionController {
     @Resource
     private AttentionService attentionService;

@@ -79,4 +79,5 @@ public class Result {
                 ", data=" + data +
                 '}';
     }
+
 }

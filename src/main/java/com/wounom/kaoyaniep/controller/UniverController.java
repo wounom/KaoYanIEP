@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.controller;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.UniverService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @ApiOperation("院校信息板块")
+@CrossOrigin
 public class UniverController {
     @Resource
     private UniverService univerService;

@@ -4,6 +4,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.PageService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/firstpage")
+@CrossOrigin
 public class FirstPageController {
 
     @Resource
