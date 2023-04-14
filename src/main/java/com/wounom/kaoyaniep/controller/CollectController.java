@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author litind
@@ -149,14 +150,15 @@ public class CollectController {
     /**
      *
      * 批量删除
-     * @param tid
+     * @param id
      * @return
      * @author litind
      **/
     @DeleteMapping("/deleteList")
     @ApiOperation("批量删除收藏")
-    public Result deleteList(@RequestBody Long[] tid,HttpServletRequest request){
-        return collectService.deleteList(tid,request);
+    public Result deleteList(@RequestParam List<Long> id, HttpServletRequest request){
+        System.out.println(id);
+        return collectService.deleteList(id,request);
     }
 
 }

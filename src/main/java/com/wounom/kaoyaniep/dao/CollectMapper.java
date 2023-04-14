@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.dao;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Collectlistarticle;
 import com.wounom.kaoyaniep.entity.Collectlistblock;
@@ -14,7 +15,7 @@ import java.util.List;
  * @date 2023/4/13 10:59
  */
 @Mapper
-public interface CollectMapper {
+public interface CollectMapper extends BaseMapper {
     @Select("select * from collectlistarticle where userEmail = #{userEmail}")
     List<Collectlistarticle> getCollectlistA(String userEmail);
     @Select("select * from collectlistblock where userEmail = #{userEmail}")
@@ -31,8 +32,10 @@ public interface CollectMapper {
     @Delete("delete from collectlistblock where userEmail = #{userEmail} and bName = #{bName}")
     int deleteCollectBlockByid(Collectlistblock collectlistblock);
 
-    @Delete("<script>"+"delete from collectlist where id in <foreach collection=\"array\" item=\"id\" open=\"(\" separator=\",\" close=\")\"> #{id} </foreach>"+"AND userId = #{user}"+"</script>")
-    int deleteByIdList(@Param("id") Long[] id,@Param("userId") Long userId);
+    @Delete("DELETE FROM collectlist WHERE id = #{id} and userId = #{userId}")
+    int deleteByIdList(@Param("id") Long id,@Param("userId")Long userId);
+
+
     @Select("select * from collectlist where userId = #{userId} AND target = #{target}")
     List<Collectlist> getCollectlist(@Param("userId") Long userId,@Param("target") int target);
 

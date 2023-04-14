@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.dao.CollectMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.CollectService;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -203,15 +204,18 @@ public class CollectServiceImpl implements CollectService {
     /**
      *
      * 批量删除
-     * @param tid
+     * @param id
      * @return
      * @author litind
      **/
     @Override
-    public Result deleteList(Long[] tid,HttpServletRequest request) {
+    public Result deleteList(List<Long> id,HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         Long userId = user.getId();
-        int r = collectMapper.deleteByIdList(tid,userId);
+        int r =0 ;
+        for (int i=0;i<id.size();i++){
+            r +=collectMapper.deleteByIdList(id.get(i),userId);
+        }
         if (r>0){
             return new Result(200,"删除成功");
         }else {

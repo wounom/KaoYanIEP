@@ -4,6 +4,7 @@ import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Result;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author litind
@@ -23,7 +24,7 @@ public interface CollectService {
 
     Result deleteBlockById(String bName, HttpServletRequest request);
 
-    Result deleteList(Long[] tid,HttpServletRequest request);
+    Result deleteList(List<Long> id, HttpServletRequest request);
 
     Result getCollectlist(HttpServletRequest request, int target);
 
