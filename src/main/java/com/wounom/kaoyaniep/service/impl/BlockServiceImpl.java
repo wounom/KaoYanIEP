@@ -69,6 +69,6 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public Result search(String blockName, String keywords) {
         List<Tiewen> list =  blockMapper.search(blockName,keywords);
-        return null;
+        return new Result(200,"message",list.size(),list);
     }
 }

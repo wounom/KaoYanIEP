@@ -3,10 +3,7 @@ package com.wounom.kaoyaniep.dao;
 import com.wounom.kaoyaniep.entity.Block;
 import com.wounom.kaoyaniep.entity.Collectlistblock;
 import com.wounom.kaoyaniep.entity.Tiewen;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -26,6 +23,6 @@ public interface BlockMapper {
     @Insert("insert into  collectlistblock(userEmail,collecttime,bName) values (#{userEmail},#{collecttime},#{bName})")
     int insertCollectlist(Collectlistblock collectlistblock);
 
-    @Select("select * from tiewen where blockName = #{blockName} AND( title LIKE CONCAT('%',:keywors,'%') OR content LIKE CONCAT('%',:keywors,'%')  )")
-    List<Tiewen> search(String blockName, String keywords);
+    @Select("select * from tiewen where blockName = #{blockName} AND ( title LIKE CONCAT('%',#{keywords},'%') OR content LIKE CONCAT('%',#{keywords},'%')  )")
+    List<Tiewen> search(@Param("blockName")String blockName,@Param("keywords") String keywords);
 }
