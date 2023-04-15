@@ -118,7 +118,7 @@ public class UserController {
      * @author litind
      **/
     @ApiOperation("忘记密码")
-    @PostMapping("/forgetpw")
+    @PutMapping("/forgetpw")
     public Result forgetpw(@RequestBody User user){
         if(!userService.isUserEmailexsit(user.getEmail())){
             return new Result(400,"账号不存在");
@@ -136,7 +136,7 @@ public class UserController {
      * @author litind
      **/
     @ApiOperation("修改密码(String oldPwd,String newPwd)")
-    @PostMapping("/resetpw")
+    @PutMapping("/resetpw")
     public Result resetPw(HttpServletRequest request,@RequestBody String param){
         JSONObject json = JSON.parseObject(param);
         String oldPwd=json.getString("oldPwd");
@@ -160,7 +160,7 @@ public class UserController {
      * @author litind
      **/
     @ApiOperation("更新用户信息")
-    @PostMapping("/updateUserInfo")
+    @PutMapping("/updateUserInfo")
     public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){//user不用传入Email，通过session获取
         User oldUser = (User) request.getSession().getAttribute("user");
         user.setEmail(oldUser.getEmail());
