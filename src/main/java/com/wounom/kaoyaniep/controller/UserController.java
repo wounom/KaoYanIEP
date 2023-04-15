@@ -82,6 +82,10 @@ public class UserController {
             return new Result(400,"账号不存在");
         }
         User newuser = userService.getUserByEmail(user.getEmail());//查询已经注册的该邮箱账户
+        newuser.setCode("");
+        newuser.setActive_Time(null);
+        newuser.setSalt("");
+        newuser.setPassword("");
         if(userService.loginCheck(user)!=null){
             String token = TokenUtils.CreateToken(newuser);
             request.getSession().setAttribute("user",newuser);

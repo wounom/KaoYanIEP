@@ -50,7 +50,7 @@ public interface UserMapper  {
     User selectByUserEmail1(String email);//获取已经注册的账号
 
     @Select(" select * from user where email = #{email}")
-    User selectUserByEmail_(String email);//获取改邮箱的所有账号
+    User selectUserByEmail_(String email);//获取该邮箱的所有账号
 
     @Update("update user set username = #{username}, is_valid = #{is_Valid} , salt = #{salt}, password = #{password} where email = #{email}")
     void updateregist(User user);
