@@ -5,7 +5,7 @@ springboot 2.0
 apache-maven-3.8.7  
 mybatis,mybatis-plus  
 ### To-do List
--[x] 已完成
+- [x] 已完成
   - [x] 首页推送
   - [x] 用户登录
   - [x] 用户注册
