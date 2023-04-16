@@ -76,8 +76,7 @@ public class TieWenController {
      * @author litind
      **/
     @PostMapping("/post")
-    @ApiOperation("发布贴文" +
-            "blockName"+"title"+"content")
+    @ApiOperation("发布贴文"+"blockName"+"title"+"content")
     public Result PostTiewen(Tiewen tiewen,HttpServletRequest request){
         return tieWenService.PostTiewen(tiewen,request);
     }
