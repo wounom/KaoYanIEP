@@ -25,4 +25,6 @@ public interface TieWenService {
     Result getTiewenByUserId(Long userId);
 
     Result deleteTiewen(HttpServletRequest request, Long tiewenId);
+
+    Result getHot();
 }

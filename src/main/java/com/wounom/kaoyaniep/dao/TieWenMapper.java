@@ -38,6 +38,14 @@ public interface TieWenMapper {
 
     @Insert("insert into tiewen(userId,title,createTime,content,blockName) values (#{userId},#{title},#{createTime},#{content},#{blockName})")
     int PostTiewen(Tiewen tiewen);
+
     @Delete("delete from tiewen where tiewenId = #{tiewenId} AND userId = #{userId}")
     int deleteTiewenByid(Tiewen tiewen);
+    @Update("update tiewen  set commentCount = commentCount+1  where tiewenId=#{tiewenId}")
+    void updateCommentCount(Long tiewenId);
+
+    @Select("select * from tiewen order by commentCount limit 0,9")
+    List<Tiewen> getHot();
+    @Select("select * from tiewen order by createTime limit 0,9")
+    List<Tiewen> getNew();
 }

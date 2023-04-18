@@ -109,6 +109,21 @@ public class TieWenController {
         return tieWenService.deleteTiewen(request,tiewenId);
     }
 
+    /**
+     *
+     * 通过贴文回复数获取热门贴文
+     * @param
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getHot")
+    @ApiOperation("获取热门贴文")
+    public Result getHot(){
+        return tieWenService.getHot();
+    }
+
+
+
 
 
 }

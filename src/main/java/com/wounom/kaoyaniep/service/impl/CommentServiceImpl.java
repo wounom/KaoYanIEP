@@ -41,13 +41,13 @@ public class CommentServiceImpl implements CommentService {
         comment.setUserName(user.getUsername());
         comment.setUserImg(user.getImage());
         comment.setCreateTime(DateTime.now());
+        tieWenMapper.updateCommentCount(comment.getTiewenId());
         int r= commentMapper.save(comment);
         if (r>0){
             return new Result(400,"评论成功");
         }else {
             return new Result(400,"失败");
         }
-
     }
 
     /**

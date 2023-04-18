@@ -137,4 +137,17 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(400,"删除失败，帖子可能已经不存在或不是您的帖子");
         }
     }
+
+    /**
+     *
+     * 获取热门贴文
+     * @param
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getHot() {
+        List<Tiewen> list =  tieWenMapper.getHot();
+        return new Result(200,"success",list.size(),list);
+    }
 }
