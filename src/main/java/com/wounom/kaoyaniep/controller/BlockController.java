@@ -35,19 +35,6 @@ public class BlockController {
        return blockService.getBlockByDistrict(district);
     }
 
-    /**
-     *
-     * 收藏板块
-     * @param
-     * @return
-     * @author litind
-     **/
-    @PostMapping("/collect/{bName}")
-    @ApiOperation("收藏板块")
-    public Result CollectBlock( @RequestParam(value = "bName") String bName, HttpServletRequest request){
-        return blockService.collectBlock(bName,request);
-    }
-
 
     /**
      *
