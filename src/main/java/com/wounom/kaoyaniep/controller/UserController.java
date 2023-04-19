@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -86,11 +87,15 @@ public class UserController {
         newuser.setActive_Time(null);
         newuser.setSalt("");
         newuser.setPassword("");
+        Map<String,Object> map = new HashMap<>();
+        map.put("user",newuser);
         if(userService.loginCheck(user)!=null){
-            String token = TokenUtils.CreateToken(newuser);
+           /* String token = TokenUtils.CreateToken(newuser);*/
             request.getSession().setAttribute("user",newuser);
             request.getSession().setMaxInactiveInterval(1800);
-            return new Result(200,"登录成功");
+            String sessionId = request.getSession().getId();
+            map.put("sessionId",sessionId);
+            return new Result(200,"登录成功",1,map);
         }else {
             return new Result(400,"用户名或密码错误");
         }
