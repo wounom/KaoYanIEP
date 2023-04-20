@@ -83,10 +83,11 @@ public class UserController {
             return new Result(400,"账号不存在");
         }
         User newuser = userService.getUserByEmail(user.getEmail());//查询已经注册的该邮箱账户
-        newuser.setCode("");
+        newuser.setCode(null);
         newuser.setActive_Time(null);
-        newuser.setSalt("");
-        newuser.setPassword("");
+        newuser.setSalt(null);
+        newuser.setPassword(null);
+        newuser.setImagePath(null);
         Map<String,Object> map = new HashMap<>();
         map.put("user",newuser);
         if(userService.loginCheck(user)!=null){

@@ -59,7 +59,7 @@ public class AttentionController {
      * @return
      * @author litind
      **/
-    @Delete("/delete")
+    @DeleteMapping("/delete")
     @ApiOperation("取消关注")
     public Result deleteAttention(HttpServletRequest request, @RequestBody Attentionlist attentionlist){
         return attentionService.delete(request,attentionlist);

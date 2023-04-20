@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.service;
 
 import com.wounom.kaoyaniep.entity.Result;
+import com.wounom.kaoyaniep.entity.University;
 
 /**
  * @author litind
@@ -8,7 +9,7 @@ import com.wounom.kaoyaniep.entity.Result;
  * @date 2023/4/6 13:45
  */
 public interface UniverService {
-    Result getUniver(String universityDistrict, String universityHigherup, Integer ifDouble, Integer ifGraduate, Integer ifIndependent);
+    Result getUniver(University university);
 
     Result getByName(String universityName);
 }

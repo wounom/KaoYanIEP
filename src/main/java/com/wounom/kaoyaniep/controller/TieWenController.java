@@ -2,6 +2,7 @@ package com.wounom.kaoyaniep.controller;
 
 
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.entity.User;
@@ -57,16 +58,17 @@ public class TieWenController {
 
     /**
      *
-     * 通过板块名称获取贴文
+     * 通过板块名称获取最新贴文
      * @param blockName
      * @return
      * @author litind
      **/
-    @GetMapping("/getByBlock")
-    @ApiOperation("通过板块名称获取贴文")
-    public Result getTiewenByBlock(String blockName){
+    @GetMapping("/getLastByBlock")
+    @ApiOperation("通过板块名称获取最新贴文")
+    public Result getTiewenByBlock(@RequestParam(value = "blockName") String blockName){
         return tieWenService.getTiewenByBlock(blockName);
     }
+
 
     /**
      *
@@ -77,7 +79,7 @@ public class TieWenController {
      **/
     @PostMapping("/post")
     @ApiOperation("发布贴文"+"blockName"+"title"+"content")
-    public Result PostTiewen(Tiewen tiewen,HttpServletRequest request){
+    public Result PostTiewen(@RequestBody Tiewen tiewen,HttpServletRequest request){
         return tieWenService.PostTiewen(tiewen,request);
     }
 

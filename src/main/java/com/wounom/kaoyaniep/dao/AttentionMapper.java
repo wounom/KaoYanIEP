@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 public interface AttentionMapper {
-    @Insert("insert into  attentionlist(target,targetid,Name,id,schoolid)\n" +
+    @Insert("insert into  attentionlist(target,targetid,Name,id,schoolid)" +
             "values (#{target},#{targetId},#{Name},#{id},#{schoolId})")
     int addAttention(Attentionlist attentionlist);
 

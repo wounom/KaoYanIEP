@@ -33,7 +33,7 @@ public interface TieWenMapper {
     @Select("select * from where tiewenId = #{tiewenId}")
     List<Tiewen> getTiewenById(int tiewenId);
 
-    @Select("select * from where blockName = #{blockName} ")
+    @Select("select * from tiewen where blockName = #{blockName} order by createTime desc")
     List<Tiewen> getTiewenByBlock(String blockName);
 
     @Insert("insert into tiewen(userId,title,createTime,content,blockName) values (#{userId},#{title},#{createTime},#{content},#{blockName})")

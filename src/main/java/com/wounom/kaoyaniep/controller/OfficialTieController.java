@@ -30,7 +30,7 @@ public class OfficialTieController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getspecialTie/blockName={blockName}")
+    @GetMapping("/getspecialTie/{blockName}")
     @ApiOperation("获取特别专版的官方帖子(blockName)")
     public Result getSpecialTie(@PathVariable String blockName){
         return officalTieService.getOfficialTieByblockName(blockName);

@@ -20,8 +20,9 @@ public class UniverServiceImpl implements UniverService {
     @Resource
     private UniverMapper univerMapper;
     @Override
-    public Result getUniver(String universityDistrict, String universityHigherup, Integer ifDouble, Integer ifGraduate, Integer ifIndependent) {
-        List<University> list = univerMapper.getUniverByCondition(universityDistrict,universityHigherup,ifDouble,ifGraduate,ifIndependent);
+    public Result getUniver(University university) {
+        List<University> list = univerMapper.getUniverByCondition(university.getUniversityDistrict(),university.getUniversityHigherup(),university.getIfDouble()
+                ,university.getIfGraduate(),university.getIfIndependent());
         if(list.size()>0){
             return  new Result(200,"获取成功",list.size(),list);
         }else {
