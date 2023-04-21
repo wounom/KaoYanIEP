@@ -1,0 +1,5 @@
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.zbin.cisp.domain
+  configuration:
+    map-underscore-to-camel-case: true

@@ -22,7 +22,7 @@ public class UniverController {
     private UniverService univerService;
     @GetMapping("/getInfo")
     @ApiOperation("通过地区、隶属、特性查询院校")
-    public Result GetUniverByCondi(@RequestBody University university){//todo:传输方式可以修改
+    public Result GetUniverByCondi(University university){//todo:传输方式可以修改
         return univerService.getUniver(university);
     }
     @GetMapping("/search")

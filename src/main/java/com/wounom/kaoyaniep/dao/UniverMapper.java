@@ -15,18 +15,7 @@ import java.util.List;
  */
 @Mapper
 public interface UniverMapper {
+    List<University> getUniverByCondition(University university);
 
-    @Select("<script>select *  from university "+
-            "where 1"+
-            "            <if test=\"universityDistrict!=null\"> universityDistrict= #{universityDistrict}, </if>"+
-            "            <if test=\"universityHigherup != null\"> universityHigherup = #{universityHigherup}, </if>" +
-            "            <if test=\"ifDouble!= null\"> ifDouble = #{ifDouble},</if>" +
-            "            <if test=\"ifGraduate != null\"> ifGraduate = #{ifGraduate},</if>" +
-            "            <if test=\"ifIndependent != null\"> ifIndependent = #{ifIndependent}</if>"+
-            "            </script>")
-    List<University> getUniverByCondition(@Param("universityDistrict") String universityDistrict,@Param("universityHigherup") String universityHigherup,
-                                          @Param("ifDouble") Integer ifDouble,@Param("ifGraduate") Integer ifGraduate,@Param("ifIndependent") Integer ifIndependent);
-
-    @Select("select * from university where universityName = #{universityName}")
     University getByName(String universityName);
 }
