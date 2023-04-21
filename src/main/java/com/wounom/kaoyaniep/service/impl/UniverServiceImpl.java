@@ -30,7 +30,7 @@ public class UniverServiceImpl implements UniverService {
     }
     /**
      *
-     * 通过袁霞名称搜索院校
+     * 通过学校名称搜索院校
      * @param universityName
      * @return
      * @author litind

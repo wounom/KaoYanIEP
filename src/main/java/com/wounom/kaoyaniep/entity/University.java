@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-06 
+ * @Date 2023-04-21 
  */
 
 @ApiModel(value = "university")
@@ -21,10 +21,22 @@ import java.io.Serializable;
 public class University  implements Serializable {
 
 
+	/**
+	 * 院校id
+	 */
+	@ApiModelProperty(value = "院校id")
 	private Long universityId;
 
+	/**
+	 * 院校名字
+	 */
+	@ApiModelProperty(value = "院校名字")
 	private String universityName;
 
+	/**
+	 * 院校简介
+	 */
+	@ApiModelProperty(value = "院校简介")
 	private String universityIntroduce;
 
 	/**
@@ -40,23 +52,51 @@ public class University  implements Serializable {
 	private String universityHigherup;
 
 	/**
-	 * 是否双一流(默认0不是，1是)
+	 * 院校是否双一流(默认0不是，1是)
 	 */
-	@ApiModelProperty(value = "是否双一流(默认0不是，1是)")
+	@ApiModelProperty(value = "院校是否双一流(默认0不是，1是)")
 	private Integer ifDouble;
 
 	/**
-	 * 是否研究生院(默认0不是，1是)
+	 * 院校是否研究生院(默认0不是，1是)
 	 */
-	@ApiModelProperty(value = "是否研究生院(默认0不是，1是)")
+	@ApiModelProperty(value = "院校是否研究生院(默认0不是，1是)")
 	private Integer ifGraduate;
 
 	/**
-	 * 是否自划线(默认0不是，1是)
+	 * 院校是否自划线(默认0不是，1是)
 	 */
-	@ApiModelProperty(value = "是否自划线(默认0不是，1是)")
+	@ApiModelProperty(value = "院校是否自划线(默认0不是，1是)")
 	private Integer ifIndependent;
 
+	/**
+	 * 院校图片路径
+	 */
+	@ApiModelProperty(value = "院校图片路径")
 	private String image;
+
+	/**
+	 * 学校官网
+	 */
+	@ApiModelProperty(value = "学校官网")
+	private String officialnet;
+
+	/**
+	 * 院校具体地址
+	 */
+	@ApiModelProperty(value = "院校具体地址")
+	private String address;
+
+	/**
+	 * 院校邮编
+	 */
+	@ApiModelProperty(value = "院校邮编")
+	private String post;
+
+	/**
+	 * 院校电话
+	 */
+	@ApiModelProperty(value = "院校电话")
+	private String phone;
 
 }
