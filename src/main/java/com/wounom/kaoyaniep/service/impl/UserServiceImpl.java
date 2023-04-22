@@ -48,12 +48,21 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     *
+     * 注册
+     * @param user
+     * @return com.wounom.kaoyaniep.entity.Result
+     * @author litind
+     **/
     @Override
     public Result register(User user) {
         user.setSalt(PasswordUtil.createSalt());//设置用户加密盐
         user.setPassword(PasswordUtil.md5Pwd(user.getPassword(),user.getSalt()));
         user.setIs_Valid(1);
-        user.setUsername(UserUtils.getRandomChineseString());
+        String name =UserUtils.getRandomChineseString();
+        user.setUsername(name);
+        System.out.println(name);
         String ocode = user.getCode();
         String ccode = userMapper.findCode(user.getEmail());
         if(!ccode.equals(ocode)){
