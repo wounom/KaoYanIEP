@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User loginCheck(User user) {
+    public User loginCheck( User user) {
         User tmpUser = userMapper.selectByUserEmail1(user.getEmail());//激活过的user
         String lpw = PasswordUtil.md5Pwd(user.getPassword(),tmpUser.getSalt());//将传入的user密码进行加密
         if(lpw.equals(tmpUser.getPassword())){

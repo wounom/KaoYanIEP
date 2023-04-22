@@ -74,7 +74,7 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     @ResponseBody
-    public Result Login(HttpServletRequest request, @RequestBody User user){
+    public Result Login(HttpServletRequest request,@RequestBody User user){
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
         /*log.info("username",user.getUsername());
@@ -93,7 +93,7 @@ public class UserController {
         if(userService.loginCheck(user)!=null){
            /* String token = TokenUtils.CreateToken(newuser);*/
             request.getSession().setAttribute("user",newuser);
-            request.getSession().setMaxInactiveInterval(1800);
+            request.getSession().setMaxInactiveInterval(604800);
             String sessionId = request.getSession().getId();
             map.put("sessionId",sessionId);
             return new Result(200,"登录成功",1,map);
