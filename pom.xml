@@ -194,7 +194,7 @@
                    -->
 
                     <!--指定远程 docker api地址-->
-                    <dockerHost>http://43.138.194.191:2375</dockerHost>
+                    <dockerHost>http://43.138.194.191:2773</dockerHost>
 
                     <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
                     <resources>
@@ -235,6 +235,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
