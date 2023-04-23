@@ -7,6 +7,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.TieWenService;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +94,9 @@ public class TieWenController {
     @GetMapping("/getByuserId")
     @ApiOperation("通过用户id获取贴文")
     public Result ManageTiewen(HttpServletRequest request){
-        User user =  (User)request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
+        //(User)request.getSession().getAttribute("user");
         Long userId = user.getId();
         return tieWenService.getTiewenByUserId(userId);
     }

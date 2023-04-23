@@ -20,11 +20,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/**")
-                /*.excludePathPatterns("/user/login","/user/logout","/user/logout","/user/regist","/user/forgetpw")
+                .excludePathPatterns("/user/login","/user/logout","/user/logout","/user/regist","/user/forgetpw")
                 .excludePathPatterns("/admin/login","/admin/newAdmin","/admin//resetadmin")
                 .excludePathPatterns("/firstpage/**","/images/firstpage/**")
-                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**", "/swagger-ui/**")*/;
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**", "/swagger-ui/**");
     }
     //todo:项目完成后加上拦截器
     @Override

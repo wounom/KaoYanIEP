@@ -56,11 +56,11 @@ public class OfficialTieController {
      * @return 
      * @author litind
      **/
-    @PostMapping("/collectArticle")
+    /*@PostMapping("/collectArticle")
     @ApiOperation("收藏文章 (title,tiewenId)")
     public Result Collect(@RequestBody TiewenOfficial tiewenOfficial, HttpServletRequest request){
         return officalTieService.collectArticle(tiewenOfficial,request);
-    }
+    }*/
 
 
     /**

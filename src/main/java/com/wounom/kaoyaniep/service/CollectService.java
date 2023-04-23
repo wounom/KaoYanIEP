@@ -12,17 +12,7 @@ import java.util.List;
  * @date 2023/4/13 10:56
  */
 public interface CollectService {
-    Result getCollectlistArticle(HttpServletRequest request);
 
-    Result getCollectlistBlock(HttpServletRequest request);
-
-    Result getCollectlistTiewen(HttpServletRequest request);
-
-    Result deleteArticleById(Long aid, HttpServletRequest request);
-
-    Result deleteTiewenById(Long tid, HttpServletRequest request);
-
-    Result deleteBlockById(String bName, HttpServletRequest request);
 
     Result deleteList(List<Long> id, HttpServletRequest request);
 

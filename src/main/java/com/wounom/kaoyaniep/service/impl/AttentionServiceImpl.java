@@ -6,6 +6,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.University;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.AttentionService;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,7 +32,8 @@ public class AttentionServiceImpl implements AttentionService {
     @Override
     public Result attention(HttpServletRequest request, User user, University university) {
         Attentionlist attentionlist = new Attentionlist();
-        User u = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User u = TokenUtils.getUser(token);
         attentionlist.setId(u.getId());
         if (user==null&&university==null){
             return new Result(400,"传入数据均为空");
@@ -80,7 +82,8 @@ public class AttentionServiceImpl implements AttentionService {
         if (attentionlist==null){
             return new Result(400,"传入消息为空,可能未关注");
         }
-        User user =(User)request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         attentionlist.setId(user.getId());
         int r = attentionMapper.delete(attentionlist);
         if (r>0){

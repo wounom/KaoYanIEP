@@ -43,10 +43,12 @@ public class CollectController {
      * @author litind
      **/
     @PostMapping("/post")
-    @ApiOperation("收藏贴文 (cName,tid,target（-1为文章，0为版块，1为贴文）)")
+    @ApiOperation("收藏接口三合一 (cName,tid,target（-1为文章，0为版块，1为贴文）)")
     public Result CollectTie(@RequestBody Collectlist collectlist, HttpServletRequest request){
         return collectService.collect(collectlist,request);
     }
+
+
     /**
      *
      * 删除操作

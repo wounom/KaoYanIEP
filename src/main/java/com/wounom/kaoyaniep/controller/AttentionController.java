@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.University;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.AttentionService;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import io.swagger.annotations.ApiOperation;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,8 @@ public class AttentionController {
     @GetMapping("/getAll")
     @ApiOperation("获取用户的关注列表")
     public Result getAttention(HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         Long id = user.getId();
         return attentionService.getById(id);
     }

@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateTime;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.TieWenService;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import org.apache.catalina.webresources.TomcatJarInputStream;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,8 @@ public class TieWenServiceImpl implements TieWenService {
     @Override
     public Result collectTie(Tiewen tiewen, HttpServletRequest request) {
         Collectlisttiewen collectlisttiewen = new Collectlisttiewen();
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         collectlisttiewen.setTName(tiewen.getTitle());
         collectlisttiewen.setTid(tiewen.getTiewenId());
         collectlisttiewen.setUserEmail(user.getEmail());
@@ -88,7 +90,8 @@ public class TieWenServiceImpl implements TieWenService {
     @Override
     public Result PostTiewen(Tiewen tiewen, HttpServletRequest request) {
         //获取发该贴文的用户信息
-        User user =(User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         tiewen.setUserId(user.getId());
         tiewen.setCreateTime(DateTime.now());
         int r = tieWenMapper.PostTiewen(tiewen);
@@ -128,7 +131,8 @@ public class TieWenServiceImpl implements TieWenService {
     public Result deleteTiewen(HttpServletRequest request, Long tiewenId) {
         Tiewen tiewen = new Tiewen();
         tiewen.setTiewenId(tiewenId);
-        User user = (User)request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         tiewen.setUserId(user.getId());
         int r = tieWenMapper.deleteTiewenByid(tiewen);
         if (r>0){

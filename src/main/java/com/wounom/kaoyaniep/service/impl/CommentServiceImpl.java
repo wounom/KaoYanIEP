@@ -9,6 +9,7 @@ import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.entity.User;
 import com.wounom.kaoyaniep.service.CommentService;
 
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,8 @@ public class CommentServiceImpl implements CommentService {
         if (comment.getContent()==null){
             return new Result(400,"数据为空");
         }
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         comment.setUserId(user.getId());
         comment.setUserName(user.getUsername());
         comment.setUserImg(user.getImage());
@@ -76,7 +78,8 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Result deleteComment(Long id, HttpServletRequest request) {
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         Comment comment = new Comment();
         comment.setId(id);
         comment.setUserId(user.getId());
@@ -97,7 +100,8 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Result getCommentByUser(HttpServletRequest request) {
-        User user =(User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         Long userId = user.getId();
         //先获取用户的贴文
         List<Tiewen> tiewenList = tieWenMapper.getTieWenbyUserId(userId);
@@ -118,7 +122,8 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Result PostMessage(HttpServletRequest request, Comment comment) {
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         comment.setUserId(user.getId());
         comment.setUserName(user.getUsername());
         comment.setUserImg(user.getImagePath());
@@ -140,7 +145,8 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Result getMessage(HttpServletRequest request) {
-        User user = (User)request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         Long targetUserId = user.getId();
         List<Comment> commentList = commentMapper.getMessage(targetUserId);
         return null;

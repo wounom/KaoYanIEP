@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,8 +77,8 @@ public class UserController {
      **/
     @ApiOperation("登录")
     @PostMapping("/login")
-    @ResponseBody
-    public Result Login(HttpServletRequest request,HttpServletResponse response, @RequestBody User user){
+    //@ResponseBody
+    public Result Login(/*HttpServletRequest request,HttpServletResponse response,*/ @RequestBody User user) throws UnsupportedEncodingException {
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
         /*log.info("username",user.getUsername());
@@ -94,15 +95,22 @@ public class UserController {
         Map<String,Object> map = new HashMap<>();
         map.put("user",newuser);
         if(userService.loginCheck(user)!=null){
-           /* String token = TokenUtils.CreateToken(newuser);*/
-            request.getSession().setAttribute("user",newuser);
+            String token = TokenUtils.CreateToken(newuser);
+            map.put("token",token);
+           /*request.getSession().setAttribute("user",newuser);
             request.getSession().setMaxInactiveInterval(604800);
             String sessionId = request.getSession().getId();
             map.put("sessionId",sessionId);
-            /*ResponseCookie cookie = ResponseCookie.from("JSESSIONID",request.getSession().getId())
-                    .secure(true).httpOnly(true).build();*/
-            response.addCookie(new Cookie("JSESSIONID",request.getSession().getId()));
-            return new Result(200,"登录成功",1,map);
+            ResponseCookie cookie = ResponseCookie.from("JSESSIONID",request.getSession().getId())
+                    .secure(true)
+
+                    .httpOnly(true)
+                    .sameSite("none")
+                    .build();
+            response.setHeader(HttpHeaders.SET_COOKIE,cookie.toString());*/
+            //response.addCookie(new Cookie("JSESSIONID",request.getSession().getId()));
+            /*response.setHeader("Access-Control-Allow-Origin", "http://172.25.88.146:8080");*/
+            return new Result(200,"登录成功",map.size(),map);
         }else {
             return new Result(400,"用户名或密码错误");
         }
@@ -144,17 +152,18 @@ public class UserController {
      *
      * 修改密码
      * 邮箱，原密码，新密码
-     * @param param
+     * @param map
      * @return com.wounom.kaoyaniep.entity.User
      * @author litind
      **/
     @ApiOperation("修改密码(String oldPwd,String newPwd)")
     @PutMapping("/resetpw")
-    public Result resetPw(HttpServletRequest request,@RequestBody String param){
-        JSONObject json = JSON.parseObject(param);
-        String oldPwd=json.getString("oldPwd");
-        String newpassword = json.getString("newPwd");
-        User user = (User) request.getSession().getAttribute("user");
+    public Result resetPw(HttpServletRequest request,@RequestBody Map<String,String> map){
+
+        String oldPwd=map.get("oldPwd");
+        String newpassword = map.get("newPwd");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         user.setPassword(oldPwd);
         return userService.resetPw(user,newpassword);
     }
@@ -175,7 +184,8 @@ public class UserController {
     @ApiOperation("更新用户信息")
     @PutMapping("/updateUserInfo")
     public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){//user不用传入Email，通过session获取
-        User oldUser = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User oldUser = TokenUtils.getUser(token);
         user.setEmail(oldUser.getEmail());
         return userService.updateUserInfo(user);
     }
@@ -190,7 +200,8 @@ public class UserController {
     @PostMapping("/uploadimage")
     @ApiOperation("上传用户头像")
     public Result uploadImg(MultipartFile file,HttpServletRequest request){
-        User user = (User) request.getSession().getAttribute("user");
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
         String email = user.getEmail();
         if (file.isEmpty()){
             return new Result(400,"文件为空");
