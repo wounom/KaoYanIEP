@@ -15,11 +15,14 @@ import org.apache.ibatis.annotations.Update;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -74,7 +77,7 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     @ResponseBody
-    public Result Login(HttpServletRequest request,@RequestBody User user){
+    public Result Login(HttpServletRequest request,HttpServletResponse response, @RequestBody User user){
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
         /*log.info("username",user.getUsername());
@@ -96,11 +99,15 @@ public class UserController {
             request.getSession().setMaxInactiveInterval(604800);
             String sessionId = request.getSession().getId();
             map.put("sessionId",sessionId);
+            /*ResponseCookie cookie = ResponseCookie.from("JSESSIONID",request.getSession().getId())
+                    .secure(true).httpOnly(true).build();*/
+            response.addCookie(new Cookie("JSESSIONID",request.getSession().getId()));
             return new Result(200,"登录成功",1,map);
         }else {
             return new Result(400,"用户名或密码错误");
         }
     }
+
 
     /**
      *
