@@ -5,9 +5,11 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.wounom.kaoyaniep.dao.UtilsMapper;
 import com.wounom.kaoyaniep.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
@@ -15,6 +17,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,11 +30,14 @@ import java.util.Map;
  * @date 2023/4/3 12:18
  */
 @Slf4j
+@Service
 public class TokenUtils {
+    @Resource
+    private UtilsMapper utilsMapper;
 
 
     private static Map<String,User> tokenMap = new HashMap<>();
-    private static final Long EXPIRE_TIME = 10*60*60*1000L;//过期时间为10小时
+    private static final Long EXPIRE_TIME = 7*24*60*60*1000L;//过期时间为7天
     private static final String TOKEN_SECRET =
             "litind@kaoyanircp.top-from:wounom.com";
 
@@ -51,16 +60,16 @@ public class TokenUtils {
 
     // TOKEN 验证
     public static Boolean verfiry(String token){
-
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                     .withIssuer("litind")
                     .build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
+
             log.info("TOKEN 验证通过");
             log.info("userId :"+ decodedJWT.getClaim("userId"));
             log.info("过期时间："+ decodedJWT.getExpiresAt());
-            System.out.println(decodedJWT.getClaim("user"));
+            System.out.println(decodedJWT.getClaim("userId"));
         }catch (Exception e){
             // 抛出错误即为验证不通过
             log.error("TOKEN 验证不通过,请再次输入");
@@ -70,14 +79,20 @@ public class TokenUtils {
     }
 
     // 通过token获取用户
-    public static  User getUser(String token){
-        /*JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
+    public static User getUser(String token){
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                 .withIssuer("litind")
                 .build();
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        User user = (User) decodedJWT.getClaim("user");*/
-        User user1 = tokenMap.get(token);
-        return user1;
+        int id = decodedJWT.getClaim("userId").asInt();
+        TokenUtils tokenUtils = new TokenUtils();
+        User user = tokenUtils.get(id);
+        //User user1 = tokenMap.get(token);
+        return user;
+    }
+
+    public User get(int id){
+        return utilsMapper.findUserById(id);
     }
 
 

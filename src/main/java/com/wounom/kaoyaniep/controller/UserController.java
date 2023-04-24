@@ -52,6 +52,19 @@ public class UserController {
 
     /**
      *
+     * 测试
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/test")
+    public User test(HttpServletRequest request){
+        String token = request.getHeader("token");
+        return TokenUtils.getUser(token);
+    }
+
+    /**
+     *
      * 注册
      * 用户名，邮箱，验证码，密码
      * @param user
