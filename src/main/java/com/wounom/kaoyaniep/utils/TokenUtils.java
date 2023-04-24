@@ -3,23 +3,13 @@ package com.wounom.kaoyaniep.utils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.wounom.kaoyaniep.dao.UtilsMapper;
 import com.wounom.kaoyaniep.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import com.google.gson.Gson;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,10 +20,7 @@ import java.util.Map;
  * @date 2023/4/3 12:18
  */
 @Slf4j
-@Service
 public class TokenUtils {
-    @Resource
-    private UtilsMapper utilsMapper;
 
 
     private static Map<String,User> tokenMap = new HashMap<>();
@@ -59,13 +46,12 @@ public class TokenUtils {
     }
 
     // TOKEN 验证
-    public static Boolean verfiry(String token){
+    public static Boolean verfiry(String token,HttpServletResponse response){
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                     .withIssuer("litind")
                     .build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
-
             log.info("TOKEN 验证通过");
             log.info("userId :"+ decodedJWT.getClaim("userId"));
             log.info("过期时间："+ decodedJWT.getExpiresAt());
@@ -80,20 +66,17 @@ public class TokenUtils {
 
     // 通过token获取用户
     public static User getUser(String token){
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
+       /* JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                 .withIssuer("litind")
                 .build();
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        int id = decodedJWT.getClaim("userId").asInt();
-        TokenUtils tokenUtils = new TokenUtils();
-        User user = tokenUtils.get(id);
-        //User user1 = tokenMap.get(token);
+        int id = decodedJWT.getClaim("userId").asInt();*/
+        User user = tokenMap.get(token);
+        System.out.println(user.toString());
         return user;
     }
 
-    public User get(int id){
-        return utilsMapper.findUserById(id);
-    }
+
 
 
 

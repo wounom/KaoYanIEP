@@ -57,13 +57,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.getWriter().close();
             return false;
         }
-        if (TokenUtils.verfiry(token)){//验证token
-            //派发新的token
-            Map<String,String> tokenMap = new HashMap<>();
-            User user = TokenUtils.getUser(token);
-            String newtoken =  TokenUtils.CreateToken(user);
-            response.getWriter().write(newtoken);
-
+        if (TokenUtils.verfiry(token,response)){//验证token
             return true;
         }else {
             return false;
