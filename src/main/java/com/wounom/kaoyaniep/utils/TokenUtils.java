@@ -46,7 +46,10 @@ public class TokenUtils {
     }
 
     // TOKEN 验证
-    public static Boolean verfiry(String token,HttpServletResponse response){
+    public static Boolean verfiry(String token){
+        if(TokenUtils.getUser(token)==null){
+            return false;
+        }
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                     .withIssuer("litind")
@@ -72,8 +75,16 @@ public class TokenUtils {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         int id = decodedJWT.getClaim("userId").asInt();*/
         User user = tokenMap.get(token);
-        System.out.println(user.toString());
         return user;
+    }
+
+    public static boolean removeToken(String token) {
+        try {
+            tokenMap.remove(token);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 
 

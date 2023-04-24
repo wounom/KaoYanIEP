@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.controller;
 
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.University;
@@ -52,12 +53,13 @@ public class UserController {
 
     /**
      *
-     * 测试
+     * 根据token获取用户信息
      * @param request
      * @return
      * @author litind
      **/
-    @GetMapping("/test")
+    @GetMapping("/getInfo")
+    @ApiOperation("根据token获取用户信息")
     public User test(HttpServletRequest request){
         String token = request.getHeader("token");
         return TokenUtils.getUser(token);
@@ -139,11 +141,17 @@ public class UserController {
      **/
     @ApiOperation("登出")
     @PostMapping("/logout")
-    public Result logout(HttpServletRequest request, SessionStatus sessionStatus) {
-        request.getSession().invalidate();
-        sessionStatus.setComplete();
-        return new Result(200,"登出成功");
+    public Result logout(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        if(TokenUtils.removeToken(token)){
+            return new Result(200,"登出成功");
+        }
+        else {
+            return new Result(400,"登出失败,系统异常,请联系管理员");
+        }
     }
+
+
     /**
      * 邮箱，验证码，新密码
      * 忘记密码
