@@ -23,6 +23,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/login","/user/regist","/user/forgetpw")
                 .excludePathPatterns("/admin/login","/admin/newAdmin","/admin//resetadmin")
                 .excludePathPatterns("/firstpage/**","/images/firstpage/**")
+                .excludePathPatterns("/email/**")
                 .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**", "/swagger-ui/**");
     }
     //todo:项目完成后加上拦截器
