@@ -60,9 +60,10 @@ public class UserController {
      **/
     @GetMapping("/getInfo")
     @ApiOperation("根据token获取用户信息")
-    public User test(HttpServletRequest request){
+    public Result test(HttpServletRequest request){
         String token = request.getHeader("token");
-        return TokenUtils.getUser(token);
+        User user = TokenUtils.getUser(token);
+        return new Result(200,"UserInfo",1,user);
     }
 
     /**
