@@ -1,14 +1,19 @@
 package com.wounom.kaoyaniep.utils;
 
+import cn.hutool.jwt.Claims;
+import cn.hutool.jwt.JWTUtil;
+import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.wounom.kaoyaniep.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 import java.util.HashMap;
@@ -22,7 +27,6 @@ import java.util.Map;
 @Slf4j
 public class TokenUtils {
 
-
     private static Map<String,User> tokenMap = new HashMap<>();
     private static final Long EXPIRE_TIME = 7*24*60*60*1000L;//过期时间为7天
     private static final String TOKEN_SECRET =
@@ -35,7 +39,7 @@ public class TokenUtils {
             Date expire = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             token = JWT.create()
                     .withIssuer("litind")  //发行人
-                    .withClaim("userId", user.getId()) //存放数据
+                    .withClaim("user", JSON.toJSONString(user)) //存放数据
                     .withExpiresAt(expire) //过期时间
                     .sign(Algorithm.HMAC256(TOKEN_SECRET));//加密方式
         }catch (Exception e){
@@ -47,18 +51,19 @@ public class TokenUtils {
 
     // TOKEN 验证
     public static Boolean verfiry(String token){
-        if(TokenUtils.getUser(token)==null){
+        /*if(TokenUtils.checkUser(token)==null){
             return false;
-        }
+        }*/
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                     .withIssuer("litind")
                     .build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
             log.info("TOKEN 验证通过");
-            log.info("userId :"+ decodedJWT.getClaim("userId"));
+            log.info("user :"+ decodedJWT.getClaim("user"));
             log.info("过期时间："+ decodedJWT.getExpiresAt());
-            System.out.println(decodedJWT.getClaim("userId"));
+            //User user = JSON.parseObject(String.valueOf(decodedJWT.getClaim("user")), User.class);
+            //System.out.println(user.getEmail());
         }catch (Exception e){
             // 抛出错误即为验证不通过
             log.error("TOKEN 验证不通过,请再次输入");
@@ -68,12 +73,7 @@ public class TokenUtils {
     }
 
     // 通过token获取用户
-    public static User getUser(String token){
-       /* JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
-                .withIssuer("litind")
-                .build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        int id = decodedJWT.getClaim("userId").asInt();*/
+    public static User checkUser(String token){
         User user = tokenMap.get(token);
         return user;
     }
@@ -85,6 +85,38 @@ public class TokenUtils {
             return false;
         }
         return true;
+    }
+    /**
+     *
+     * 解析token
+     * @param token
+     * @return
+     * @author litind
+     **/
+    static DecodedJWT verifyToken(String token) {
+        DecodedJWT jwt = null;
+        try {
+            //解析方式和密钥
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).build();
+            DecodedJWT decodedJWT = JWT.decode(token);
+            jwt = verifier.verify(decodedJWT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // token 校检失败
+        }
+        return jwt;
+    }
+
+    /**
+     * 解析token获取User
+     * @param token
+     * @return
+     */
+    public static User getUser(String token) {
+        DecodedJWT jwt = verifyToken(token);
+        String userToJson = jwt.getClaim("user").asString();
+        User user = JSON.parseObject(userToJson,User.class);
+        return user;
     }
 
 

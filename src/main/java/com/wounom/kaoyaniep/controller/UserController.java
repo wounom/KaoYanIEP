@@ -53,6 +53,19 @@ public class UserController {
 
     /**
      *
+     * 测试
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/test")
+    public String test(HttpServletRequest request){
+        String token = request.getHeader("token");
+        User user =  TokenUtils.getUser(token);
+        return user.getEmail();
+    }
+    /**
+     *
      * 根据token获取用户信息
      * @param request
      * @return
@@ -60,7 +73,7 @@ public class UserController {
      **/
     @GetMapping("/getInfo")
     @ApiOperation("根据token获取用户信息")
-    public Result test(HttpServletRequest request){
+    public Result getInfo(HttpServletRequest request){
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         return new Result(200,"UserInfo",1,user);

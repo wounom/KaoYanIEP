@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-14 
+ * @Date 2023-04-24 
  */
 
 @ApiModel(value = "collectlist")
@@ -47,10 +47,10 @@ public class Collectlist  implements Serializable {
 	private Integer target;
 
 	/**
-	 * 名字
+	 * 收藏的名字
 	 */
-	@ApiModelProperty(value = "名字")
-	private String cName;
+	@ApiModelProperty(value = "收藏的名字")
+	private String targetName;
 
 	/**
 	 * 目标标识符（id）可以重复

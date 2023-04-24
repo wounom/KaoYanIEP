@@ -1,10 +1,12 @@
 package com.wounom.kaoyaniep.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.entity.Collectlist;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
 import com.wounom.kaoyaniep.service.CollectService;
 import io.swagger.annotations.ApiOperation;
+import jdk.vm.ci.meta.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -21,6 +23,18 @@ import java.util.List;
 public class CollectController {
     @Resource
     private CollectService collectService;
+    /**
+     *
+     * 获取单个收藏
+     * @param
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getSingle")
+    @ApiOperation("通过页面target,tid,cName获取是否收藏")
+    public Result getSingle(HttpServletRequest request,@RequestBody Collectlist collectlist){
+        return collectService.getCollectSingle(request,collectlist);
+    }
 
     /**
      *
@@ -43,7 +57,7 @@ public class CollectController {
      * @author litind
      **/
     @PostMapping("/post")
-    @ApiOperation("收藏接口三合一 (cName,tid,target（-1为文章，0为版块，1为贴文）)")
+    @ApiOperation("收藏接口三合一 (targetName(关注对象的名字),tid(关注对象的id),target（-1为官方贴文(文章)，0为版块，1为贴文）)")
     public Result CollectTie(@RequestBody Collectlist collectlist, HttpServletRequest request){
         return collectService.collect(collectlist,request);
     }
@@ -57,9 +71,9 @@ public class CollectController {
      * @author litind
      **/
     @DeleteMapping("/delete")
-    @ApiOperation("删除收藏板块(tid,target)")
-    public Result delete(@RequestBody Collectlist collectlist, HttpServletRequest request){
-        return collectService.delete(collectlist,request);
+    @ApiOperation("删除收藏(id)")
+    public Result delete(@RequestParam(value = "id") Long id, HttpServletRequest request){
+        return collectService.delete(id,request);
     }
     /**
      *

@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.dao.CollectMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.CollectService;
@@ -21,7 +22,26 @@ import java.util.List;
 public class CollectServiceImpl implements CollectService {
     @Resource
     private CollectMapper collectMapper;
-
+    /**
+     *
+     * 获取单个的收藏
+     * @param request,collectlist
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getCollectSingle(HttpServletRequest request, Collectlist collectlist) {
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
+        Long userId = user.getId();
+        collectlist.setUserId(userId);
+        Collectlist collectResult = collectMapper.getCollectSingle(collectlist);
+        if (collectResult!=null){
+            return new Result(200,"获取成功",1,collectResult);
+        }else {
+            return new Result(400,"获取失败，未收藏");
+        }
+    }
 
     /**
      *
@@ -66,15 +86,17 @@ public class CollectServiceImpl implements CollectService {
     /**
      *
      * 删除收藏
-     * @param collectlist,request
+     * @param id,request
      * @return
      * @author litind
      **/
     @Override
-    public Result delete(Collectlist collectlist, HttpServletRequest request) {
+    public Result delete(Long id, HttpServletRequest request) {
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
+        Collectlist collectlist = new Collectlist();
         collectlist.setUserId(user.getId());
+        collectlist.setId(id);
         int r = collectMapper.deletet(collectlist);
         if (r>0){
             return new Result(200,"删除成功");

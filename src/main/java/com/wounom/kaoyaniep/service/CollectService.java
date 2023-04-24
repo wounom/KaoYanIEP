@@ -20,5 +20,7 @@ public interface CollectService {
 
     Result collect(Collectlist collectlist, HttpServletRequest request);
 
-    Result delete(Collectlist collectlist, HttpServletRequest request);
+    Result delete(Long id, HttpServletRequest request);
+
+    Result getCollectSingle(HttpServletRequest request, Collectlist collectlist);
 }

@@ -16,21 +16,6 @@ import java.util.List;
  */
 @Mapper
 public interface CollectMapper extends BaseMapper {
-    @Select("select * from collectlistarticle where userEmail = #{userEmail}")
-    List<Collectlistarticle> getCollectlistA(String userEmail);
-    @Select("select * from collectlistblock where userEmail = #{userEmail}")
-    List<Collectlistblock> getCollectlistB(String userEmail);
-
-    @Select("select * from collectlisttiewen where userEmail = #{userEmail}")
-    List<Collectlisttiewen> getCollectlistT(String userEmail);
-
-
-    @Delete("delete from collectlistarticle where userEmail = #{userEmail} and aid = #{aid}")
-    int deleteCollectArticleByid(Collectlistarticle collectlistarticle);
-    @Delete("delete from collectlisttiewen where userEmail = #{userEmail} and tid = #{tid}")
-    int deleteCollectTiewenByid(Collectlisttiewen collectlisttiewen);
-    @Delete("delete from collectlistblock where userEmail = #{userEmail} and bName = #{bName}")
-    int deleteCollectBlockByid(Collectlistblock collectlistblock);
 
     @Delete("DELETE FROM collectlist WHERE id = #{id} and userId = #{userId}")
     int deleteByIdList(@Param("id") Long id,@Param("userId")Long userId);
@@ -41,6 +26,8 @@ public interface CollectMapper extends BaseMapper {
 
     @Insert("insert into  collectlist(userId,collecttime,target,cName,tid) values (#{userId},#{collecttime},#{target},#{cName}),#{tid}")
     int insertCollectlist(Collectlist collectlist);
-    @Delete("delete from collectlist where userId = #{userId} AND target = #{target} AND tid = #{tid}")
+    @Delete("delete from collectlist where userId = #{userId} AND id = #{id}")
     int deletet(Collectlist collectlist);
+
+    Collectlist getCollectSingle(Collectlist collectlist);
 }
