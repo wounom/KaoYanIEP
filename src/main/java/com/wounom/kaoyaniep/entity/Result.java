@@ -14,7 +14,7 @@ public class Result {
     private Integer code = 0;
     private String message;
     private Integer count = 0;
-    private Object data;
+    private Object data = null;
 
     public Integer getCode() {
         return code;
