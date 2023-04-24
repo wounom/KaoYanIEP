@@ -166,8 +166,7 @@ public class UserController {
         if(!userService.isUserEmailexsit(user.getEmail())){
             return new Result(400,"账号不存在");
         }
-        userService.forgetPw(user);
-        return new Result(200,"修改成功");
+        return userService.forgetPw(user);
     }
 
     /**
