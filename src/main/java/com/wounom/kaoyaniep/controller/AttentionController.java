@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.entity.Attentionlist;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.University;
@@ -24,6 +25,18 @@ import javax.servlet.http.HttpServletRequest;
 public class AttentionController {
     @Resource
     private AttentionService attentionService;
+    /**
+     *
+     * 判断用户是否已经关注该用户（院校）
+     * @param
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getIf")
+    @ApiOperation("判断是否关注过")
+    public Result getIf(HttpServletRequest request,@RequestParam(value = "targetid",required = false) Long targetid,@RequestParam(value = "schoolid",required = false) Long schoolid){
+        return attentionService.getIf(request,targetid,schoolid);
+    }
 
     /**
      *

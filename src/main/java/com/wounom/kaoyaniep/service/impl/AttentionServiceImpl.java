@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.service.impl;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.dao.AttentionMapper;
 import com.wounom.kaoyaniep.entity.Attentionlist;
 import com.wounom.kaoyaniep.entity.Result;
@@ -22,6 +23,38 @@ import java.util.List;
 public class AttentionServiceImpl implements AttentionService {
     @Resource
     private AttentionMapper attentionMapper;
+    
+    /**
+     *
+     * @param
+     * @return 
+     * @author litind
+     **/
+    @Override
+    public Result getIf(HttpServletRequest request, Long targetid, Long schoolid) {
+        String token = request.getHeader("token");
+        User u = TokenUtils.getUser(token);
+        Attentionlist attentionlist = new Attentionlist();
+        attentionlist.setUserId(u.getId());
+        attentionlist.setTargetid(targetid);
+        attentionlist.setSchoolid(schoolid);
+        Attentionlist alist = null;
+        if (targetid==null){//查询学校
+            alist = attentionMapper.findIfSchool(attentionlist);
+        }else {
+            alist = attentionMapper.findIfUser(attentionlist);
+        }
+        boolean b = false;
+        if (alist!=null){
+            b = true;
+        }
+        if (b){
+            return new Result(200,"已关注",1,b);
+        }else {
+            return new Result(400,"未关注",0,b);
+        }
+    }
+
     /**
      *
      * 关注用户或者院校

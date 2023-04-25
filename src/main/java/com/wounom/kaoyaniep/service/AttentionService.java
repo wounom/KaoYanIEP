@@ -18,4 +18,6 @@ public interface AttentionService {
     Result getById(Long id);
 
     Result delete(HttpServletRequest request, Attentionlist attentionlist);
+
+    Result getIf(HttpServletRequest request, Long targetid, Long schoolid);
 }

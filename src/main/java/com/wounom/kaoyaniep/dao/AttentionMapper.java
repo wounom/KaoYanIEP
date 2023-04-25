@@ -27,4 +27,8 @@ public interface AttentionMapper {
 
     @Delete("delete from attentionlist where userId=#{userId}  AND targetid=#{targetid}" )
     int deleteAttentionUser(Attentionlist attentionlist);
+    @Select("select * from attentionlist where userId = #{userId} AND schoolid = #{schoolid}")
+    Attentionlist findIfSchool(Attentionlist attentionlist);
+    @Select("select * from attentionlist where userId = #{userId} AND targetid = #{targetid}")
+    Attentionlist findIfUser(Attentionlist attentionlist);
 }

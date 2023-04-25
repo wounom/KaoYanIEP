@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.dao.BlockMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.BlockService;
@@ -69,6 +70,11 @@ public class BlockServiceImpl implements BlockService {
     @Override
     public Result search(String blockName, String keywords) {
         List<Tiewen> list =  blockMapper.search(blockName,keywords);
-        return new Result(200,"message",list.size(),list);
+        if (list.size()>0){
+            return new Result(200,"message",list.size(),list);
+        }else {
+            return new Result(400,"无内容",0,null);
+        }
+
     }
 }

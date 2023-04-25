@@ -43,9 +43,11 @@ public class BlockController {
      * @return
      * @author litind
      **/
+
     @GetMapping("/search")
     @ApiOperation("模糊搜索板块内的贴文")
-    public Result Search(@RequestParam String blockName,@RequestParam String keywords){
+    public Result Search(@RequestParam(value = "blockName") String blockName
+            ,@RequestParam(value = "keywords") String keywords){
 
         return blockService.search(blockName,keywords);
     }
