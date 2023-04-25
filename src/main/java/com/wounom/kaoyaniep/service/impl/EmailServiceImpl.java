@@ -75,13 +75,13 @@ public class EmailServiceImpl implements EmailService {
                 User user = new User();
                 user.setEmail(email);
                 user.setCode(code);
-                user.setActive_Time(activeTime);
+                user.setActiveTime(activeTime);
                 userMapper.insertCode(user);
             }else {
                 User user = new User();
                 user.setEmail(email);
                 user.setCode(code);
-                user.setActive_Time(activeTime);
+                user.setActiveTime(activeTime);
                 userMapper.updateUsercode(user);//新增code项，后续用户信息插入code
             }
             return new Result(200,"发送成功");

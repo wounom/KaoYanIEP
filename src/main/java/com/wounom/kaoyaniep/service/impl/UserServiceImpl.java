@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public Result register(User user) {
         user.setSalt(PasswordUtil.createSalt());//设置用户加密盐
         user.setPassword(PasswordUtil.md5Pwd(user.getPassword(),user.getSalt()));
-        user.setIs_Valid(1);
+        user.setIsValid(1);
         String name =UserUtils.getRandomChineseString();
         user.setUsername(name);
         System.out.println(name);
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
             return new Result(400,"验证码超时");
         }
         user.setCode("");
-        user.setActive_Time(LocalDateTime.now());
+        user.setActiveTime(LocalDateTime.now());
         userMapper.updatePw(user);
         return new Result(200,"密码修改成功");
     }
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         if(lpw.equals(tmpUser.getPassword())){
             user.setSalt(PasswordUtil.createSalt());//设置用户加密盐
             user.setPassword(PasswordUtil.md5Pwd(newpassword,user.getSalt()));
-            user.setActive_Time(LocalDateTime.now());
+            user.setActiveTime(LocalDateTime.now());
             user.setCode("");
             userMapper.updatePw(user);
             return new Result(200,"密码修改成功");
@@ -158,8 +158,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result uploadimg(String email, MultipartFile file, HttpServletRequest request){
         User user = userMapper.selectByUserEmail1(email);
-        if (user.getImagePath()!=null){
-            FileUtil.deleteFile(user.getImagePath());
+        if (user.getImagepath()!=null){
+            FileUtil.deleteFile(user.getImagepath());
         }
 
         try {
@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
             User newuser = new User();
             newuser.setEmail(email);
             newuser.setImage(url);
-            newuser.setImagePath(path);
+            newuser.setImagepath(path);
             userMapper.updateUserImg(newuser);
             return new Result(200,url);
         } catch (IOException e) {

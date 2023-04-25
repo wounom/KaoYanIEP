@@ -36,7 +36,7 @@ public interface UserMapper  {
             "<if test=\"username!=null\"> username= #{username}, </if>"+
             "<if test=\"sex != null\"> sex = #{sex}, </if>"+
             "<if test=\"birthDay!= null\"> birthday = #{birthDay},</if>"+
-            "<if test=\"target_Unversity != null\"> target_unversity = #{target_Unversity},</if>"
+            "<if test=\"targetUnversity != null\"> targetUnversity = #{targetUnversity},</if>"
             +"</set>"+"where email = #{email}"+"</script>")
     int updateUser(User user);
 
@@ -46,33 +46,33 @@ public interface UserMapper  {
 
     void insert(User user);
 
-    @Select("select * from user where email = #{email} AND is_valid=1")
+    @Select("select * from user where email = #{email} AND isValid=1")
     User selectByUserEmail1(String email);//获取已经注册的账号
 
     @Select(" select * from user where email = #{email}")
     User selectUserByEmail_(String email);//获取该邮箱的所有账号
 
-    @Update("update user set username = #{username}, is_valid = #{is_Valid} , salt = #{salt}, password = #{password} where email = #{email}")
+    @Update("update user set username = #{username}, isValid = #{isValid} , salt = #{salt}, password = #{password} where email = #{email}")
     void updateregist(User user);
 
-    @Insert("insert into  user(email,code,active_time)\n" +
-            "values (#{email},#{code},#{active_Time})")
+    @Insert("insert into  user(email,code,activeTime)\n" +
+            "values (#{email},#{code},#{activeTime})")
     void insertCode(User user);
 
-    @Update("update  user set code =#{code}, active_time=#{active_Time} where email=#{email}")
+    @Update("update  user set code =#{code}, activeTime=#{activeTime} where email=#{email}")
     void updateUsercode(User user);
 
     @Select("Select * FROM user")
     List<User>  findall();
-    @Select("Select username,email,password,salt,is_valid FROM user")
+    @Select("Select username,email,password,salt,isValid FROM user")
     List<User> selectList();
     @Select("SELECT code from user where email = #{email}")
     String findCode(String email);
 
-    @Select("select active_time from user where email = #{email}")
+    @Select("select activeTime from user where email = #{email}")
     LocalDateTime findActive(String email);
 
-    @Update("update user set code =#{code}, active_time=#{active_Time},salt = #{salt}, password = #{password} where email = #{email}")
+    @Update("update user set code =#{code}, activeTime=#{activeTime},salt = #{salt}, password = #{password} where email = #{email}")
     void updatePw(User user);
 
     @Update("update user set image = #{image}, imagepath = #{imagePath} where email = #{email}")

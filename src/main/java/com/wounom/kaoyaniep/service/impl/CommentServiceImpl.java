@@ -126,7 +126,7 @@ public class CommentServiceImpl implements CommentService {
         User user = TokenUtils.getUser(token);
         comment.setUserId(user.getId());
         comment.setUserName(user.getUsername());
-        comment.setUserImg(user.getImagePath());
+        comment.setUserImg(user.getImagepath());
         comment.setCreateTime(DateTime.now());
         int r= commentMapper.saveMessage(comment);
         if (r>0){

@@ -1,153 +1,110 @@
 package com.wounom.kaoyaniep.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * @author litind
- * @version 1.0
- * @date 2023/3/30 15:53
+ * @Description  
+ * @Author  zhf
+ * @Date 2023-04-25 
  */
-public class User {
 
-    private long id;
-    private String username;
-    private String password;
-    private String email;
-    private String code;
-    private String salt;
-    private long is_Valid;
-    private LocalDateTime active_Time;
-
-    private String sex;
-    private String signature;
-    private String target_Unversity;
-
-    private Date birthDay;
-    public String image;
-
-    public String imagePath;
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public String getTarget_Unversity() {
-        return target_Unversity;
-    }
+@ApiModel(value = "user")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class User  implements Serializable {
 
 
+	/**
+	 * 用户id
+	 */
+	@ApiModelProperty(value = "用户id")
+	private Long id;
 
+	/**
+	 * 用户名
+	 */
+	@ApiModelProperty(value = "用户名")
+	private String username;
 
-    public void setTarget_Unversity(String target_Unversity) {
-        this.target_Unversity = target_Unversity;
-    }
+	/**
+	 * 用户密码
+	 */
+	@ApiModelProperty(value = "用户密码")
+	private String password;
 
-    public long getId() {
-        return id;
-    }
+	/**
+	 * 用户电子邮箱
+	 */
+	@ApiModelProperty(value = "用户电子邮箱")
+	private String email;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	/**
+	 * 验证码
+	 */
+	@ApiModelProperty(value = "验证码")
+	private String code;
 
+	/**
+	 * 密码加密
+	 */
+	@ApiModelProperty(value = "密码加密")
+	private String salt;
 
-    public String getUsername() {
-        return username;
-    }
+	/**
+	 * 激活状态(默认为0，未激活；1已激活)
+	 */
+	@ApiModelProperty(value = "激活状态(默认为0，未激活；1已激活)")
+	private Integer isValid;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	/**
+	 * 激活时间
+	 */
+	@ApiModelProperty(value = "激活时间")
+	private LocalDateTime activeTime;
 
+	/**
+	 * 性别
+	 */
+	@ApiModelProperty(value = "性别")
+	private String sex;
 
-    public String getPassword() {
-        return password;
-    }
+	/**
+	 * 生日
+	 */
+	@ApiModelProperty(value = "生日")
+	private Date birthday;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	/**
+	 * 个性签名
+	 */
+	@ApiModelProperty(value = "个性签名")
+	private String signature;
 
+	/**
+	 * 目标院校
+	 */
+	@ApiModelProperty(value = "目标院校")
+	private String targetUnversity;
 
-    public String getEmail() {
-        return email;
-    }
+	/**
+	 * 头像（头像名字）
+	 */
+	@ApiModelProperty(value = "头像（头像名字）")
+	private String image;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-
-    public long getIs_Valid() {
-        return is_Valid;
-    }
-
-    public void setIs_Valid(long is_Valid) {
-        this.is_Valid = is_Valid;
-    }
-
-
-    public LocalDateTime getActive_Time() {
-        return active_Time;
-    }
-
-    public void setActive_Time(LocalDateTime active_Time) {
-        this.active_Time = active_Time;
-    }
+	/**
+	 * 头像文件路径
+	 */
+	@ApiModelProperty(value = "头像文件路径")
+	private String imagepath;
 
 }
-

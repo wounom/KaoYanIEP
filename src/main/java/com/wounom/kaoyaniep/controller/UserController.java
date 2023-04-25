@@ -118,10 +118,10 @@ public class UserController {
         }
         User newuser = userService.getUserByEmail(user.getEmail());//查询已经注册的该邮箱账户
         newuser.setCode(null);
-        newuser.setActive_Time(null);
+        newuser.setActiveTime(null);
         newuser.setSalt(null);
         newuser.setPassword(null);
-        newuser.setImagePath(null);
+        newuser.setImagepath(null);
         Map<String,Object> map = new HashMap<>();
         map.put("user",newuser);
         if(userService.loginCheck(user)!=null){
