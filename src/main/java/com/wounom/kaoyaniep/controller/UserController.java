@@ -64,6 +64,7 @@ public class UserController {
         User user =  TokenUtils.getUser(token);
         return user.getEmail();
     }
+
     /**
      *
      * 根据token获取用户信息

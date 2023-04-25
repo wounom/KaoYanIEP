@@ -20,11 +20,9 @@ public interface CollectMapper extends BaseMapper {
     @Delete("DELETE FROM collectlist WHERE id = #{id} and userId = #{userId}")
     int deleteByIdList(@Param("id") Long id,@Param("userId")Long userId);
 
-
     @Select("select * from collectlist where userId = #{userId} AND target = #{target}")
     List<Collectlist> getCollectlist(@Param("userId") Long userId,@Param("target") int target);
 
-    @Insert("insert into  collectlist(userId,collecttime,target,cName,tid) values (#{userId},#{collecttime},#{target},#{cName}),#{tid}")
     int insertCollectlist(Collectlist collectlist);
     @Delete("delete from collectlist where userId = #{userId} AND id = #{id}")
     int deletet(Collectlist collectlist);

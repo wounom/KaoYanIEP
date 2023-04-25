@@ -8,4 +8,8 @@
                                     AND targetName = #{targetName} AND tid = #{tid}
     </select>
 
+    <insert id="insertCollectlist">
+        insert into  collectlist(userId,collecttime,target,targetName,tid) values(#{userId},#{collecttime},#{target},#{targetName},#{tid})
+    </insert>
+
 </mapper>

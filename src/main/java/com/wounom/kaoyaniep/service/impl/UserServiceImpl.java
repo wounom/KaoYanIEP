@@ -151,8 +151,10 @@ public class UserServiceImpl implements UserService {
      * @return java.lang.Boolean
      * @author litind
      **/
-    @Value("${file.upload-path}/")
+    @Value("${file.upload-path}")
     private String imgPath;
+    @Value("${file.upload-ip}")
+    private String ip;
     @Override
     public Result uploadimg(String email, MultipartFile file, HttpServletRequest request){
         User user = userMapper.selectByUserEmail1(email);
@@ -162,7 +164,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             String newFn = FileUtil.saveFile(file,imgPath);
-            String url = request.getScheme()+"://43.138.194.191:"+request.getServerPort() +"/images/userheadimg/"+newFn;//todo:部署后记得改ip
+            String url = request.getScheme()+"://"+ip+":"+request.getServerPort() +"/images/userheadimg/"+newFn;//todo:部署后记得改ip
             String path = imgPath+newFn;
             User newuser = new User();
             newuser.setEmail(email);

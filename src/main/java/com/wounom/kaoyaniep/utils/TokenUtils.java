@@ -45,9 +45,22 @@ public class TokenUtils {
         }catch (Exception e){
             e.printStackTrace();
         }
-        tokenMap.put(token,user);
+        saveUser(token,user);
         return token;
     }
+
+    //缓存已经登录的账户
+    static void saveUser(String token,User user){
+        User u = tokenMap.get(token);
+        if (u==null){
+            tokenMap.put(token,user);
+        }else {
+            //当用户重新登录的时候，先将缓存中的token去掉，再存入新的token
+            tokenMap.remove(token);
+            tokenMap.put(token,user);
+        }
+    }
+
 
     // TOKEN 验证
     public static Boolean verfiry(String token){
@@ -73,11 +86,21 @@ public class TokenUtils {
     }
 
     // 通过token获取用户
-    public static User checkUser(String token){
+    /**
+     *
+     * 推荐使用该方法获取用户
+     * 可与前端登录、登出形成两轮验证
+     * @param token
+     * @return com.wounom.kaoyaniep.entity.User
+     * @author litind
+     **/
+    public static User getUser1(String token){
         User user = tokenMap.get(token);
         return user;
     }
 
+    //登出时使用该方法删除服务器缓存中的token
+    //防止已登出的用户使用登出前的token恶意操作
     public static boolean removeToken(String token) {
         try {
             tokenMap.remove(token);
@@ -86,6 +109,7 @@ public class TokenUtils {
         }
         return true;
     }
+
     /**
      *
      * 解析token

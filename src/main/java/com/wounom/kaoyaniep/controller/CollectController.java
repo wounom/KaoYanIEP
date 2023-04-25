@@ -32,7 +32,11 @@ public class CollectController {
      **/
     @GetMapping("/getSingle")
     @ApiOperation("通过页面target,tid,cName获取是否收藏")
-    public Result getSingle(HttpServletRequest request,@RequestBody Collectlist collectlist){
+    public Result getSingle(HttpServletRequest request,@RequestParam("targetName") String targetName,@RequestParam(value = "target") Integer target,@RequestParam(value = "tid") Long tid){
+        Collectlist collectlist = new Collectlist();
+        collectlist.setTid(tid);
+        collectlist.setTarget(target);
+        collectlist.setTargetName(targetName);
         return collectService.getCollectSingle(request,collectlist);
     }
 
@@ -66,7 +70,7 @@ public class CollectController {
     /**
      *
      * 删除操作
-     * @param collectlist,request
+     * @param id,request
      * @return com.wounom.kaoyaniep.entity.Result
      * @author litind
      **/
