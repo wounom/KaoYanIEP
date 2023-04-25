@@ -28,14 +28,14 @@ public class AttentionController {
     /**
      *
      * 关注用户
-     * @param user，university
+     * @param attentionlist
      * @return
      * @author litind
      **/
     @PostMapping("/add")
     @ApiOperation("关注用户传入user，关注学校传入university")
-    public Result attention(HttpServletRequest request, @RequestBody(required = false) User user, @RequestBody(required = false) University university){
-        return attentionService.attention(request,user,university);
+    public Result attention(HttpServletRequest request, @RequestBody Attentionlist attentionlist){
+        return attentionService.attention(request,attentionlist);
     }
 
     /**

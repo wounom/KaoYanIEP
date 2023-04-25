@@ -192,7 +192,7 @@ public class UserController {
      * @author litind
      **/
     @ApiOperation("修改密码(String oldPwd,String newPwd)")
-    @PutMapping("/resetpw")
+    @PostMapping("/resetpw")
     public Result resetPw(HttpServletRequest request,@RequestBody Map<String,String> map){
 
         String oldPwd=map.get("oldPwd");
@@ -217,7 +217,7 @@ public class UserController {
      * @author litind
      **/
     @ApiOperation("更新用户信息")
-    @PutMapping("/updateUserInfo")
+    @PostMapping("/updateInfo")
     public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){//user不用传入Email，通过session获取
         String token = request.getHeader("token");
         User oldUser = TokenUtils.getUser(token);
@@ -234,7 +234,7 @@ public class UserController {
      **/
     @PostMapping("/uploadimage")
     @ApiOperation("上传用户头像")
-    public Result uploadImg(MultipartFile file,HttpServletRequest request){
+    public Result uploadImg(@RequestParam(value = "file") MultipartFile file,HttpServletRequest request){
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         String email = user.getEmail();

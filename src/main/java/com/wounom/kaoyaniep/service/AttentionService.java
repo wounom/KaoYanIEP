@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2023/4/13 10:35
  */
 public interface AttentionService {
-    Result attention(HttpServletRequest request, User user, University university);
+    Result attention(HttpServletRequest request, Attentionlist attentionlist);
 
     Result getById(Long id);
 

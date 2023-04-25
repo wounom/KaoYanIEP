@@ -30,18 +30,6 @@ public class TieWenController {
     @Resource
     private TieWenService tieWenService;
 
-    /**
-     *
-     * 收藏贴文
-     * @param tiewen,request
-     * @return
-     * @author litind
-     **/
-    @PostMapping("/collectTie")
-    @ApiOperation("收藏贴文 (title,tiewenId)")
-    public Result CollectTie(@RequestBody Tiewen tiewen, HttpServletRequest request){
-        return tieWenService.collectTie(tiewen,request);
-    }
 
     /**
      *
@@ -50,12 +38,13 @@ public class TieWenController {
      * @return
      * @author litind
      **/
-    @GetMapping("/getByid/{tiewenId}")
-    @ApiOperation("通过贴文id查看贴文详情：收藏贴文看详情(tiewenId)")
-    public  Result getTiewenByid(@PathVariable(value = "tiewenId") int tiewenId){
-
+    @GetMapping("/getByid")
+    @ApiOperation("通过贴文id获取贴文详情(tiewenId)")
+    public  Result getTiewenByid(@RequestParam(value = "tiewenId") int tiewenId){
         return tieWenService.getTiewenByid(tiewenId);
     }
+
+
 
     /**
      *
@@ -113,6 +102,7 @@ public class TieWenController {
     public Result DeleteTiewen(HttpServletRequest request,@RequestParam(value = "tiewenId") Long tiewenId){
         return tieWenService.deleteTiewen(request,tiewenId);
     }
+
 
     /**
      *

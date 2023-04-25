@@ -81,7 +81,7 @@ public class CommentController {
      * @return
      * @author litind
      **/
-    @PostMapping("postmessage")
+    @PostMapping("/postmessage")
     @ApiOperation("发送留言content,targetUserId")
     public Result PostMessage(HttpServletRequest request,@RequestBody Comment comment){
         return commentService.PostMessage(request,comment);
@@ -94,7 +94,7 @@ public class CommentController {
      * @return
      * @author litind
      **/
-    @GetMapping("getmessage")
+    @GetMapping("/getmessage")
     @ApiOperation("获取留言")
     public Result GetMessage(HttpServletRequest request){
         return commentService.getMessage(request);

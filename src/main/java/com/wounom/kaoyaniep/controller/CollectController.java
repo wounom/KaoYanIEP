@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author litind
@@ -79,16 +80,18 @@ public class CollectController {
     public Result delete(@RequestParam(value = "id") Long id, HttpServletRequest request){
         return collectService.delete(id,request);
     }
+
     /**
      *
      * 批量删除
-     * @param id
+     * @param idmap
      * @return
      * @author litind
      **/
     @DeleteMapping("/deleteList")
     @ApiOperation("批量删除收藏")
-    public Result deleteList(@RequestBody List<Long> id, HttpServletRequest request){
+    public Result deleteList(@RequestBody Map<String,List<Long>> idmap, HttpServletRequest request){
+        List<Long> id = idmap.get("id");
         System.out.println(id);
         return collectService.deleteList(id,request);
     }

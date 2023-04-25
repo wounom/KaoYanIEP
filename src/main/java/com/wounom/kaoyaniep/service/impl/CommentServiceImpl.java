@@ -1,8 +1,12 @@
 package com.wounom.kaoyaniep.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.wounom.kaoyaniep.dao.CommentMapper;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
+import com.wounom.kaoyaniep.dao.UniverMapper;
+import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.entity.Comment;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.entity.Tiewen;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +35,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
     @Resource
     private TieWenMapper tieWenMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public Result postComment(Comment comment, HttpServletRequest request) {
@@ -46,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         tieWenMapper.updateCommentCount(comment.getTiewenId());
         int r= commentMapper.save(comment);
         if (r>0){
-            return new Result(400,"评论成功");
+            return new Result(200,"评论成功");
         }else {
             return new Result(400,"失败");
         }
@@ -66,7 +73,12 @@ public class CommentServiceImpl implements CommentService {
         for (Comment rootComment : rootComments){
             rootComment.setChildren(comments.stream().filter(comment -> rootComment.getId().equals(comment.getParentId())).collect(Collectors.toList()));
         }
-        return new Result(200,"success",rootComments.size(),rootComments);
+        if (rootComments.size()>0){
+            return new Result(200,"success",rootComments.size(),rootComments);
+        }else {
+            return new Result(400,"数据空");
+        }
+
     }
 
     /**
@@ -106,11 +118,21 @@ public class CommentServiceImpl implements CommentService {
         //先获取用户的贴文
         List<Tiewen> tiewenList = tieWenMapper.getTieWenbyUserId(userId);
         //再通过用户贴文的id获取评论
-        List<List<Comment>> comments = (List<List<Comment>>) new Comment();
-        for (int i = 0 ; i<tiewenList.size();i++){
-            List<Comment> list = commentMapper.getByTiewenId(tiewenList.get(i).getTiewenId());
-            comments.add(list);
+        //查询出用户所有贴文下的评论
+        List<Comment> comments = new ArrayList<Comment>();
+        for (int i = 0 ; i<tiewenList.size() ;i++){
+            List<Comment> c = commentMapper.getByTiewenId(tiewenList.get(i).getTiewenId());
+            for (int j=0;j<c.size();j++){
+                comments.add(c.get(j));
+            }
         }
+        System.out.println("评论数:"+comments.size());
+        //放入树
+        List<Comment> rootComments = comments.stream().filter(comment -> comment.getParentId()==null).collect(Collectors.toList());
+        for (Comment rootComment : rootComments){
+            rootComment.setChildren(comments.stream().filter(comment -> rootComment.getId().equals(comment.getParentId())).collect(Collectors.toList()));
+        }
+        System.out.println(rootComments.size());
         return new Result(200,"获取成功",comments.size(),comments);
     }
     /**
@@ -128,9 +150,14 @@ public class CommentServiceImpl implements CommentService {
         comment.setUserName(user.getUsername());
         comment.setUserImg(user.getImagepath());
         comment.setCreateTime(DateTime.now());
+        Long uid = user.getId();
+        User user1 = userMapper.getUserById(comment.getTargetUserId());
+        if (user1==null){
+            return new Result(400,"目标用户不存在");
+        }
         int r= commentMapper.saveMessage(comment);
         if (r>0){
-            return new Result(400,"成功");
+            return new Result(200,"成功");
         }else {
             return new Result(400,"失败");
         }
@@ -149,6 +176,10 @@ public class CommentServiceImpl implements CommentService {
         User user = TokenUtils.getUser(token);
         Long targetUserId = user.getId();
         List<Comment> commentList = commentMapper.getMessage(targetUserId);
-        return null;
+        if (commentList.isEmpty()){
+            return new Result(400,"无留言");
+        }else {
+            return new Result(200,"成功",commentList.size(),commentList);
+        }
     }
 }

@@ -25,28 +25,19 @@ public class AttentionServiceImpl implements AttentionService {
     /**
      *
      * 关注用户或者院校
-     * @param user,university
+     * @param attentionlist
      * @return java.lang.Boolean
      * @author litind
      **/
     @Override
-    public Result attention(HttpServletRequest request, User user, University university) {
-        Attentionlist attentionlist = new Attentionlist();
+    public Result attention(HttpServletRequest request, Attentionlist attentionlist) {
         String token = request.getHeader("token");
         User u = TokenUtils.getUser(token);
-        attentionlist.setId(u.getId());
-        if (user==null&&university==null){
+
+        if (attentionlist==null){
             return new Result(400,"传入数据均为空");
         }
-        if (user==null){//传入的是学校
-            attentionlist.setSchoolid(university.getUniversityId());
-            attentionlist.setName(university.getUniversityName());
-            attentionlist.setTarget(1);
-        }else {//传入的是用户
-            attentionlist.setName(user.getUsername());
-            attentionlist.setTargetid(user.getId());
-            attentionlist.setTarget(0);
-        }
+        attentionlist.setUserId(u.getId());
         int r = attentionMapper.addAttention(attentionlist);
         if (r>0){
             return new Result(200,"关注成功");
@@ -84,8 +75,13 @@ public class AttentionServiceImpl implements AttentionService {
         }
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
-        attentionlist.setId(user.getId());
-        int r = attentionMapper.delete(attentionlist);
+        attentionlist.setUserId(user.getId());
+        int r =0;
+        if (attentionlist.getTarget()==1){
+             r = attentionMapper.deleteAttentionUniver(attentionlist);
+        }else {
+            r = attentionMapper.deleteAttentionUser(attentionlist);
+        }
         if (r>0){
             return new Result(200,"取消关注成功");
         }else{

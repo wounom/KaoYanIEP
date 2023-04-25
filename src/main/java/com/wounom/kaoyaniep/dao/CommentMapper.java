@@ -15,8 +15,8 @@ import java.util.List;
  */
 @Mapper
 public interface CommentMapper {
-    @Insert("insert into comment(userId,userName,userImg,content,tiewenId,createTime,parentId,rootId" +
-            ") values (#{userId},#{userName},#{userImg},#{content},#{tiewenId},#{createTime},#{parentId},#{rootId}) ")
+    @Insert("insert into comment(userId,userName,userImg,content,tiewenId,createTime,parentId" +
+            ") values (#{userId},#{userName},#{userImg},#{content},#{tiewenId},#{createTime},#{parentId}) ")
     int save(Comment comment);
     @Select("select * from comment where tiewenId = #{tiewenId}")
     List<Comment> getByTiewenId(Long tiewenId);

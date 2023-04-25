@@ -15,13 +15,16 @@ import java.util.List;
  */
 @Mapper
 public interface AttentionMapper {
-    @Insert("insert into  attentionlist(target,targetid,Name,id,schoolid)" +
-            "values (#{target},#{targetId},#{Name},#{id},#{schoolId})")
+    @Insert("insert into  attentionlist(target,targetid,Name,userId,schoolid)" +
+            "values(#{target},#{targetid},#{name},#{userId},#{schoolid})")
     int addAttention(Attentionlist attentionlist);
 
-    @Select("select * from attentionlist where id = #{id}")
+    @Select("select * from attentionlist where userId = #{id}")
     List<Attentionlist> getByid(Long id);
 
-    @Delete("delete from attentionlist where id=#{id} AND targetid=#{targetId} AND schoolid = #{schoolId}")
-    int delete(Attentionlist attentionlist);
+    @Delete("delete from attentionlist where userId=#{userId}  AND schoolid=#{schoolid}")
+    int deleteAttentionUniver(Attentionlist attentionlist);
+
+    @Delete("delete from attentionlist where userId=#{userId}  AND targetid=#{targetid}" )
+    int deleteAttentionUser(Attentionlist attentionlist);
 }

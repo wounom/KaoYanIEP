@@ -75,11 +75,15 @@ public class CollectServiceImpl implements CollectService {
         User user = TokenUtils.getUser(token);
         collectlist.setUserId(user.getId());
         collectlist.setCollecttime(DateTime.now());
-        int r = collectMapper.insertCollectlist(collectlist);
-        if (r>0){
-            return new Result(200,"收藏成功");
+        if( collectMapper.getCollectSingle(collectlist)!=null){
+            return new Result(400,"已收藏");
         }else {
-            return new Result(400,"收藏失败");
+            int r = collectMapper.insertCollectlist(collectlist);
+            if (r>0){
+                return new Result(200,"收藏成功");
+            }else {
+                return new Result(400,"收藏失败");
+            }
         }
     }
 

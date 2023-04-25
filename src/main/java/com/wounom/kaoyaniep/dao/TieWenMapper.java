@@ -20,17 +20,10 @@ public interface TieWenMapper {
     List<Tiewen> getTieWenbyUserId(Long userId);
 
 
-    @Select("select * from tiewen where status = 0")
-    List<Tiewen> getCheckTiewen();
-
-
-    @Delete("delete from tiewen where blockName = #{blockName}")
-    int deleteTiewenByBlock(String blockName);
-
     @Insert("insert into  collectlisttiewen(userEmail,collecttime,tName,tid) values (#{userEmail},#{collecttime},#{tName}),#{tid}")
     int insertCollectlist(Collectlisttiewen collectlisttiewen);
 
-    @Select("select * from where tiewenId = #{tiewenId}")
+    @Select("select * from tiewen where tiewenId = #{tiewenId}")
     List<Tiewen> getTiewenById(int tiewenId);
 
     @Select("select * from tiewen where blockName = #{blockName} order by createTime desc")

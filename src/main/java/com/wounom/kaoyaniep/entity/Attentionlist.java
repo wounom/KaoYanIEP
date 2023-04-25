@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-13 
+ * @Date 2023-04-25 
  */
 
 @ApiModel(value = "attentionlist")
@@ -26,12 +26,6 @@ public class Attentionlist  implements Serializable {
 	 */
 	@ApiModelProperty(value = "关注列表id")
 	private Long attentionid;
-
-	/**
-	 * 关注对象标识（用户）
-	 */
-	@ApiModelProperty(value = "关注对象标识（用户）")
-	private Long targetid;
 
 	/**
 	 * 关注对象类型（0为用户（默认）1为院校）
@@ -49,7 +43,13 @@ public class Attentionlist  implements Serializable {
 	 * 自己的标识
 	 */
 	@ApiModelProperty(value = "自己的标识")
-	private Long id;
+	private Long userId;
+
+	/**
+	 * 关注对象标识（用户）
+	 */
+	@ApiModelProperty(value = "关注对象标识（用户）")
+	private Long targetid;
 
 	/**
 	 * 关注对象标识（院校）
