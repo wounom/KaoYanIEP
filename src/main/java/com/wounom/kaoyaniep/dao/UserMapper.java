@@ -77,7 +77,7 @@ public interface UserMapper  {
     @Update("update user set code =#{code}, activeTime=#{activeTime},salt = #{salt}, password = #{password} where email = #{email}")
     void updatePw(User user);
 
-    @Update("update user set image = #{image}, imagepath = #{imagePath} where email = #{email}")
+    @Update("update user set image = #{image}, imagepath = #{imagepath} where email = #{email}")
     void updateUserImg(User user);
 
 

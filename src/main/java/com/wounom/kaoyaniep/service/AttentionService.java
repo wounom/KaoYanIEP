@@ -19,5 +19,5 @@ public interface AttentionService {
 
     Result delete(HttpServletRequest request, Attentionlist attentionlist);
 
-    Result getIf(HttpServletRequest request, Long targetid, Long schoolid);
+    Result getIf(HttpServletRequest request, Long targetid, Long schoolid,int target);
 }

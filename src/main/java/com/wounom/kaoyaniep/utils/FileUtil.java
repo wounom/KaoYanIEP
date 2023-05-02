@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.utils;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.io.FileUtils;
 
 import javax.swing.plaf.multi.MultiListUI;
 import java.io.File;
@@ -30,7 +31,7 @@ public class FileUtil {
             dir.mkdir();
         }
         File file1 = new File(path,newFileName);
-        file.transferTo(file1);
+        FileUtils.copyInputStreamToFile(file.getInputStream(),file1);
         return newFileName;
     }
     /**

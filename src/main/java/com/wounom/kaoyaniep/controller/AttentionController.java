@@ -34,8 +34,8 @@ public class AttentionController {
      **/
     @GetMapping("/getIf")
     @ApiOperation("判断是否关注过")
-    public Result getIf(HttpServletRequest request,@RequestParam(value = "targetid",required = false) Long targetid,@RequestParam(value = "schoolid",required = false) Long schoolid){
-        return attentionService.getIf(request,targetid,schoolid);
+    public Result getIf(HttpServletRequest request,@RequestParam("target") int target,@RequestParam(value = "targetid",required = false) Long targetid,@RequestParam(value = "schoolid",required = false) Long schoolid){
+        return attentionService.getIf(request,targetid,schoolid,target);
     }
 
     /**
@@ -46,7 +46,7 @@ public class AttentionController {
      * @author litind
      **/
     @PostMapping("/add")
-    @ApiOperation("关注用户传入user，关注学校传入university")
+    @ApiOperation("关注 不可二次关注")
     public Result attention(HttpServletRequest request, @RequestBody Attentionlist attentionlist){
         return attentionService.attention(request,attentionlist);
     }

@@ -234,7 +234,7 @@ public class UserController {
      **/
     @PostMapping("/uploadimage")
     @ApiOperation("上传用户头像")
-    public Result uploadImg(@RequestParam(value = "file") MultipartFile file,HttpServletRequest request){
+    public Result uploadImg(MultipartFile file,HttpServletRequest request){
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         String email = user.getEmail();

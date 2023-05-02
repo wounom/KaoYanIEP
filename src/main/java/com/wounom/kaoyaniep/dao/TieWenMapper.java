@@ -23,13 +23,13 @@ public interface TieWenMapper {
     @Insert("insert into  collectlisttiewen(userEmail,collecttime,tName,tid) values (#{userEmail},#{collecttime},#{tName}),#{tid}")
     int insertCollectlist(Collectlisttiewen collectlisttiewen);
 
-    @Select("select * from tiewen where tiewenId = #{tiewenId}")
+    @Select("select * from tiewen where tiewenId = #{tiewenId} AND status = 1")
     List<Tiewen> getTiewenById(int tiewenId);
 
-    @Select("select * from tiewen where blockName = #{blockName} order by createTime desc")
+    @Select("select * from tiewen where blockName = #{blockName} AND status = 1 order by createTime desc")
     List<Tiewen> getTiewenByBlock(String blockName);
 
-    @Insert("insert into tiewen(userId,title,createTime,content,blockName) values (#{userId},#{title},#{createTime},#{content},#{blockName})")
+    @Insert("insert into tiewen(userId,title,createTime,content,blockName,username) values (#{userId},#{title},#{createTime},#{content},#{blockName},#{username})")
     int PostTiewen(Tiewen tiewen);
 
     @Delete("delete from tiewen where tiewenId = #{tiewenId} AND userId = #{userId}")
@@ -37,8 +37,8 @@ public interface TieWenMapper {
     @Update("update tiewen  set commentCount = commentCount+1  where tiewenId=#{tiewenId}")
     void updateCommentCount(Long tiewenId);
 
-    @Select("select * from tiewen order by commentCount limit 0,9")
+    @Select("select * from tiewen where status = 1 order by commentCount limit 0,9")
     List<Tiewen> getHot();
-    @Select("select * from tiewen order by createTime limit 0,9")
+    @Select("select * from tiewen where status = 1 order by createTime limit 0,9")
     List<Tiewen> getNew();
 }

@@ -64,9 +64,9 @@ public class TokenUtils {
 
     // TOKEN 验证
     public static Boolean verfiry(String token){
-        /*if(TokenUtils.checkUser(token)==null){
+        if(TokenUtils.getUser(token)==null){
             return false;
-        }*/
+        }
         try {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET))
                     .withIssuer("litind")
@@ -94,7 +94,7 @@ public class TokenUtils {
      * @return com.wounom.kaoyaniep.entity.User
      * @author litind
      **/
-    public static User getUser1(String token){
+    public static User getUser(String token){
         User user = tokenMap.get(token);
         return user;
     }
@@ -136,7 +136,7 @@ public class TokenUtils {
      * @param token
      * @return
      */
-    public static User getUser(String token) {
+    public static User getUser1(String token) {
         DecodedJWT jwt = verifyToken(token);
         String userToJson = jwt.getClaim("user").asString();
         User user = JSON.parseObject(userToJson,User.class);

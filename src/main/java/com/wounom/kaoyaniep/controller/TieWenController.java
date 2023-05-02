@@ -45,7 +45,6 @@ public class TieWenController {
     }
 
 
-
     /**
      *
      * 通过板块名称获取最新贴文
@@ -58,7 +57,6 @@ public class TieWenController {
     public Result getTiewenByBlock(@RequestParam(value = "blockName") String blockName){
         return tieWenService.getTiewenByBlock(blockName);
     }
-
 
     /**
      *

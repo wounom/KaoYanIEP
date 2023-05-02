@@ -2,10 +2,7 @@ package com.wounom.kaoyaniep.service.impl;
 
 import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.dao.AttentionMapper;
-import com.wounom.kaoyaniep.entity.Attentionlist;
-import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.University;
-import com.wounom.kaoyaniep.entity.User;
+import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.AttentionService;
 import com.wounom.kaoyaniep.utils.TokenUtils;
 import org.springframework.stereotype.Service;
@@ -31,15 +28,16 @@ public class AttentionServiceImpl implements AttentionService {
      * @author litind
      **/
     @Override
-    public Result getIf(HttpServletRequest request, Long targetid, Long schoolid) {
+    public Result getIf(HttpServletRequest request, Long targetid, Long schoolid,int target) {
         String token = request.getHeader("token");
         User u = TokenUtils.getUser(token);
         Attentionlist attentionlist = new Attentionlist();
         attentionlist.setUserId(u.getId());
         attentionlist.setTargetid(targetid);
         attentionlist.setSchoolid(schoolid);
+        attentionlist.setTarget(target);
         Attentionlist alist = null;
-        if (targetid==null){//查询学校
+        if (target==1){//查询学校
             alist = attentionMapper.findIfSchool(attentionlist);
         }else {
             alist = attentionMapper.findIfUser(attentionlist);
@@ -66,11 +64,19 @@ public class AttentionServiceImpl implements AttentionService {
     public Result attention(HttpServletRequest request, Attentionlist attentionlist) {
         String token = request.getHeader("token");
         User u = TokenUtils.getUser(token);
-
         if (attentionlist==null){
             return new Result(400,"传入数据均为空");
         }
         attentionlist.setUserId(u.getId());
+        Attentionlist attentionlist1 = null;
+        if (attentionlist.getTarget()==1){
+             attentionlist1 = attentionMapper.findIfSchool(attentionlist);
+        }else {
+             attentionlist1 = attentionMapper.findIfUser(attentionlist);
+        }
+        if (attentionlist1!=null){
+            return new Result(400,"已关注，请勿重复关注");
+        }
         int r = attentionMapper.addAttention(attentionlist);
         if (r>0){
             return new Result(200,"关注成功");
@@ -78,6 +84,7 @@ public class AttentionServiceImpl implements AttentionService {
             return new Result(400,"关注失败");
         }
     }
+
     /**
      *
      * 获取用户的关注列表

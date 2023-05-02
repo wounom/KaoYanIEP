@@ -22,7 +22,7 @@ public class PageServiceImpl implements PageService {
     public Result getFPP() {
         List<FirstpagePush> data =  pageMapper.selectFpp();
         if (data.isEmpty()){
-            return new Result(400,"推送表为空");
+            return new Result(400,"推送表为空", data.size(),data);
         }
         return new Result(200,"获取成功",data.size(),data);
     }

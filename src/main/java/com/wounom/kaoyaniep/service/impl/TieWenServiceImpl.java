@@ -3,12 +3,16 @@ package com.wounom.kaoyaniep.service.impl;
 
 
 import cn.hutool.core.date.DateTime;
+import com.wounom.kaoyaniep.dao.CommentMapper;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
+import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.TieWenService;
 import com.wounom.kaoyaniep.utils.TokenUtils;
 import org.apache.catalina.webresources.TomcatJarInputStream;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +28,11 @@ import java.util.List;
 public class TieWenServiceImpl implements TieWenService {
     @Resource
     private TieWenMapper tieWenMapper;
+    @Resource
+    private CommentMapper commentMapper;
 
+    @Resource
+    private UserMapper userMapper;
     /**
      *
      * 收藏帖子
@@ -74,6 +82,12 @@ public class TieWenServiceImpl implements TieWenService {
     @Override
     public Result getTiewenByBlock(String blockName) {
         List<Tiewen> tiewenList = tieWenMapper.getTiewenByBlock(blockName);
+        for (int i = 0;i<tiewenList.size();i++){
+            Long tiewenId = tiewenList.get(i).getTiewenId();
+            //查询贴文最新评论
+            Comment comment = commentMapper.getLastBytiewenId(tiewenId);
+            tiewenList.get(i).setComment(comment);
+        }
         if (tiewenList.size()>0){
             return new Result(200,"获取成功",tiewenList.size(),tiewenList);
         }else {
@@ -93,6 +107,7 @@ public class TieWenServiceImpl implements TieWenService {
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         tiewen.setUserId(user.getId());
+        tiewen.setUsername(user.getUsername());
         tiewen.setCreateTime(DateTime.now());
         int r = tieWenMapper.PostTiewen(tiewen);
         if (r>0){

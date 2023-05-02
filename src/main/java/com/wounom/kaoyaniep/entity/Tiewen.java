@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * @Description  
  * @Author  zhf
- * @Date 2023-04-05 
+ * @Date 2023-04-26 
  */
 
 @ApiModel(value = "tiewen")
@@ -33,6 +33,12 @@ public class Tiewen  implements Serializable {
 	 */
 	@ApiModelProperty(value = "用户id")
 	private Long userId;
+
+	/**
+	 * 用户名
+	 */
+	@ApiModelProperty(value = "用户名")
+	private String username;
 
 	/**
 	 * 标题
@@ -69,5 +75,11 @@ public class Tiewen  implements Serializable {
 	 */
 	@ApiModelProperty(value = "版块名字")
 	private String blockName;
+
+	/**
+	 * 最新评论
+	 **/
+	@ApiModelProperty(value = "最新评论")
+	private Comment comment;
 
 }

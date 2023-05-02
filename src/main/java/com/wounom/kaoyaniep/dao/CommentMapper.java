@@ -27,4 +27,6 @@ public interface CommentMapper {
     int saveMessage(Comment comment);
     @Select("select * from comment where targetUserId = #{targetUserId}")
     List<Comment> getMessage(Long targetUserId);
+    @Select("SELECT userName, createTime  FROM comment  WHERE tiewenId = #{tiewenId} AND parentId is Null  ORDER BY createTime DESC LIMIT 1")
+    Comment getLastBytiewenId(Long tiewenId);
 }

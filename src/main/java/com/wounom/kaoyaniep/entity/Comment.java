@@ -75,11 +75,13 @@ public class Comment  implements Serializable {
 	 */
 	@ApiModelProperty(value = "用户头像")
 	private String userImg;
+
 	/**
 	 * 留言用户id
 	 */
 	@ApiModelProperty(value = "留言用户id")
 	private Long targetUserId;
+
 	/**
 	 * 子评论
 	 **/
