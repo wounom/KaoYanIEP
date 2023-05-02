@@ -222,7 +222,7 @@ public class UserController {
         String token = request.getHeader("token");
         User oldUser = TokenUtils.getUser(token);
         user.setEmail(oldUser.getEmail());
-        return userService.updateUserInfo(user);
+        return userService.updateUserInfo(user,request);
     }
 
     /**

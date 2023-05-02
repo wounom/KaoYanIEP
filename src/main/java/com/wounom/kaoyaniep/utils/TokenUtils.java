@@ -12,6 +12,7 @@ import com.wounom.kaoyaniep.entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class TokenUtils {
             Date expire = new Date(System.currentTimeMillis() + EXPIRE_TIME);
             token = JWT.create()
                     .withIssuer("litind")  //发行人
-                    .withClaim("user", JSON.toJSONString(user)) //存放数据
+                    .withClaim("userId",user.getId()) //存放数据
                     .withExpiresAt(expire) //过期时间
                     .sign(Algorithm.HMAC256(TOKEN_SECRET));//加密方式
         }catch (Exception e){
@@ -73,7 +74,7 @@ public class TokenUtils {
                     .build();
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
             log.info("TOKEN 验证通过");
-            log.info("user :"+ decodedJWT.getClaim("user"));
+            log.info("userId:"+ decodedJWT.getClaim("userId"));
             log.info("过期时间："+ decodedJWT.getExpiresAt());
             //User user = JSON.parseObject(String.valueOf(decodedJWT.getClaim("user")), User.class);
             //System.out.println(user.getEmail());
@@ -110,6 +111,20 @@ public class TokenUtils {
         return true;
     }
 
+
+    /**
+     *
+     * 修改用户信息后更新tokenmap
+     * @param user,token
+     * @return
+     * @author litind
+     **/
+    public static void updateTokenmap(User user, HttpServletRequest request){
+        String token = request.getHeader("token");
+        tokenMap.put(token,user);
+    }
+
+
     /**
      *
      * 解析token
@@ -142,6 +157,7 @@ public class TokenUtils {
         User user = JSON.parseObject(userToJson,User.class);
         return user;
     }
+
 
 
 

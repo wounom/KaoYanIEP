@@ -75,7 +75,7 @@ public interface UserService {
      * @return void
      * @author litind
      **/
-    Result updateUserInfo(User user);
+    Result updateUserInfo(User user,HttpServletRequest request);
 
     /**
      *

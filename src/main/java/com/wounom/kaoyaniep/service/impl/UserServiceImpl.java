@@ -5,6 +5,7 @@ import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.service.UserService;
 import com.wounom.kaoyaniep.utils.FileUtil;
 import com.wounom.kaoyaniep.utils.PasswordUtil;
+import com.wounom.kaoyaniep.utils.TokenUtils;
 import com.wounom.kaoyaniep.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -135,8 +136,10 @@ public class UserServiceImpl implements UserService {
      * @author litind
      **/
     @Override
-    public Result updateUserInfo(User user){
+    public Result updateUserInfo(User user,HttpServletRequest request){
         int r = userMapper.updateUser(user);
+        User user1 = userMapper.selectByUserEmail1(user.getEmail());
+        TokenUtils.updateTokenmap(user1,request);
         if(r>0){
             return new Result(200,"修改成功");
         }else {
@@ -161,7 +164,6 @@ public class UserServiceImpl implements UserService {
         if (user.getImagepath()!=null){
             FileUtil.deleteFile(user.getImagepath());
         }
-
         try {
             String newFn = FileUtil.saveFile(file,imgPath);
             String url = request.getScheme()+"://"+ip+":"+request.getServerPort() +"/images/userheadimg/"+newFn;//todo:部署后记得改ip
@@ -171,6 +173,9 @@ public class UserServiceImpl implements UserService {
             newuser.setImage(url);
             newuser.setImagepath(path);
             userMapper.updateUserImg(newuser);
+            user.setImage(url);
+            user.setImagepath(path);
+            TokenUtils.updateTokenmap(user,request);
             return new Result(200,url);
         } catch (IOException e) {
 
