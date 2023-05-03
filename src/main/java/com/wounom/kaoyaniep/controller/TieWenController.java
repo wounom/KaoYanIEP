@@ -40,7 +40,7 @@ public class TieWenController {
      **/
     @GetMapping("/getByid")
     @ApiOperation("通过贴文id获取贴文详情(tiewenId)")
-    public  Result getTiewenByid(@RequestParam(value = "tiewenId") int tiewenId){
+    public  Result getTiewenByid(@RequestParam(value = "tiewenId") Long tiewenId){
         return tieWenService.getTiewenByid(tiewenId);
     }
 
@@ -100,7 +100,6 @@ public class TieWenController {
     public Result DeleteTiewen(HttpServletRequest request,@RequestParam(value = "tiewenId") Long tiewenId){
         return tieWenService.deleteTiewen(request,tiewenId);
     }
-
 
     /**
      *

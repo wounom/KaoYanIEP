@@ -3,6 +3,7 @@ package com.wounom.kaoyaniep.service.impl;
 
 
 import cn.hutool.core.date.DateTime;
+import com.wounom.kaoyaniep.dao.BlockMapper;
 import com.wounom.kaoyaniep.dao.CommentMapper;
 import com.wounom.kaoyaniep.dao.TieWenMapper;
 import com.wounom.kaoyaniep.dao.UserMapper;
@@ -31,6 +32,8 @@ public class TieWenServiceImpl implements TieWenService {
     @Resource
     private CommentMapper commentMapper;
 
+    @Resource
+    private BlockMapper blockMapper;
     @Resource
     private UserMapper userMapper;
     /**
@@ -64,7 +67,7 @@ public class TieWenServiceImpl implements TieWenService {
      * @author litind
      **/
     @Override
-    public Result getTiewenByid(int tiewenId) {
+    public Result getTiewenByid(Long tiewenId) {
         List<Tiewen> tiewenList  =  tieWenMapper.getTiewenById(tiewenId);
         if (tiewenList.size()>0){
             return new Result(200,"获取成功",tiewenList.size(),tiewenList);
@@ -111,6 +114,7 @@ public class TieWenServiceImpl implements TieWenService {
         tiewen.setCreateTime(DateTime.now());
         int r = tieWenMapper.PostTiewen(tiewen);
         if (r>0){
+            blockMapper.addTiewenCount(tiewen.getBlockName());
             return new Result(200,"发布成功");
         }else {
             return new Result(400,"发布失败");
@@ -149,8 +153,10 @@ public class TieWenServiceImpl implements TieWenService {
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         tiewen.setUserId(user.getId());
+        List<Tiewen> newTiewen = tieWenMapper.getTiewenById(tiewenId);
         int r = tieWenMapper.deleteTiewenByid(tiewen);
         if (r>0){
+            blockMapper.cutTiewenCount(newTiewen.get(0).getBlockName());
             return new Result(200,"删除成功");
         }else {
             return new Result(400,"删除失败，帖子可能已经不存在或不是您的帖子");

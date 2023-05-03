@@ -11,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface BlockService {
 
-    Result deleteBlock(String blockName);
 
-    Result getBlockByDistrict(String district);
 
-    Result collectBlock(String bName, HttpServletRequest request);
+    Result getBlockByStatus(int status);
+
 
     Result search(String blockName, String keywords);
 }

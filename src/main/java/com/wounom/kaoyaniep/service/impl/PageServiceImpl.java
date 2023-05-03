@@ -24,6 +24,7 @@ public class PageServiceImpl implements PageService {
         if (data.isEmpty()){
             return new Result(400,"推送表为空", data.size(),data);
         }
+        System.out.println(data.get(0).getFirstId());
         return new Result(200,"获取成功",data.size(),data);
     }
 }

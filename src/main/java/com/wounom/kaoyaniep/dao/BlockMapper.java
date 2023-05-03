@@ -14,8 +14,8 @@ import java.util.List;
  */
 @Mapper
 public interface BlockMapper {
-    @Select("select * from block where district = #{district}")
-    List<Block> getBlockByDistrict(String district);
+    @Select("select * from block where status = #{status}")
+    List<Block> getBlockByStatus(int status);
 
     @Delete("delete from block where blockName = #{blockName}")
     int deleteBlock(String blockName);
@@ -25,4 +25,9 @@ public interface BlockMapper {
 
     @Select("select * from tiewen where blockName = #{blockName} AND ( title LIKE CONCAT('%',#{keywords},'%') OR content LIKE CONCAT('%',#{keywords},'%')  )")
     List<Tiewen> search(@Param("blockName")String blockName,@Param("keywords") String keywords);
+
+    @Update("update block set tiewencount = tiewencount+1  where blockName=#{blockName}")
+    void addTiewenCount(String blockName);
+    @Update("update block set tiewencount = tiewencount+1  where blockName=#{blockName}")
+    void cutTiewenCount(String blockName);
 }

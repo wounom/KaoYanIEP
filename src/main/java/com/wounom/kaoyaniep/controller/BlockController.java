@@ -31,8 +31,8 @@ public class BlockController {
      **/
     @GetMapping("/getByDistrict")
     @ApiOperation("研友论坛中获取板块列表与板块信息")
-    public Result getBlockByDistrict(@RequestParam("district") String district){
-       return blockService.getBlockByDistrict(district);
+    public Result getBlockByDistrict(@RequestParam("status") int status){//todo:修改为status查询
+       return blockService.getBlockByStatus(status);
     }
 
 

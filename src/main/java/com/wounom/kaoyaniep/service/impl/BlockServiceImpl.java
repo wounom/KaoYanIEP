@@ -21,8 +21,8 @@ public class BlockServiceImpl implements BlockService {
     @Resource
     private BlockMapper blockMapper;
     @Override
-    public Result getBlockByDistrict(String district) {
-        List<Block> blockList =  blockMapper.getBlockByDistrict(district);
+    public Result getBlockByStatus(int status) {
+        List<Block> blockList =  blockMapper.getBlockByStatus(status);
         if(blockList.size()>0){
             return new Result(200,"获取成功",blockList.size(),blockList);
         }else {
@@ -30,36 +30,6 @@ public class BlockServiceImpl implements BlockService {
         }
     }
 
-    @Override
-    public Result deleteBlock(String blockName) {
-        int r = blockMapper.deleteBlock(blockName);
-        if (r>0){
-            return new Result(200,"删除成功");
-        }else{
-            return new Result(400,"系统错误");
-        }
-    }
-    /**
-     *
-     * 收藏
-     * @param bName,request
-     * @return
-     * @author litind
-     **/
-    @Override
-    public Result collectBlock(String bName, HttpServletRequest request) {
-        Collectlistblock collectlistblock = new Collectlistblock();
-        User user = (User) request.getSession().getAttribute("user");
-        collectlistblock.setBName(bName);
-        collectlistblock.setUserEmail(user.getEmail());
-        collectlistblock.setCollecttime(DateTime.now());
-        int r = blockMapper.insertCollectlist(collectlistblock);
-        if (r>0){
-            return new Result(200,"收藏成功");
-        }else {
-            return new Result(400,"收藏失败");
-        }
-    }
     /**
      *
      * 模糊搜索
