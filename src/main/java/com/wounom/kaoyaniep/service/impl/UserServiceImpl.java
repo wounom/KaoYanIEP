@@ -1,5 +1,8 @@
 package com.wounom.kaoyaniep.service.impl;
 
+import com.wounom.kaoyaniep.dao.AttentionMapper;
+import com.wounom.kaoyaniep.dao.CommentMapper;
+import com.wounom.kaoyaniep.dao.TieWenMapper;
 import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.dao.UserMapper;
 import com.wounom.kaoyaniep.service.UserService;
@@ -28,8 +31,12 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
     @Resource
     UserMapper userMapper;
-
-
+    @Resource
+    private AttentionMapper attentionMapper;
+    @Resource
+    private CommentMapper commentMapper;
+    @Resource
+    private TieWenMapper tieWenMapper;
     @Override
     public boolean isUserEmailexsit(String email){
         return userMapper.selectByUserEmail1(email) != null;
@@ -138,8 +145,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result updateUserInfo(User user,HttpServletRequest request){
         int r = userMapper.updateUser(user);
-        User user1 = userMapper.selectByUserEmail1(user.getEmail());
-        TokenUtils.updateTokenmap(user1,request);
+        User newuser = userMapper.selectByUserEmail1(user.getEmail());
+        if (user.getUsername()!=null){//更新其他表中的用户名comment,tiewen
+            r =  commentMapper.updateUsername(newuser);
+            r = tieWenMapper.updateUsername(newuser);
+        }
+
+        TokenUtils.updateTokenmap(newuser,request);
         if(r>0){
             return new Result(200,"修改成功");
         }else {

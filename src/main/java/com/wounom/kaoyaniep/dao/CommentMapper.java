@@ -1,10 +1,8 @@
 package com.wounom.kaoyaniep.dao;
 
 import com.wounom.kaoyaniep.entity.Comment;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import com.wounom.kaoyaniep.entity.User;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -29,4 +27,7 @@ public interface CommentMapper {
     List<Comment> getMessage(Long targetUserId);
     @Select("SELECT userName, createTime  FROM comment  WHERE tiewenId = #{tiewenId} AND parentId is Null  ORDER BY createTime DESC LIMIT 1")
     Comment getLastBytiewenId(Long tiewenId);
+
+    @Update("update comment  set userName = #{username}  where userId=#{id}")
+    int updateUsername(User newuser);
 }

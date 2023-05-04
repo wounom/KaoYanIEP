@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
+import java.util.Collection;
 import java.util.Date;
 
 import java.util.HashMap;
@@ -52,12 +53,12 @@ public class TokenUtils {
 
     //缓存已经登录的账户
     static void saveUser(String token,User user){
-        User u = tokenMap.get(token);
-        if (u==null){
+        Collection<User> collect = tokenMap.values();
+        if (collect.contains(user)==false){
             tokenMap.put(token,user);
         }else {
             //当用户重新登录的时候，先将缓存中的token去掉，再存入新的token
-            tokenMap.remove(token);
+            collect.remove(user);
             tokenMap.put(token,user);
         }
     }

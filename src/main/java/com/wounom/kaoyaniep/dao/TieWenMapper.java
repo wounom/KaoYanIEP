@@ -4,6 +4,7 @@ package com.wounom.kaoyaniep.dao;
 
 import com.wounom.kaoyaniep.entity.Collectlisttiewen;
 import com.wounom.kaoyaniep.entity.Tiewen;
+import com.wounom.kaoyaniep.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -41,4 +42,6 @@ public interface TieWenMapper {
     List<Tiewen> getHot();
     @Select("select * from tiewen where status = 1 order by createTime limit 0,9")
     List<Tiewen> getNew();
+    @Update("update tiewen  set username = #{username}  where userId=#{id}")
+    int updateUsername(User newuser);
 }
