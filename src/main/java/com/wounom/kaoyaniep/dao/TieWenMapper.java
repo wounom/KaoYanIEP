@@ -25,7 +25,7 @@ public interface TieWenMapper {
     int insertCollectlist(Collectlisttiewen collectlisttiewen);
 
     @Select("select * from tiewen where tiewenId = #{tiewenId} AND status = 1")
-    List<Tiewen> getTiewenById(Long tiewenId);
+    Tiewen getTiewenById(Long tiewenId);
 
     @Select("select * from tiewen where blockName = #{blockName} AND status = 1 order by createTime desc")
     List<Tiewen> getTiewenByBlock(String blockName);

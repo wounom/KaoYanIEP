@@ -4,10 +4,7 @@ import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.PageService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -34,5 +31,18 @@ public class FirstPageController {
     @ApiOperation("获取首页推送")
     public Result getFpp(){
         return  pageService.getFPP();
+    }
+
+    /**
+     *
+     * 获取特别专版的官方帖子
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getspecialTie/{blockName}")
+    @ApiOperation("获取官方帖子(blockName)")
+    public Result getSpecialTie(@PathVariable String blockName){
+        return pageService.getOfficialTieByblockName(blockName);
     }
 }

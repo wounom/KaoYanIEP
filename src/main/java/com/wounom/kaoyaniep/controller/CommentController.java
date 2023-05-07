@@ -1,6 +1,7 @@
 package com.wounom.kaoyaniep.controller;
 
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.entity.Comment;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.CommentService;
@@ -46,6 +47,19 @@ public class CommentController {
     @ApiOperation("获取评论")
     public Result getComment(@RequestParam Long tiewenId){
         return commentService.getComment(tiewenId);
+    }
+
+    /**
+     *
+     * 获取回复
+     * @param
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getAns")
+    @ApiOperation("获取回复")
+    public Result getAns(HttpServletRequest request){
+        return commentService.getAns(request);
     }
 
     /**

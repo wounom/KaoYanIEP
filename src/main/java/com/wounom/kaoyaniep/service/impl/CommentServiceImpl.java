@@ -40,7 +40,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Result postComment(Comment comment, HttpServletRequest request) {
-        //todo:增加贴文不存在与评论不存在的异常判断
         if (comment.getContent()==null){
             return new Result(400,"数据为空");
         }
@@ -68,17 +67,50 @@ public class CommentServiceImpl implements CommentService {
      **/
     @Override
     public Result getComment(Long tiewenId) {
-        List<Comment> comments = commentMapper.getByTiewenId(tiewenId);
+        List<Comment> rootComments = commentMapper.findByTiewenId(tiewenId);
+        rootComments.forEach(this::setChildren);
+        /*List<Comment> comments = commentMapper.getByTiewenId(tiewenId);
         List<Comment> rootComments = comments.stream().filter(comment -> comment.getParentId()==null).collect(Collectors.toList());
         for (Comment rootComment : rootComments){
             rootComment.setChildren(comments.stream().filter(comment -> rootComment.getId().equals(comment.getParentId())).collect(Collectors.toList()));
-        }
+        }*/
         if (rootComments.size()>0){
             return new Result(200,"success",rootComments.size(),rootComments);
         }else {
             return new Result(400,"数据空");
         }
 
+    }
+
+    /**
+     *
+     * 获取回复
+     * @param request
+     * @return
+     * @author litind
+     **/
+    @Override
+    public Result getAns(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        User user = TokenUtils.getUser(token);
+        //查找自己所有的评论
+        Long userId = user.getId();
+        List<Comment>  ownComment = commentMapper.getByUser(userId);
+        //查找自己评论下的回复
+        for (int i = 0 ; i<ownComment.size();i++){
+            Long id = ownComment.get(i).getId();//自己评论的id
+            List<Comment> chlComment = commentMapper.getChlByid(id);
+            ownComment.get(i).setChildren(chlComment);//将子评论放置在自己的父评论下
+            Long tiewenId = ownComment.get(i).getTiewenId();
+            System.out.println("这是贴文id"+tiewenId);
+            String tiewenTitle = commentMapper.getTiewenTitle(tiewenId);
+            ownComment.get(i).setTiewenTitle(tiewenTitle);//放置该评论所在的贴文
+        }
+        if (!ownComment.isEmpty()){
+            return new Result(200,"获取成功",ownComment.size(),ownComment);
+        }else {
+            return new Result(400,"无评论",0,null);
+        }
     }
 
     /**
@@ -105,7 +137,6 @@ public class CommentServiceImpl implements CommentService {
 
     /**
      * 用户获取自己帖子下的评论
-     *
      * @param request
      * @return
      * @author litind
@@ -121,18 +152,20 @@ public class CommentServiceImpl implements CommentService {
         //查询出用户所有贴文下的评论
         List<Comment> comments = new ArrayList<Comment>();
         for (int i = 0 ; i<tiewenList.size() ;i++){
-            List<Comment> c = commentMapper.getByTiewenId(tiewenList.get(i).getTiewenId());
+            Long id = tiewenList.get(i).getTiewenId();
+            List<Comment> c = commentMapper.findByTiewenId(id);
             for (int j=0;j<c.size();j++){
-                comments.add(c.get(j));
+                comments.add(c.get(j));//放入所有贴文中的一级子评论
             }
         }
-        System.out.println("评论数:"+comments.size());
+        comments.forEach(this::setChildren);
+        /*System.out.println("评论数:"+comments.size());
         //放入树
         List<Comment> rootComments = comments.stream().filter(comment -> comment.getParentId()==null).collect(Collectors.toList());
         for (Comment rootComment : rootComments){
             rootComment.setChildren(comments.stream().filter(comment -> rootComment.getId().equals(comment.getParentId())).collect(Collectors.toList()));
         }
-        System.out.println(rootComments.size());
+        System.out.println(rootComments.size());*/
         return new Result(200,"获取成功",comments.size(),comments);
     }
     /**
@@ -180,6 +213,22 @@ public class CommentServiceImpl implements CommentService {
             return new Result(400,"无留言");
         }else {
             return new Result(200,"成功",commentList.size(),commentList);
+        }
+    }
+
+    /**
+     *
+     * 递归获取子评论
+     * @param comment
+     * @return
+     * @author litind
+     **/
+    public void setChildren(Comment comment){
+        Long id = comment.getId();
+        List<Comment> children = commentMapper.findByParentId(id);
+        if (!children.isEmpty()){
+            comment.setChildren(children);
+            children.forEach(this::setChildren);
         }
     }
 }

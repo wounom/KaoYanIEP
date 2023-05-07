@@ -82,4 +82,11 @@ public class Tiewen  implements Serializable {
 	@ApiModelProperty(value = "最新评论")
 	private Comment comment;
 
+	/**
+	 *
+	 * 头像
+	 **/
+	@ApiModelProperty(value = "发布人的头像")
+	private String image;
+
 }

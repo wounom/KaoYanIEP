@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.dao;
 
+import com.wounom.kaoyaniep.controller.CommentController;
 import com.wounom.kaoyaniep.entity.Comment;
 import com.wounom.kaoyaniep.entity.User;
 import org.apache.ibatis.annotations.*;
@@ -18,6 +19,7 @@ public interface CommentMapper {
     int save(Comment comment);
     @Select("select * from comment where tiewenId = #{tiewenId}")
     List<Comment> getByTiewenId(Long tiewenId);
+    List<Comment> findByTiewenId(Long tiewenId);
     @Delete("delete from comment where id = #{id} AND userId = #{userId}")
     int deleteComment(Comment comment);
     @Insert("insert into comment(userId,userName,userImg,content,targetUserId,createTime" +
@@ -30,4 +32,14 @@ public interface CommentMapper {
 
     @Update("update comment  set userName = #{username}  where userId=#{id}")
     int updateUsername(User newuser);
+
+    List<Comment> getByUser(Long id);
+
+    List<Comment> getChlByid(Long id);
+
+    String getTiewenTitle(Long tiewenId);
+
+    void updateImg(User user);
+
+    List<Comment> findByParentId(Long id);
 }

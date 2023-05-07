@@ -59,6 +59,7 @@ public class TieWenServiceImpl implements TieWenService {
             return new Result(400,"收藏失败");
         }
     }
+
     /**
      *
      * 通过贴文id获取贴文详情
@@ -68,9 +69,15 @@ public class TieWenServiceImpl implements TieWenService {
      **/
     @Override
     public Result getTiewenByid(Long tiewenId) {
-        List<Tiewen> tiewenList  =  tieWenMapper.getTiewenById(tiewenId);
-        if (tiewenList.size()>0){
-            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        Tiewen tiewen  =  tieWenMapper.getTiewenById(tiewenId);
+        if (tiewen.getUserId()!=0){
+            User user = userMapper.getUserById(tiewen.getUserId());
+            tiewen.setImage(user.getImage());
+        }else {
+            tiewen.setImage(null);
+        }
+        if (tiewen!=null){
+            return new Result(200,"获取成功",1,tiewen);
         }else {
             return new Result(400,"获取失败，数据为空");
         }
@@ -114,7 +121,6 @@ public class TieWenServiceImpl implements TieWenService {
         tiewen.setCreateTime(DateTime.now());
         int r = tieWenMapper.PostTiewen(tiewen);
         if (r>0){
-            blockMapper.addTiewenCount(tiewen.getBlockName());
             return new Result(200,"发布成功");
         }else {
             return new Result(400,"发布失败");
@@ -153,10 +159,9 @@ public class TieWenServiceImpl implements TieWenService {
         String token = request.getHeader("token");
         User user = TokenUtils.getUser(token);
         tiewen.setUserId(user.getId());
-        List<Tiewen> newTiewen = tieWenMapper.getTiewenById(tiewenId);
+        Tiewen newTiewen = tieWenMapper.getTiewenById(tiewenId);
         int r = tieWenMapper.deleteTiewenByid(tiewen);
         if (r>0){
-            blockMapper.cutTiewenCount(newTiewen.get(0).getBlockName());
             return new Result(200,"删除成功");
         }else {
             return new Result(400,"删除失败，帖子可能已经不存在或不是您的帖子");

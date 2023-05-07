@@ -9,4 +9,6 @@ import com.wounom.kaoyaniep.entity.Result;
  */
 public interface PageService {
     Result getFPP();
+
+    Result getOfficialTieByblockName(String blockName);
 }

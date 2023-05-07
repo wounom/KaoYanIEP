@@ -88,5 +88,11 @@ public class Comment  implements Serializable {
 	@ApiModelProperty(value = "子评论")
 	private List<Comment> children;
 
+	/**
+	 *
+	 * 贴文标题
+	 **/
+	@ApiModelProperty(value = "贴文标题")
+	private String TiewenTitle;
 
 }

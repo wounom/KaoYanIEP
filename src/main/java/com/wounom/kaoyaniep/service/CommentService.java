@@ -22,4 +22,6 @@ public interface CommentService {
     Result PostMessage(HttpServletRequest request, Comment comment);
 
     Result getMessage(HttpServletRequest request);
+
+    Result getAns(HttpServletRequest request);
 }

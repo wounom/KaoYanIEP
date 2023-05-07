@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wounom.kaoyaniep.dao.CommentMapper">
+    <!--namespace根据自己需要创建的的mapper的路径和名称填写-->
+
+    <select id="findByTiewenId" resultType="com.wounom.kaoyaniep.entity.Comment">
+        select * from comment where tiewenId = #{tiewenId} AND parentId is NULL
+    </select>
+
+
+    <select id="getByUser" resultType="com.wounom.kaoyaniep.entity.Comment">
+        select * from comment where userId = #{userId}  AND tiewenId is not null
+    </select>
+    <select id="getChlByid" resultType="com.wounom.kaoyaniep.entity.Comment">
+        select * from comment where  parentId =#{id}
+    </select>
+
+    <select id="getTiewenTitle" resultType="java.lang.String">
+        select title from tiewen where tiewenId = #{tiewenId}
+    </select>
+
+    <update id="updateImg">
+        update comment set userImg = #{image} where userId = #{id}
+    </update>
+
+    <select id="findByParentId" resultType="com.wounom.kaoyaniep.entity.Comment">
+        select * from comment where parentId=#{id}
+    </select>
+</mapper>

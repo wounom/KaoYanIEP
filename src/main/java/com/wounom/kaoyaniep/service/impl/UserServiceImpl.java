@@ -147,10 +147,9 @@ public class UserServiceImpl implements UserService {
         int r = userMapper.updateUser(user);
         User newuser = userMapper.selectByUserEmail1(user.getEmail());
         if (user.getUsername()!=null){//更新其他表中的用户名comment,tiewen
-            r =  commentMapper.updateUsername(newuser);
-            r = tieWenMapper.updateUsername(newuser);
+            commentMapper.updateUsername(newuser);
+            tieWenMapper.updateUsername(newuser);
         }
-
         TokenUtils.updateTokenmap(newuser,request);
         if(r>0){
             return new Result(200,"修改成功");
@@ -187,6 +186,7 @@ public class UserServiceImpl implements UserService {
             userMapper.updateUserImg(newuser);
             user.setImage(url);
             user.setImagepath(path);
+            commentMapper.updateImg(user);
             TokenUtils.updateTokenmap(user,request);
             return new Result(200,url);
         } catch (IOException e) {
