@@ -20,10 +20,8 @@ public interface CommentMapper {
     @Select("select * from comment where tiewenId = #{tiewenId}")
     List<Comment> getByTiewenId(Long tiewenId);
     List<Comment> findByTiewenId(Long tiewenId);
-    @Delete("delete from comment where id = #{id} AND userId = #{userId}")
-    int deleteComment(Comment comment);
-    @Insert("insert into comment(userId,userName,userImg,content,targetUserId,createTime" +
-            ") values (#{userId},#{userName},#{userImg},#{content},#{targetUserId},#{createTime}) ")
+    @Delete("delete from comment where id = #{id}")
+    int deleteComment(Long id);
     int saveMessage(Comment comment);
     @Select("select * from comment where targetUserId = #{targetUserId}")
     List<Comment> getMessage(Long targetUserId);

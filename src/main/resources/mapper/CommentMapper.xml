@@ -26,4 +26,8 @@
     <select id="findByParentId" resultType="com.wounom.kaoyaniep.entity.Comment">
         select * from comment where parentId=#{id}
     </select>
+
+    <insert id="saveMessage">
+        insert into comment(userId,userName,userImg,content,targetUserId,createTime)values(#{userId},#{userName},#{userImg},#{content},#{targetUserId},#{createTime})
+    </insert>
 </mapper>

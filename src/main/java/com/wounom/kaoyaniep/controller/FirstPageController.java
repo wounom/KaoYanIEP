@@ -1,5 +1,6 @@
 package com.wounom.kaoyaniep.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import com.wounom.kaoyaniep.entity.Result;
 import com.wounom.kaoyaniep.service.PageService;
 import io.swagger.annotations.ApiOperation;
@@ -45,4 +46,26 @@ public class FirstPageController {
     public Result getSpecialTie(@PathVariable String blockName){
         return pageService.getOfficialTieByblockName(blockName);
     }
+
+    /**
+     * @param status
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getByDistrict")
+    @ApiOperation("通过地区获取板块")
+    public Result getBlockByDistrict(@RequestParam("status") int status){
+        return pageService.getBlockByStatus(status);
+    }
+
+    /**
+     * @param blockName
+     * @return
+     * @author litind
+     **/
+    @GetMapping("/getLastByBlock")
+    public Result getTiewenByBlock(@RequestParam(value = "blockName") String blockName){
+        return pageService.getTiewenByBlock(blockName);
+    }
+
 }

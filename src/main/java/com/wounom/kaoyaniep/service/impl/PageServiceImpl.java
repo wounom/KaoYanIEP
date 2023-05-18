@@ -1,9 +1,9 @@
 package com.wounom.kaoyaniep.service.impl;
 
+import com.wounom.kaoyaniep.dao.CommentMapper;
 import com.wounom.kaoyaniep.dao.PageMapper;
-import com.wounom.kaoyaniep.entity.FirstpagePush;
-import com.wounom.kaoyaniep.entity.Result;
-import com.wounom.kaoyaniep.entity.TiewenOfficial;
+import com.wounom.kaoyaniep.dao.TieWenMapper;
+import com.wounom.kaoyaniep.entity.*;
 import com.wounom.kaoyaniep.service.PageService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,10 @@ import java.util.List;
 public class PageServiceImpl implements PageService {
     @Resource
     private PageMapper pageMapper;
+    @Resource
+    private TieWenMapper tieWenMapper;
+    @Resource
+    private CommentMapper commentMapper;
     @Override
     public Result getFPP() {
         List<FirstpagePush> data =  pageMapper.selectFpp();
@@ -43,6 +47,31 @@ public class PageServiceImpl implements PageService {
             return new Result(200,"获取成功",list.size(),list);
         }else {
             return new Result(400,"获取失败,该板块内容为空",0,null);
+        }
+    }
+
+    @Override
+    public Result getBlockByStatus(int status) {
+        List<Block> blockList =  pageMapper.getBlockByStatus(status);
+        if(blockList.size()>0){
+            return new Result(200,"获取成功",blockList.size(),blockList);
+        }else {
+            return new Result(400,"获取失败，该项目下无板块");
+        }
+    }
+    @Override
+    public Result getTiewenByBlock(String blockName) {
+        List<Tiewen> tiewenList = tieWenMapper.getTiewenByBlock(blockName);
+        for (int i = 0;i<tiewenList.size();i++){
+            Long tiewenId = tiewenList.get(i).getTiewenId();
+            //查询贴文最新评论
+            Comment comment = commentMapper.getLastBytiewenId(tiewenId);
+            tiewenList.get(i).setComment(comment);
+        }
+        if (tiewenList.size()>0){
+            return new Result(200,"获取成功",tiewenList.size(),tiewenList);
+        }else {
+            return new Result(400,"获取失败，数据为空");
         }
     }
 }

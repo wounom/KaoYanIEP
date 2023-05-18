@@ -116,18 +116,13 @@ public class CommentServiceImpl implements CommentService {
     /**
      *
      * 删除评论
-     * @param request,id
+     * @param id
      * @return
      * @author litind
      **/
     @Override
-    public Result deleteComment(Long id, HttpServletRequest request) {
-        String token = request.getHeader("token");
-        User user = TokenUtils.getUser(token);
-        Comment comment = new Comment();
-        comment.setId(id);
-        comment.setUserId(user.getId());
-        int r = commentMapper.deleteComment(comment);
+    public Result deleteComment(Long id) {
+        int r = commentMapper.deleteComment(id);
         if(r>0){
             return new Result(200,"删除成功");
         }else {
@@ -181,9 +176,8 @@ public class CommentServiceImpl implements CommentService {
         User user = TokenUtils.getUser(token);
         comment.setUserId(user.getId());
         comment.setUserName(user.getUsername());
-        comment.setUserImg(user.getImagepath());
+        comment.setUserImg(user.getImage());
         comment.setCreateTime(DateTime.now());
-        Long uid = user.getId();
         User user1 = userMapper.getUserById(comment.getTargetUserId());
         if (user1==null){
             return new Result(400,"目标用户不存在");
@@ -231,4 +225,6 @@ public class CommentServiceImpl implements CommentService {
             children.forEach(this::setChildren);
         }
     }
+
+
 }

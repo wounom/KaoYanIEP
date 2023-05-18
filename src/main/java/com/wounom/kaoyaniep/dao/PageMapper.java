@@ -1,7 +1,6 @@
 package com.wounom.kaoyaniep.dao;
 
-import com.wounom.kaoyaniep.entity.FirstpagePush;
-import com.wounom.kaoyaniep.entity.TiewenOfficial;
+import com.wounom.kaoyaniep.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,4 +17,8 @@ public interface PageMapper {
     List<FirstpagePush> selectFpp();
     @Select("select * from tiewen_official where blockName = #{blockName}")
     List<TiewenOfficial> getOfficialTieByBlockName(String blockName);
+    @Select("select * from block where status = #{status}")
+    List<Block> getBlockByStatus(int status);
+
+
 }

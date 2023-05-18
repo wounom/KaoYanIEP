@@ -11,4 +11,8 @@ public interface PageService {
     Result getFPP();
 
     Result getOfficialTieByblockName(String blockName);
+
+    Result getBlockByStatus(int status);
+
+    Result getTiewenByBlock(String blockName);
 }

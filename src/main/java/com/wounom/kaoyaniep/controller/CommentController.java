@@ -71,8 +71,8 @@ public class CommentController {
      **/
     @DeleteMapping("/delete")
     @ApiOperation("通过用户id评论id删除评论")
-    public Result deleteComment(@RequestParam Long id,HttpServletRequest request){
-        return commentService.deleteComment(id,request);
+    public Result deleteComment(@RequestParam Long id){
+        return commentService.deleteComment(id);
     }
 
     /**
