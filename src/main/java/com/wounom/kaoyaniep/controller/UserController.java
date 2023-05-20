@@ -108,25 +108,25 @@ public class UserController {
     @ApiOperation("登录")
     @PostMapping("/login")
     //@ResponseBody
-    public Result Login(/*HttpServletRequest request,HttpServletResponse response,*/ @RequestBody User user) throws UnsupportedEncodingException {
+    public Result Login( @RequestBody User user){
         System.out.println(user.getEmail());
         System.out.println(user.getPassword());
         /*log.info("username",user.getUsername());
         log.info("password",user.getPassword());*/
-        if(!userService.isUserEmailexsit(user.getEmail())){
+        if(!userService.isUserEmailexsit(user.getEmail())){//判断数据库是否有激活的该账号
             return new Result(400,"账号不存在");
         }
         User newuser = userService.getUserByEmail(user.getEmail());//查询已经注册的该邮箱账户
-        newuser.setCode(null);
+        newuser.setCode(null);//清除用户敏感数据信息
         newuser.setActiveTime(null);
         newuser.setSalt(null);
         newuser.setPassword(null);
         newuser.setImagepath(null);
         Map<String,Object> map = new HashMap<>();
-        map.put("user",newuser);
+        map.put("user",newuser);//返回实体中存入用户信息
         if(userService.loginCheck(user)!=null){
-            String token = TokenUtils.CreateToken(newuser);
-            map.put("token",token);
+            String token = TokenUtils.CreateToken(newuser);//使用token生产工具类，生成token用以登录后的身份验证
+            map.put("token",token);//返回实体中存入token
            /*request.getSession().setAttribute("user",newuser);
             request.getSession().setMaxInactiveInterval(604800);
             String sessionId = request.getSession().getId();
@@ -137,9 +137,9 @@ public class UserController {
                     .httpOnly(true)
                     .sameSite("none")
                     .build();
-            response.setHeader(HttpHeaders.SET_COOKIE,cookie.toString());*/
+            response.setHeader(HttpHeaders.SET_COOKIE,cookie.toString());
             //response.addCookie(new Cookie("JSESSIONID",request.getSession().getId()));
-            /*response.setHeader("Access-Control-Allow-Origin", "http://172.25.88.146:8080");*/
+            response.setHeader("Access-Control-Allow-Origin", "http://172.25.88.146:8080");*/
             return new Result(200,"登录成功",map.size(),map);
         }else {
             return new Result(400,"用户名或密码错误");
@@ -158,7 +158,7 @@ public class UserController {
     @PostMapping("/logout")
     public Result logout(HttpServletRequest request) {
         String token = request.getHeader("token");
-        if(TokenUtils.removeToken(token)){
+        if(TokenUtils.removeToken(token)){//清除服务器中用户登录后的token信息
             return new Result(200,"登出成功");
         }
         else {
@@ -218,7 +218,8 @@ public class UserController {
      **/
     @ApiOperation("更新用户信息")
     @PostMapping("/updateInfo")
-    public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){//user不用传入Email，通过session获取
+    public Result updateUserinfo(@RequestBody User user,HttpServletRequest request){
+        //user不用传入Email，通过session获取
         String token = request.getHeader("token");
         User oldUser = TokenUtils.getUser(token);
         user.setEmail(oldUser.getEmail());
